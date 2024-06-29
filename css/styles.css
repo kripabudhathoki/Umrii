@@ -11113,10 +11113,19 @@ p {
   z-index: -1;
 }
 
-.footer {
-  background-color: rgba(47, 23, 15, 0.9);
+.footer { 
+  background-color: transparent;
+  
 }
-
+.socialMediaIcon {
+  margin: 0 10px;
+  color: #A54A4E;
+  text-decoration: none;
+  
+}
+.socialMediaIcon:hover {
+  color: #ddd;
+}
 .intro {
   position: relative;
 }
