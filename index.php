@@ -54,7 +54,7 @@
 							$loggedin = false;
 						}
 						if (!$loggedin) {
-							echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:white; background-color:transparent;'><b>Log In</b></button></a>";
+							echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756;'><b>Log In</b></button></a>";
 						} else {
 							echo "<a href='logout.php' class='position-relative ms-3 my-auto'>
 							<i class='fas fa-solid fa-right-from-bracket fa-2x'></i></a>";
@@ -81,7 +81,7 @@
                             <span class="section-heading-lower"><b>Worth Drinking</b></span>
                         </h2>
                         <p class="mb-3">Every cup of our quality refreshing summer drinks starts with locally sourced, hand picked ingredients. Once you try it, our drinks will be a blissful addition to your everyday summer routine - we guarantee it!</p>
-                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!">Visit Us Today!</a></div>
+                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!"><b>Visit Us Today!</b></a></div>
                     </div>
                 </div>
             </div>
