@@ -1,3 +1,4 @@
+<link href="css/styles.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 <footer class="footer text-faded text-center py-5">
         <div class="container">
