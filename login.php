@@ -4,6 +4,8 @@
 <head>
     <meta charset="utf-8">
     <title>Umrii</title>
+    <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
     <link href="css/login.css" rel="stylesheet" />
     <a href="index.php" class="navbar-brand">
 					<h1 class="display-6"  style="text-align: center;"><img src="assets/img/logoW.png" class="main-logo" /></h1>

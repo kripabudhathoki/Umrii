@@ -1,3 +1,4 @@
+<link href="css/styles.css" rel="stylesheet" />
 <header>
             <h1 class="site-heading text-center text-faded d-none d-lg-block">
                 <div class="topbar bg-primary">
