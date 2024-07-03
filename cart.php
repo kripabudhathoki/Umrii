@@ -49,6 +49,48 @@
     position: relative;
     z-index: 1;
   }
+
+  /* The Popup (background) */
+.cart-popup {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Popup Content */
+.cart-popup-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  max-width: 400px; /* Set a max-width for better design */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 </style>
 
     <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
@@ -80,12 +122,11 @@
                 <tbody>
                   <tr class="text-center">
                     <td class="product-remove"><a href="#"><span class="bi bi-x-circle"></span></a></td>
-                    <td class="image-prod"><div class="img" style="background-image:url(images/product-3.jpg);"></div></td>
+                    <td class="image-prod"><div class="img" style="background-image:url(assets/img/strawberry.jpg);"></div></td>
                     <td class="product-name">
-                      <h3>Bell Pepper</h3>
-                      <p>Far far away, behind the word mountains, far from the countries</p>
+                      <h4>Strawberry Crush</h4>
                     </td>
-                    <td class="price">$4.90</td>
+                    <td class="price">Rs. 220</td>
                     <td class="quantity">
                       <div class="input-group mb-3">
                         <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
@@ -97,10 +138,10 @@
                     <td class="product-remove"><a href="#"><span class="bi bi-x-circle"></span></a></td>
                     <td class="image-prod"><div class="img" style="background-image:url(images/product-4.jpg);"></div></td>
                     <td class="product-name">
-                      <h3>Bell Pepper</h3>
-                      <p>Far far away, behind the word mountains, far from the countries</p>
+                      <h4>Forest Fruite</h4>
+                      
                     </td>
-                    <td class="price">$15.70</td>
+                    <td class="price">Rs. 220</td>
                     <td class="quantity">
                       <div class="input-group mb-3">
                         <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
@@ -113,67 +154,65 @@
             </div>
           </div>
         </div>
-        <div class="row justify-content-end">
-          <div class="col-lg-4 mt-5 cart-wrap">
-            <div class="cart-total mb-3">
-              <h3>Coupon Code</h3>
-              <p>Enter your coupon code if you have one</p>
-              <form action="#" class="info">
-                <div class="form-group">
-                  <label for="">Coupon code</label>
-                  <input type="text" class="form-control text-left px-3" placeholder="">
-                </div>
-              </form>
-            </div>
-            <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
-          </div>
-          <div class="col-lg-4 mt-5 cart-wrap">
-            <div class="cart-total mb-3">
-              <h3>Estimate shipping and tax</h3>
-              <p>Enter your destination to get a shipping estimate</p>
-              <form action="#" class="info">
-                <div class="form-group">
-                  <label for="">Country</label>
-                  <input type="text" class="form-control text-left px-3" placeholder="">
-                </div>
-                <div class="form-group">
-                  <label for="country">State/Province</label>
-                  <input type="text" class="form-control text-left px-3" placeholder="">
-                </div>
-                <div class="form-group">
-                  <label for="country">Zip/Postal Code</label>
-                  <input type="text" class="form-control text-left px-3" placeholder="">
-                </div>
-              </form>
-            </div>
-            <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Estimate</a></p>
-          </div>
-          <div class="col-lg-4 mt-5 cart-wrap">
-            <div class="cart-total mb-3">
-              <h3>Cart Total</h3>
-              <p class="d-flex">
-                <span>Subtotal</span>
-                <span>$20.60</span>
-              </p>
-              <p class="d-flex">
-                <span>Delivery</span>
-                <span>$0.00</span>
-              </p>
-              <p class="d-flex">
-                <span>Discount</span>
-                <span>$3.00</span>
-              </p>
-              <hr>
-              <p class="d-flex total-price">
-                <span>Total</span>
-                <span>$17.60</span>
-              </p>
-            </div>
-            <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
-          </div>
+        <!-- Button to open the popup -->
+<button id="cart-total-btn" class="btn btn-primary py-3 px-4" style="margin: 5% 40%;"><b>View Cart Total</b></button>
+
+<!-- Popup structure -->
+<div id="cart-popup" class="cart-popup">
+  <div class="cart-popup-content">
+    <span class="close">&times;</span>
+    <div class="cart-total mb-3">
+      <h3>Cart Total</h3>
+      <p class="d-flex">
+        <span>Subtotal: </span>
+        <span>$20.60</span>
+      </p>
+      <p class="d-flex">
+        <span>Delivery</span>
+        <span>$0.00</span>
+      </p>
+
+      <hr>
+      <p class="d-flex total-price">
+        <span>Total</span>
+        <span>$17.60</span>
+      </p>
+    </div>
+    <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+  </div>
+</div>
+
         </div>
       </div>
     </section>
+    <script>
+  // Get the popup
+  var popup = document.getElementById("cart-popup");
+
+  // Get the button that opens the popup
+  var btn = document.getElementById("cart-total-btn");
+
+  // Get the <span> element that closes the popup
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks the button, open the popup 
+  btn.onclick = function() {
+    popup.style.display = "block";
+  }
+
+  // When the user clicks on <span> (x), close the popup
+  span.onclick = function() {
+    popup.style.display = "none";
+  }
+
+  // When the user clicks anywhere outside of the popup, close it
+  window.onclick = function(event) {
+    if (event.target == popup) {
+      popup.style.display = "none";
+    }
+  }
+</script>
+
     
     <!-- Footer -->
     <?php

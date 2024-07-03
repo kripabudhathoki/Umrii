@@ -105,7 +105,7 @@
                 </span>
               </div>
             </div>
-            <p><a href="cart.html" class="btn btn-primary py-3 px-5">Add to Cart</a></p>
+            <p><a href="cart.php" class="btn btn-primary py-3 px-5">Add to Cart</a></p>
           </div>
         </div>
       </div>

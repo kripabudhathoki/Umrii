@@ -152,7 +152,7 @@ h4, .h4 {
 }
 @media (min-width: 1200px) {
   h4, .h4 {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 }
 
@@ -466,6 +466,7 @@ caption {
 th {
   text-align: inherit;
   text-align: -webkit-match-parent;
+  width: 0%;
 }
 
 thead,
@@ -2644,7 +2645,8 @@ textarea.form-control-lg {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  width: 100%;
+  width: 40%;
+  margin: 0 32%;
 }
 .input-group > .form-control,
 .input-group > .form-select,
