@@ -7,6 +7,15 @@
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
     <link href="css/login.css" rel="stylesheet" />
+    <style>
+        .name-group {
+            display: flex;
+            justify-content: space-between;
+        }
+        .name-group .input {
+            width: 48%;
+        }
+    </style>
 </head>
 
 <body>
@@ -43,9 +52,15 @@
                                 </div>
                             </div>
                             <div class="sign-up-form">
-                                <div class="group">
-                                    <label for="signup-user" class="label">Username</label>
-                                    <input id="signup-user" type="text" class="input" placeholder="Create your Username">
+                                <div class="name-group group">
+                                    <div>
+                                        <label for="signup-firstname" class="label">First Name</label>
+                                        <input id="signup-firstname" type="text" class="input" placeholder="Enter your first name">
+                                    </div>
+                                    <div>
+                                        <label for="signup-lastname" class="label">Last Name</label>
+                                        <input id="signup-lastname" type="text" class="input" placeholder="Enter your last name">
+                                    </div>
                                 </div>
                                 <div class="group">
                                     <label for="signup-pass" class="label">Password</label>
@@ -58,6 +73,16 @@
                                 <div class="group">
                                     <label for="signup-email" class="label">Email Address</label>
                                     <input id="signup-email" type="text" class="input" placeholder="Enter your email address">
+                                </div>
+                                <div class="name-group group">
+                                    <div>
+                                        <label for="signup-firstname" class="label">Address</label>
+                                        <input id="signup-firstname" type="text" class="input" placeholder="Enter your address">
+                                    </div>
+                                    <div>
+                                        <label for="signup-lastname" class="label">Phone Number</label>
+                                        <input id="signup-lastname" type="number" class="input" placeholder="Enter your phone number">
+                                    </div>
                                 </div>
                                 <div class="group">
                                     <input type="submit" class="button" value="Sign Up">
