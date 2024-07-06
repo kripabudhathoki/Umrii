@@ -1,3 +1,8 @@
+<?php
+include "dbconnect.php";
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,27 +16,27 @@
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
-		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
-	<header>
+        <header>
             <h1 class="site-heading text-center text-faded d-none d-lg-block">
                 <div class="topbar bg-primary">
-			<div class="d-flex justify-content-between">
-				<div class="top-info ps-2">
-                <small class="me-3"><a class="text-white"><b>Lalitpur, Nepal</b></a></small>
-					<small class="me-3"><a class="text-white"><b>umrii.np@gmail.com</b></a></small>
-				</div>
-				<div class="top-link pe-2">
-					<small class="me-3"><a class="text-white"><b>+977 9828884567</b></a></small>
-				</div>
-			</div>
-		</div>
-            <a href="index.php" class="navbar-brand">
-					<h1 class="display-6"><img src="assets/img/logoW.png" class="main-logo" /></h1>
-				</a>
+                    <div class="d-flex justify-content-between">
+                        <div class="top-info ps-2">
+                            <small class="me-3"><a class="text-white"><b>Lalitpur, Nepal</b></a></small>
+                            <small class="me-3"><a class="text-white"><b>umrii.np@gmail.com</b></a></small>
+                        </div>
+                        <div class="top-link pe-2">
+                            <small class="me-3"><a class="text-white"><b>+977 9828884567</b></a></small>
+                        </div>
+                    </div>
+                </div>
+                <a href="index.php" class="navbar-brand">
+                    <h1 class="display-6"><img src="assets/img/logoW.png" class="main-logo" /></h1>
+                </a>
             </h1>
         </header>
         <!-- Navigation-->
@@ -45,29 +50,29 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.php">About</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="products.php">Products</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="store.html">Store</a></li>
-						<li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="product.php">Review</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="product.php">Review</a></li>
                     </ul>
-					<?php
-						if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-							$loggedin = true;
-						} else {
-							$loggedin = false;
-						}
-						if (!$loggedin) {
-							echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756;'><b>Log In</b></button></a>";
-						} else {
-							echo "<a href='logout.php' class='position-relative ms-3 my-auto'>
-							<i class='fas fa-solid fa-right-from-bracket fa-2x'></i></a>";
-						}
-						?>
-						<a>
-							<?php if (isset($_SESSION['email'])) {
-								echo
-								'<a class="nav-link">
-						<i class="bi bi-person"></i>' . " " . $_SESSION['email'];
-								'</a>';
-							}
-							?>
+                    <?php
+                        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+                            $loggedin = true;
+                        } else {
+                            $loggedin = false;
+                        }
+                        if (!$loggedin) {
+                            echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756;'><b>Log In</b></button></a>";
+                        } else {
+                            echo "<a href='logout.php' class='position-relative ms-3 my-auto'>
+                            <i class='fas fa-solid fa-right-from-bracket fa-2x'></i></a>";
+                        }
+                    ?>
+                    <a>
+                        <?php if (isset($_SESSION['username'])) {
+                            echo
+                            '<a class="nav-link">
+                    <i class="bi bi-person"></i>' . " " . $_SESSION['username'];
+                            '</a>';
+                        }
+                        ?>
                 </div>
             </div>
         </nav></div>
@@ -89,88 +94,72 @@
         <!--section 2-->
         <section class="page-section clearfix">
             <div class="container">
-
-		<article class="postcard dark blue">
-			<a class="postcard__img_link" href="#">
-				<img class="postcard__img" src="assets/img/bestseller1.jpg" alt="Image Title" />
-			</a>
-			<div class="postcard__text">
-				<h1 class="postcard__title blue"><a href="#"><b>Forest Fruit Crush</b></a></h1>
-                <b>BEST SELLER</b>
-				<div class="postcard__subtitle small">
-				</div>
-				<div class="postcard__bar"></div>
-				<div class="postcard__preview-txt">Experience the vibrant blend of strawberries, blackcurrants, raspberries, red currants, and cherries, perfectly balanced with fresh lime and mint. Refreshing and delicious, our Forest Fruit Crush is a taste of nature's finest berries in every sip. Perfect for cooling down or enjoying a burst of fruity goodness!</div>
-				<ul class="postcard__tagbox">
-					<li class="tag__item"><i class="fas fa-tag mr-2"></i><b>Price: 220</b></li>
-					<li class="tag__item play blue">
-						<a href="#"><b>BUY NOW!</b></a>
-					</li>
-				</ul>
-			</div>
-		</article>
-		<article class="postcard dark red">
-			<a class="postcard__img_link" href="#">
-				<img class="postcard__img" src="assets/img/special.jpg" alt="Image Title" />	
-			</a>
-			<div class="postcard__text">
-				<h1 class="postcard__title red"><a href="#"><b>UMRII SPECIAL</b></a></h1>
-				<div class="postcard__subtitle small">
-				<b> YOU'RE SPECIAL</b>
-				</div>
-				<div class="postcard__bar"></div>
-				<div class="postcard__preview-txt">Indulge in the rich and creamy delight of our Umrii Special. This luxurious drink is crafted with a perfect blend of milk and chocolate, offering a smooth and decadent experience with every sip. Whether you're in the mood for a comforting treat or a satisfying pick-me-up, the Umrii Special is your go-to choice for a deliciously indulgent moment.</div>
-				<ul class="postcard__tagbox">
-					<li class="tag__item"><i class="fas fa-tag mr-2"></i><b>Price:250</b></li>
-					<li class="tag__item play red">
-						<a href="#"><b>BUY NOW!</b></a>
-					</li>
-				</ul>
-			</div>
-		</article>
-		<article class="postcard dark green">
-			<a class="postcard__img_link" href="#">
-				<img class="postcard__img" src="assets/img/bestseller2.jpg" alt="Image Title" />
-			</a>
-			<div class="postcard__text">
-				<h1 class="postcard__title green"><a href="#"><b>STRAWBERRY CRUSH</b></a></h1>
-				<div class="postcard__subtitle small">
-						<b>EVERYONE'S FAVORITE</b>
-				</div>
-				<div class="postcard__bar"></div>
-				<div class="postcard__preview-txt">Savor the refreshing taste of our Strawberry Crush. Made with luscious strawberry puree, zesty fresh lime, and a hint of aromatic mint, this delightful drink offers a perfect balance of sweetness and tang. Enjoy a revitalizing burst of flavor in every sip, perfect for any occasion.</div>
-				<ul class="postcard__tagbox">
-					<li class="tag__item"><i class="fas fa-tag mr-2"></i><b>Price: 220</b></li>
-					<li class="tag__item play green">
-						<a href="#"><b>BUY NOW!</b></a>
-					</li>
-				</ul>
-			</div>
-		</article>
-	</div>
-</section>
-         <!--section 2 end -->
-        <section class="page-section cta">
-        <div class="container-gallery">
-    <div class="popup popup-1">
-        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery1.jpg" />
-    </div>
-    <div class="popup popup-2">
-        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery2.jpg" />
-    </div>
-    <div class="popup popup-3">
-        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery5.jpg" />
-    </div>
-    <div class="popup popup-4">
-        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery3.jpg" />
-    </div>
-    <div class="popup popup-5">
-        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery4.jpg" />
-    </div>
-</div>
+                <article class="postcard dark blue">
+                    <a class="postcard__img_link" href="#">
+                        <img class="postcard__img" src="assets/img/bestseller1.jpg" alt="Image Title" />
+                    </a>
+                    <div class="postcard__text">
+                        <h1 class="postcard__title blue"><a href="#"><b>Forest Fruit Crush</b></a></h1>
+                        <b>BEST SELLER</b>
+                        <div class="postcard__subtitle small">
+                        </div>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt">Experience the vibrant blend of strawberries, blackcurrants, raspberries, red currants, and cherries, perfectly balanced with fresh lime and mint. Refreshing and delicious, our Forest Fruit Crush is a taste of nature's finest berries in every sip. Perfect for cooling down or enjoying a burst of fruity goodness!</div>
+                        <ul class="postcard__tagbox">
+                            <li class="tag__item"><i class="fas fa-tag mr-2"></i><b>Price: 220</b></li>
+                            <li class="tag__item play blue">
+                                <a href="#"><b>BUY NOW!</b></a>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+                <article class="postcard dark red">
+                    <a class="postcard__img_link" href="#">
+                        <img class="postcard__img" src="assets/img/special.jpg" alt="Image Title" />    
+                    </a>
+                    <div class="postcard__text">
+                        <h1 class="postcard__title red"><a href="#"><b>UMRII SPECIAL</b></a></h1>
+                        <div class="postcard__subtitle small">
+                        <b> YOU'RE SPECIAL</b>
+                        </div>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt">Indulge in the rich and creamy delight of our Umrii Special. This luxurious drink is crafted with a perfect blend of milk and chocolate, offering a smooth and decadent experience with every sip. Whether you're in the mood for a comforting treat or a satisfying pick-me-up, the Umrii Special is your go-to choice for a deliciously indulgent moment.</div>
+                        <ul class="postcard__tagbox">
+                            <li class="tag__item"><i class="fas fa-tag mr-2"></i><b>Price:250</b></li>
+                            <li class="tag__item play red">
+                                <a href="#"><b>BUY NOW!</b></a>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+                <article class="postcard dark green">
+                    <a class="postcard__img_link" href="#">
+                        <img class="postcard__img" src="assets/img/bestseller2.jpg" alt="Image Title" />
+                    </a>
+                    <div class="postcard__text">
+                        <h1 class="postcard__title green"><a href="#"><b>STRAWBERRY CRUSH</b></a></h1>
+                        <div class="postcard__subtitle small">
+                                <b>EVERYONE'S FAVORITE</b>
+                        </div>
+                        <div class="postcard__bar"></div>
+                        <div class="postcard__preview-txt">Dive into the irresistible taste of our Strawberry Crush, where the sweetness of fresh, juicy strawberries meets a hint of zesty lemon. This delightful combination creates a refreshing and invigorating drink that's perfect for quenching your thirst on a hot summer day. Enjoy the natural goodness of strawberries in every delightful sip!</div>
+                        <ul class="postcard__tagbox">
+                            <li class="tag__item"><i class="fas fa-tag mr-2"></i><b>Price: 230</b></li>
+                            <li class="tag__item play green">
+                                <a href="#"><b>BUY NOW!</b></a>
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
         </section>
-		<?php
-include('footer.php');
-?>
+        <!-- Footer-->
+        <footer class="footer text-faded text-center py-5">
+            <div class="container"><p class="m-0 small">Copyright &copy; UMRII 2024</p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
     </body>
 </html>

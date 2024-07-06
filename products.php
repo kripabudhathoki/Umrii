@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Check if the user is logged in
+$is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+$username = $is_logged_in ? $_SESSION['username'] : 'Guest';
+// $email = $is_logged_in ? $_SESSION['email'] : '';
+?>
+<?php
 include "dbconnect.php"; // Include your database connection file
 
 // Query to fetch products from the database
