@@ -256,6 +256,8 @@ a:hover {
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
   color: inherit;
   text-decoration: none;
+  /*background-color: rgb(165, 74, 78, 0.9);*/
+
 }
 .main-logo {
   height: 130px;
