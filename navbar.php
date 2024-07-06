@@ -44,10 +44,10 @@
 						}
 						?>
 						<a>
-							<?php if (isset($_SESSION['email'])) {
+							<?php if (isset($_SESSION['username'])) {
 								echo
 								'<a class="nav-link">
-						<i class="bi bi-person"></i>' . " " . $_SESSION['email'];
+						<i class="bi bi-person"></i>' . " " . $_SESSION['username'];
 								'</a>';
 							}
 							?>
