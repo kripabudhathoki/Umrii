@@ -30,7 +30,7 @@
                 <div class="login-box">
                     <div class="login-snip">
                         <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-                        <label for="tab-1" class="tab">Login</label>
+                        <label for="tab-1" class="tab">Log In</label>
                         <input id="tab-2" type="radio" name="tab" class="sign-up">
                         <label for="tab-2" class="tab">Sign Up</label>
                         <div class="login-space">
@@ -44,7 +44,7 @@
                                     <input id="login-pass" type="password" class="input" placeholder="Enter your password">
                                 </div>
                                 <div class="group">
-                                    <input type="submit" class="button" value="Sign In">
+                                    <input type="submit" class="button" value="Log In">
                                 </div>
                                 <div class="hr"></div>
                                 <div class="foot">

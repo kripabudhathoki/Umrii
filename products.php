@@ -59,15 +59,24 @@ if (mysqli_num_rows($result) > 0) {
     <section class="page-section">
         <div class="container">
             <div class="card">
-                <div class="row g-0">
+                <div class="row g-0" style="margin: -8% 0%;">
                     <div class="col-md-4">
-                        <img src="assets/img/<?php echo $product_image; ?>" class="img-fluid card-img-top" alt="<?php echo $product_name; ?>">
+                        <img src="assets/img/<?php echo $product_image; ?>" class="img-fluid card-img-top" alt="<?php echo $product_name; ?>" style="margin: 24% 0%;">
                     </div>
                     <div class="col-md-8">
-                        <div class="card-body">
+                        <div class="card-body" style="margin: 20% 0%;">
                             <h5 class="card-title"><?php echo $product_name; ?></h5>
                             <p class="card-text"><?php echo $product_description; ?></p>
                             <p class="card-text">Price: $<?php echo $product_price; ?></p>
+                        </div>
+                    </div></div>
+                    <div class="card-footer">
+                            <a href="product-detail.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="View Details">
+                                <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;">View Detail</i>
+                            </a>
+                            <a href="cart.php" title="Add to Cart">
+                                <i class="fas fa-cart-plus" style="margin: 0% 35%;font-size: small;">Add to Cart</i></a>
+                            </button>
                         </div>
                     </div>
                 </div>
