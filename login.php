@@ -1,3 +1,77 @@
+<?php
+include "dbconnect.php";
+session_start();
+
+$signup_success = false;
+$login_success = false;
+$signup_error = '';
+$login_error = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['signup'])) {
+        $fname = mysqli_real_escape_string($conn, $_POST['signup-firstname']);
+        $lname = mysqli_real_escape_string($conn, $_POST['signup-lastname']);
+        $email = mysqli_real_escape_string($conn, $_POST['signup-email']);
+        $phone = mysqli_real_escape_string($conn, $_POST['signup-phone']);
+        $password = mysqli_real_escape_string($conn, $_POST['signup-pass']);
+        $address = mysqli_real_escape_string($conn, $_POST['signup-address']);
+        $username = mysqli_real_escape_string($conn, $_POST['signup-username']);
+
+        // Check if username or email already exists
+        $check_query = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
+        $result = mysqli_query($conn, $check_query);
+        $user = mysqli_fetch_assoc($result);
+
+        if ($user) {
+            if ($user['username'] === $username) {
+                $signup_error['username'] = "Username already exists";
+            }
+
+            if ($user['email'] === $email) {
+                $signup_error['email'] = "Email already exists";
+            }
+        } else {
+            // Hash the password for security
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            // Insert user data into the database
+            $sql = "INSERT INTO users (fname, lname, email, phone, password, address, username)
+                    VALUES ('$fname', '$lname', '$email', '$phone', '$hashed_password', '$address', '$username')";
+
+            if (mysqli_query($conn, $sql)) {
+                $signup_success = true;
+            } else {
+                $signup_error['database'] = "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+        }
+    }
+
+    if (isset($_POST['login'])) {
+        $username = mysqli_real_escape_string($conn, $_POST['login-username']);
+        $password = mysqli_real_escape_string($conn, $_POST['login-password']);
+
+        $query = "SELECT * FROM users WHERE username='$username' LIMIT 1";
+        $result = mysqli_query($conn, $query);
+        $user = mysqli_fetch_assoc($result);
+
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['email'] = $user['email'];
+            $login_success = true;
+        } else {
+            $login_error = "Invalid username or password";
+        }
+    }
+}
+
+if ($signup_success || $login_success) {
+    echo '<script>
+            alert("'.($signup_success ? 'Signup' : 'Login').' successful");
+            window.location.href = "index.php";
+          </script>';
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +88,11 @@
         }
         .name-group .input {
             width: 48%;
+        }
+        .error {
+            color: red;
+            font-size: 0.875em;
+            margin-top: 3px; /* Adjust spacing for error messages */
         }
     </style>
 </head>
@@ -35,62 +114,98 @@
                         <label for="tab-2" class="tab">Sign Up</label>
                         <div class="login-space">
                             <div class="login">
-                                <div class="group">
-                                    <label for="login-user" class="label">Username</label>
-                                    <input id="login-user" type="text" class="input" placeholder="Enter your username">
-                                </div>
-                                <div class="group">
-                                    <label for="login-pass" class="label">Password</label>
-                                    <input id="login-pass" type="password" class="input" placeholder="Enter your password">
-                                </div>
-                                <div class="group">
-                                    <input type="submit" class="button" value="Log In">
-                                </div>
-                                <div class="hr"></div>
-                                <div class="foot">
-                                    <a href="#">Forgot Password?</a>
-                                </div>
+                                <form id="login-form" action="" method="POST" onsubmit="return validateLogin()">
+                                    <div class="group">
+                                        <label for="login-user" class="label">Username</label>
+                                        <input id="login-user" type="text" name="login-username" class="input" placeholder="Enter your username">
+                                        <?php if ($login_error): ?>
+                                            <div class="error"><?php echo $login_error; ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="group">
+                                        <label for="login-pass" class="label">Password</label>
+                                        <input id="login-pass" type="password" name="login-password" class="input" placeholder="Enter your password">
+                                        <div id="login-pass-error" class="error"></div>
+                                    </div>
+                                    <div class="group">
+                                        <input type="submit" name="login" class="button" value="Log In">
+                                    </div>
+                                    <div class="hr"></div>
+                                    <div class="foot">
+                                        <a href="#">Forgot Password?</a>
+                                    </div>
+                                </form>
                             </div>
                             <div class="sign-up-form">
-                                <div class="name-group group">
-                                    <div>
-                                        <label for="signup-firstname" class="label">First Name</label>
-                                        <input id="signup-firstname" type="text" class="input" placeholder="Enter your first name">
+                                <form id="signup-form" action="" method="POST" onsubmit="return validateSignUp()">
+                                    <div class="name-group group">
+                                        <div>
+                                            <label for="signup-firstname" class="label">First Name</label>
+                                            <input id="signup-firstname" type="text" name="signup-firstname" class="input" placeholder="Enter your first name">
+                                            <?php if (isset($signup_error['fname'])): ?>
+                                                <div class="error"><?php echo $signup_error['fname']; ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div>
+                                            <label for="signup-lastname" class="label">Last Name</label>
+                                            <input id="signup-lastname" type="text" name="signup-lastname" class="input" placeholder="Enter your last name">
+                                            <?php if (isset($signup_error['lname'])): ?>
+                                                <div class="error"><?php echo $signup_error['lname']; ?></div>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <label for="signup-lastname" class="label">Last Name</label>
-                                        <input id="signup-lastname" type="text" class="input" placeholder="Enter your last name">
+                                    <div class="group">
+                                        <label for="signup-username" class="label">Username</label>
+                                        <input id="signup-username" type="text" name="signup-username" class="input" placeholder="Create a username">
+                                        <?php if (isset($signup_error['username'])): ?>
+                                            <div class="error"><?php echo $signup_error['username']; ?></div>
+                                        <?php endif; ?>
                                     </div>
-                                </div>
-                                <div class="group">
-                                    <label for="signup-pass" class="label">Password</label>
-                                    <input id="signup-pass" type="password" class="input" placeholder="Create your password">
-                                </div>
-                                <div class="group">
-                                    <label for="signup-repeat-pass" class="label">Repeat Password</label>
-                                    <input id="signup-repeat-pass" type="password" class="input" placeholder="Repeat your password">
-                                </div>
-                                <div class="group">
-                                    <label for="signup-email" class="label">Email Address</label>
-                                    <input id="signup-email" type="text" class="input" placeholder="Enter your email address">
-                                </div>
-                                <div class="name-group group">
-                                    <div>
-                                        <label for="signup-firstname" class="label">Address</label>
-                                        <input id="signup-firstname" type="text" class="input" placeholder="Enter your address">
+                                    <div class="group">
+                                        <label for="signup-pass" class="label">Password</label>
+                                        <input id="signup-pass" type="password" name="signup-pass" class="input" placeholder="Create your password">
+                                        <?php if (isset($signup_error['password'])): ?>
+                                            <div class="error"><?php echo $signup_error['password']; ?></div>
+                                        <?php endif; ?>
                                     </div>
-                                    <div>
-                                        <label for="signup-lastname" class="label">Phone Number</label>
-                                        <input id="signup-lastname" type="number" class="input" placeholder="Enter your phone number">
+                                    <div class="group">
+                                        <label for="signup-repeat-pass" class="label">Repeat Password</label>
+                                        <input id="signup-repeat-pass" type="password" name="signup-repeat-pass" class="input" placeholder="Repeat your password">
+                                        <?php if (isset($signup_error['repeat_password'])): ?>
+                                            <div class="error"><?php echo $signup_error['repeat_password']; ?></div>
+                                        <?php endif; ?>
                                     </div>
-                                </div>
-                                <div class="group">
-                                    <input type="submit" class="button" value="Sign Up">
-                                </div>
-                                <div class="hr"></div>
-                                <div class="foot">
-                                    <label for="tab-1">Already Member?</label>
-                                </div>
+                                    <div class="group">
+                                        <label for="signup-email" class="label">Email Address</label>
+                                        <input id="signup-email" type="text" name="signup-email" class="input" placeholder="Enter your email address">
+                                        <?php if (isset($signup_error['email'])): ?>
+                                            <div class="error"><?php echo $signup_error['email']; ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="name-group group">
+                                        <div>
+                                            <label for="signup-address" class="label">Address</label>
+                                            <input id="signup-address" type="text" name="signup-address" class="input" placeholder="Enter your address">
+                                            <?php if (isset($signup_error['address'])): ?>
+                                                <div class="error"><?php echo $signup_error['address']; ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div>
+                                            <label for="signup-phone" class="label">Phone Number</label>
+                                            <input id="signup-phone" type="number" name="signup-phone" class="input" placeholder="Enter your phone number">
+                                            <?php if (isset($signup_error['phone'])): ?>
+                                                <div class="error"><?php echo $signup_error['phone']; ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                    <div class="group">
+                                        <input type="submit" name="signup" class="button" value="Sign Up">
+                                    </div>
+                                    <div class="hr"></div>
+                                    <div class="foot">
+                                        <label for="tab-1">Already Member?</label>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -98,6 +213,106 @@
             </div>
         </div>
     </div>
+    <script>
+        function validateLogin() {
+            let isValid = true;
+            const username = document.getElementById('login-user');
+            const password = document.getElementById('login-pass');
+
+            if (username.value.trim() === '') {
+                document.getElementById('login-user-error').textContent = 'Username is required';
+                isValid = false;
+            } else {
+                document.getElementById('login-user-error').textContent = '';
+            }
+
+            if (password.value.trim() === '') {
+                document.getElementById('login-pass-error').textContent = 'Password is required';
+                isValid = false;
+            } else {
+                document.getElementById('login-pass-error').textContent = '';
+            }
+
+            return isValid;
+        }
+
+        function validateSignUp() {
+            let isValid = true;
+            const firstName = document.getElementById('signup-firstname');
+            const lastName = document.getElementById('signup-lastname');
+            const username = document.getElementById('signup-username');
+            const password = document.getElementById('signup-pass');
+            const repeatPassword = document.getElementById('signup-repeat-pass');
+            const email = document.getElementById('signup-email');
+            const address = document.getElementById('signup-address');
+            const phone = document.getElementById('signup-phone');
+
+            if (firstName.value.trim() === '') {
+                document.getElementById('signup-firstname-error').textContent = 'First Name is required';
+                isValid = false;
+            } else {
+                document.getElementById('signup-firstname-error').textContent = '';
+            }
+
+            if (lastName.value.trim() === '') {
+                document.getElementById('signup-lastname-error').textContent = 'Last Name is required';
+                isValid = false;
+            } else {
+                document.getElementById('signup-lastname-error').textContent = '';
+            }
+
+            if (username.value.trim() === '') {
+                document.getElementById('signup-username-error').textContent = 'Username is required';
+                isValid = false;
+            } else {
+                document.getElementById('signup-username-error').textContent = '';
+            }
+
+            if (password.value.trim() === '') {
+                document.getElementById('signup-pass-error').textContent = 'Password is required';
+                isValid = false;
+            } else {
+                document.getElementById('signup-pass-error').textContent = '';
+            }
+
+            if (repeatPassword.value.trim() === '') {
+                document.getElementById('signup-repeat-pass-error').textContent = 'Repeat Password is required';
+                isValid = false;
+            } else if (repeatPassword.value.trim() !== password.value.trim()) {
+                document.getElementById('signup-repeat-pass-error').textContent = 'Passwords do not match';
+                isValid = false;
+            } else {
+                document.getElementById('signup-repeat-pass-error').textContent = '';
+            }
+
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (email.value.trim() === '') {
+                document.getElementById('signup-email-error').textContent = 'Email Address is required';
+                isValid = false;
+            } else if (!emailPattern.test(email.value.trim())) {
+                document.getElementById('signup-email-error').textContent = 'Invalid Email Address';
+                isValid = false;
+            } else {
+                document.getElementById('signup-email-error').textContent = '';
+            }
+
+            if (address.value.trim() === '') {
+                document.getElementById('signup-address-error').textContent = 'Address is required';
+                isValid = false;
+            } else {
+                document.getElementById('signup-address-error').textContent = '';
+            }
+
+            if (phone.value.trim() === '') {
+                document.getElementById('signup-phone-error').textContent = 'Phone Number is required';
+                isValid = false;
+            } else {
+                document.getElementById('signup-phone-error').textContent = '';
+            }
+
+            return isValid;
+        }
+    </script>
 </body>
 
 </html>
