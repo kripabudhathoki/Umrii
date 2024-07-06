@@ -4,7 +4,7 @@ session_start();
 
 $signup_success = false;
 $login_success = false;
-$signup_error = '';
+$signup_error = [];
 $login_error = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -56,16 +56,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
-            $login_success = true;
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['loggedin'] = true;
+            header('Location: index.php');
+            exit();
         } else {
             $login_error = "Invalid username or password";
         }
     }
 }
 
-if ($signup_success || $login_success) {
+if ($signup_success) {
     echo '<script>
-            alert("'.($signup_success ? 'Signup' : 'Login').' successful");
+            alert("Signup successful");
             window.location.href = "index.php";
           </script>';
     exit();
@@ -74,7 +77,6 @@ if ($signup_success || $login_success) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>Umrii</title>
@@ -96,7 +98,6 @@ if ($signup_success || $login_success) {
         }
     </style>
 </head>
-
 <body>
     <a href="index.php" class="navbar-brand">
         <h1 class="display-6" style="text-align: center;">
@@ -119,7 +120,7 @@ if ($signup_success || $login_success) {
                                         <label for="login-user" class="label">Username</label>
                                         <input id="login-user" type="text" name="login-username" class="input" placeholder="Enter your username">
                                         <?php if ($login_error): ?>
-                                            <div class="error"><?php echo $login_error; ?></div>
+                                            <div id="login-user-error" class="error"><?php echo $login_error; ?></div>
                                         <?php endif; ?>
                                     </div>
                                     <div class="group">
@@ -143,14 +144,14 @@ if ($signup_success || $login_success) {
                                             <label for="signup-firstname" class="label">First Name</label>
                                             <input id="signup-firstname" type="text" name="signup-firstname" class="input" placeholder="Enter your first name">
                                             <?php if (isset($signup_error['fname'])): ?>
-                                                <div class="error"><?php echo $signup_error['fname']; ?></div>
+                                                <div id="signup-firstname-error" class="error"><?php echo $signup_error['fname']; ?></div>
                                             <?php endif; ?>
                                         </div>
                                         <div>
                                             <label for="signup-lastname" class="label">Last Name</label>
                                             <input id="signup-lastname" type="text" name="signup-lastname" class="input" placeholder="Enter your last name">
                                             <?php if (isset($signup_error['lname'])): ?>
-                                                <div class="error"><?php echo $signup_error['lname']; ?></div>
+                                                <div id="signup-lastname-error" class="error"><?php echo $signup_error['lname']; ?></div>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -158,28 +159,28 @@ if ($signup_success || $login_success) {
                                         <label for="signup-username" class="label">Username</label>
                                         <input id="signup-username" type="text" name="signup-username" class="input" placeholder="Create a username">
                                         <?php if (isset($signup_error['username'])): ?>
-                                            <div class="error"><?php echo $signup_error['username']; ?></div>
+                                            <div id="signup-username-error" class="error"><?php echo $signup_error['username']; ?></div>
                                         <?php endif; ?>
                                     </div>
                                     <div class="group">
                                         <label for="signup-pass" class="label">Password</label>
                                         <input id="signup-pass" type="password" name="signup-pass" class="input" placeholder="Create your password">
                                         <?php if (isset($signup_error['password'])): ?>
-                                            <div class="error"><?php echo $signup_error['password']; ?></div>
+                                            <div id="signup-pass-error" class="error"><?php echo $signup_error['password']; ?></div>
                                         <?php endif; ?>
                                     </div>
                                     <div class="group">
                                         <label for="signup-repeat-pass" class="label">Repeat Password</label>
                                         <input id="signup-repeat-pass" type="password" name="signup-repeat-pass" class="input" placeholder="Repeat your password">
                                         <?php if (isset($signup_error['repeat_password'])): ?>
-                                            <div class="error"><?php echo $signup_error['repeat_password']; ?></div>
+                                            <div id="signup-repeat-pass-error" class="error"><?php echo $signup_error['repeat_password']; ?></div>
                                         <?php endif; ?>
                                     </div>
                                     <div class="group">
                                         <label for="signup-email" class="label">Email Address</label>
                                         <input id="signup-email" type="text" name="signup-email" class="input" placeholder="Enter your email address">
                                         <?php if (isset($signup_error['email'])): ?>
-                                            <div class="error"><?php echo $signup_error['email']; ?></div>
+                                            <div id="signup-email-error" class="error"><?php echo $signup_error['email']; ?></div>
                                         <?php endif; ?>
                                     </div>
                                     <div class="name-group group">
@@ -187,14 +188,14 @@ if ($signup_success || $login_success) {
                                             <label for="signup-address" class="label">Address</label>
                                             <input id="signup-address" type="text" name="signup-address" class="input" placeholder="Enter your address">
                                             <?php if (isset($signup_error['address'])): ?>
-                                                <div class="error"><?php echo $signup_error['address']; ?></div>
+                                                <div id="signup-address-error" class="error"><?php echo $signup_error['address']; ?></div>
                                             <?php endif; ?>
                                         </div>
                                         <div>
                                             <label for="signup-phone" class="label">Phone Number</label>
                                             <input id="signup-phone" type="number" name="signup-phone" class="input" placeholder="Enter your phone number">
                                             <?php if (isset($signup_error['phone'])): ?>
-                                                <div class="error"><?php echo $signup_error['phone']; ?></div>
+                                                <div id="signup-phone-error" class="error"><?php echo $signup_error['phone']; ?></div>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -285,12 +286,8 @@ if ($signup_success || $login_success) {
                 document.getElementById('signup-repeat-pass-error').textContent = '';
             }
 
-            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (email.value.trim() === '') {
-                document.getElementById('signup-email-error').textContent = 'Email Address is required';
-                isValid = false;
-            } else if (!emailPattern.test(email.value.trim())) {
-                document.getElementById('signup-email-error').textContent = 'Invalid Email Address';
+                document.getElementById('signup-email-error').textContent = 'Email is required';
                 isValid = false;
             } else {
                 document.getElementById('signup-email-error').textContent = '';
@@ -304,7 +301,7 @@ if ($signup_success || $login_success) {
             }
 
             if (phone.value.trim() === '') {
-                document.getElementById('signup-phone-error').textContent = 'Phone Number is required';
+                document.getElementById('signup-phone-error').textContent = 'Phone number is required';
                 isValid = false;
             } else {
                 document.getElementById('signup-phone-error').textContent = '';
@@ -314,5 +311,4 @@ if ($signup_success || $login_success) {
         }
     </script>
 </body>
-
 </html>

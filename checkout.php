@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+$is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+$username = $is_logged_in ? $_SESSION['username'] : 'Guest';
+// $email = $is_logged_in ? $_SESSION['email'] : '';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
