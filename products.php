@@ -6,22 +6,7 @@ $is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
 // $email = $is_logged_in ? $_SESSION['email'] : '';
 ?>
-<?php
-include "dbconnect.php"; // Include your database connection file
 
-// Query to fetch products from the database
-$sql = "SELECT * FROM products";
-$result = mysqli_query($conn, $sql);
-
-// Check if there are any products
-if (mysqli_num_rows($result) > 0) {
-    // Output data of each row
-    while ($row = mysqli_fetch_assoc($result)) {
-        $product_name = $row['product_name'];
-        $product_image = $row['product_image'];
-        $product_description = $row['product_description'];
-        $product_price = $row['product_price'];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,6 +50,22 @@ if (mysqli_num_rows($result) > 0) {
     <?php include('navbar.php'); ?>
     
     <section class="page-section">
+    <?php
+include "dbconnect.php"; // Include your database connection file
+
+// Query to fetch products from the database
+$sql = "SELECT * FROM products";
+$result = mysqli_query($conn, $sql);
+
+// Check if there are any products
+if (mysqli_num_rows($result) > 0) {
+    // Output data of each row
+    while ($row = mysqli_fetch_assoc($result)) {
+        $product_name = $row['product_name'];
+        $product_image = $row['product_image'];
+        $product_description = $row['product_description'];
+        $product_price = $row['product_price'];
+?>
         <div class="container">
             <div class="card">
                 <div class="row g-0" style="margin: -8% 0%;">
@@ -91,6 +92,13 @@ if (mysqli_num_rows($result) > 0) {
             </div>
         </div>
     </section>
+    <?php
+    } // End of while loop
+} else {
+    echo "No products found";
+}
+mysqli_close($conn); // Close database connection
+?>
     
     <?php include('footer.php'); ?>
     
@@ -98,10 +106,3 @@ if (mysqli_num_rows($result) > 0) {
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-<?php
-    } // End of while loop
-} else {
-    echo "No products found";
-}
-mysqli_close($conn); // Close database connection
-?>
