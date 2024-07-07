@@ -17,31 +17,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $address = mysqli_real_escape_string($conn, $_POST['signup-address']);
         $username = mysqli_real_escape_string($conn, $_POST['signup-username']);
 
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $signup_error['email'] = "Invalid email format";
+        }
+
+        // Validate phone number
+        if (!preg_match("/^[0-9]{10}$/", $phone)) {
+            $signup_error['phone'] = "Invalid phone number";
+        }
+
+        // Validate password length
+        if (strlen($password) < 8) {
+            $signup_error['password'] = "Password must be at least 8 characters long";
+        }
+
         // Check if username or email already exists
-        $check_query = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
-        $result = mysqli_query($conn, $check_query);
-        $user = mysqli_fetch_assoc($result);
+        if (empty($signup_error)) {
+            $check_query = "SELECT * FROM users WHERE username=? OR email=? LIMIT 1";
+            $stmt = $conn->prepare($check_query);
+            $stmt->bind_param("ss", $username, $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
 
-        if ($user) {
-            if ($user['username'] === $username) {
-                $signup_error['username'] = "Username already exists";
-            }
+            if ($user) {
+                if ($user['username'] === $username) {
+                    $signup_error['username'] = "Username already exists";
+                }
 
-            if ($user['email'] === $email) {
-                $signup_error['email'] = "Email already exists";
-            }
-        } else {
-            // Hash the password for security
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-            // Insert user data into the database
-            $sql = "INSERT INTO users (fname, lname, email, phone, password, address, username)
-                    VALUES ('$fname', '$lname', '$email', '$phone', '$hashed_password', '$address', '$username')";
-
-            if (mysqli_query($conn, $sql)) {
-                $signup_success = true;
+                if ($user['email'] === $email) {
+                    $signup_error['email'] = "Email already exists";
+                }
             } else {
-                $signup_error['database'] = "Error: " . $sql . "<br>" . mysqli_error($conn);
+                // Hash the password for security
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+                // Insert user data into the database
+                $sql = "INSERT INTO users (fname, lname, email, phone, password, address, username) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("sssssss", $fname, $lname, $email, $phone, $hashed_password, $address, $username);
+
+                if ($stmt->execute()) {
+                    $signup_success = true;
+                } else {
+                    $signup_error['database'] = "Error: " . $stmt->error;
+                }
             }
         }
     }
@@ -50,9 +70,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = mysqli_real_escape_string($conn, $_POST['login-username']);
         $password = mysqli_real_escape_string($conn, $_POST['login-password']);
 
-        $query = "SELECT * FROM users WHERE username='$username' LIMIT 1";
-        $result = mysqli_query($conn, $query);
-        $user = mysqli_fetch_assoc($result);
+        $query = "SELECT * FROM users WHERE username=? LIMIT 1";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
@@ -75,6 +98,7 @@ if ($signup_success) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,7 +118,7 @@ if ($signup_success) {
         .error {
             color: red;
             font-size: 0.875em;
-            margin-top: 3px; /* Adjust spacing for error messages */
+            margin-top: 3px;
         }
     </style>
 </head>
@@ -289,6 +313,9 @@ if ($signup_success) {
             if (email.value.trim() === '') {
                 document.getElementById('signup-email-error').textContent = 'Email is required';
                 isValid = false;
+            } else if (!validateEmail(email.value.trim())) {
+                document.getElementById('signup-email-error').textContent = 'Invalid email format';
+                isValid = false;
             } else {
                 document.getElementById('signup-email-error').textContent = '';
             }
@@ -303,12 +330,26 @@ if ($signup_success) {
             if (phone.value.trim() === '') {
                 document.getElementById('signup-phone-error').textContent = 'Phone number is required';
                 isValid = false;
+            } else if (!validatePhone(phone.value.trim())) {
+                document.getElementById('signup-phone-error').textContent = 'Invalid phone number';
+                isValid = false;
             } else {
                 document.getElementById('signup-phone-error').textContent = '';
             }
 
             return isValid;
         }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function validatePhone(phone) {
+            const re = /^[0-9]{10}$/;
+            return re.test(String(phone));
+        }
     </script>
 </body>
 </html>
+
