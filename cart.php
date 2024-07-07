@@ -26,9 +26,8 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     <!-- Bootstrap Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
   </head>
-  <?php
-   include('navbar.php');
-   ?>
+  <body>
+  <?php include('navbar.php'); ?>
     
     <!-- END nav -->
     <style>
@@ -128,35 +127,30 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="text-center">
-                    <td class="product-remove"><a href="#"><span class="bi bi-x-circle"></span></a></td>
-                    <td class="image-prod"><div class="img" style="background-image:url(assets/img/strawberry.jpg);"></div></td>
-                    <td class="product-name">
-                      <h4>Strawberry Crush</h4>
-                    </td>
-                    <td class="price">Rs. 220</td>
-                    <td class="quantity">
-                      <div class="input-group mb-3">
-                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                      </div>
-                    </td>
-                    <td class="total">$4.90</td>
-                  </tr><!-- END TR-->
-                  <tr class="text-center">
-                    <td class="product-remove"><a href="#"><span class="bi bi-x-circle"></span></a></td>
-                    <td class="image-prod"><div class="img" style="background-image:url(images/product-4.jpg);"></div></td>
-                    <td class="product-name">
-                      <h4>Forest Fruite</h4>
-                      
-                    </td>
-                    <td class="price">Rs. 220</td>
-                    <td class="quantity">
-                      <div class="input-group mb-3">
-                        <input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                      </div>
-                    </td>
-                    <td class="total">$15.70</td>
-                  </tr><!-- END TR-->
+                  <?php if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])): ?>
+                    <?php foreach($_SESSION['cart'] as $item): ?>
+                      <tr class="text-center">
+                        <td class="product-remove"><a href="#"><span class="bi bi-x-circle"></span></a></td>
+                        <td class="image-prod">
+                          <div class="img" style="background-image:url('assets/img/<?php echo $item['product_image']; ?>');"></div>
+                        </td>
+                        <td class="product-name">
+                          <h4><?php echo $item['product_name']; ?></h4>
+                        </td>
+                        <td class="price">Rs. <?php echo $item['product_price']; ?></td>
+                        <td class="quantity">
+                          <div class="input-group mb-3">
+                            <input type="text" name="quantity" class="quantity form-control input-number" value="<?php echo $item['quantity']; ?>" min="1" max="100">
+                          </div>
+                        </td>
+                        <td class="total">Rs. <?php echo $item['product_price'] * $item['quantity']; ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <tr class="text-center">
+                      <td colspan="6">Your cart is empty</td>
+                    </tr>
+                  <?php endif; ?>
                 </tbody>
               </table>
             </div>
@@ -173,17 +167,27 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
       <h3>Cart Total</h3>
       <p class="d-flex">
         <span>Subtotal: </span>
-        <span>$20.60</span>
+        <span>
+          <?php
+          $subtotal = 0;
+          if(isset($_SESSION['cart'])) {
+              foreach($_SESSION['cart'] as $item) {
+                  $subtotal += $item['product_price'] * $item['quantity'];
+              }
+          }
+          echo 'Rs. ' . $subtotal;
+          ?>
+        </span>
       </p>
       <p class="d-flex">
         <span>Delivery</span>
-        <span>$0.00</span>
+        <span>Rs. 0.00</span>
       </p>
 
       <hr>
       <p class="d-flex total-price">
         <span>Total</span>
-        <span>$17.60</span>
+        <span>Rs. <?php echo $subtotal; ?></span>
       </p>
     </div>
     <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
@@ -223,9 +227,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
 
     
     <!-- Footer -->
-    <?php
-   include('footer.php');
-   ?>
+    <?php include('footer.php'); ?>
     
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
