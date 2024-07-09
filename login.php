@@ -103,7 +103,7 @@ if ($signup_success) {
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Umrii</title>
+    <title>UMRII</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
     <link href="css/login.css" rel="stylesheet" />
