@@ -179,10 +179,10 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
           ?>
         </span>
       </p>
-      <p class="d-flex">
+      <!-- <p class="d-flex">
         <span>Delivery</span>
         <span>Rs. 0.00</span>
-      </p>
+      </p> -->
 
       <hr>
       <p class="d-flex total-price">
@@ -190,7 +190,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
         <span>Rs. <?php echo $subtotal; ?></span>
       </p>
     </div>
-    <p><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+    <p><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
   </div>
 </div>
 
