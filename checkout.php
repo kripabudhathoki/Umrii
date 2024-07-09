@@ -22,12 +22,11 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
 </head>
+<body>
 <?php
    include('navbar.php');
-   ?>
-    <!-- END nav -->
-
-    <style>
+?>
+<style>
   .hero-wrap {
     position: relative;
     overflow: hidden;
@@ -43,7 +42,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     background-image: url('assets/img/background1.jpg');
     background-size: cover;
     background-position: center;
-    filter: blur(1px); /* Adjust the blur intensity as needed */
+    filter: blur(1px);
     z-index: -1;
     padding: 5em 0;
     margin: 0 5%;
@@ -53,9 +52,54 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     position: relative;
     z-index: 1;
   }
+
+  .billing-form {
+    background: #c16569;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+
+  .billing-heading {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .form-control {
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #ced4da;
+  }
+
+  .cart-detail {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .cart-detail h3 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .payment-method-buttons {
+    display: flex;
+    justify-content: center;
+  }
+
+  .payment-method-buttons .btn {
+    margin: 0 10px;
+  }
 </style>
 
-    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
+<div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
       <div class="col-md-9 text-center">
@@ -65,161 +109,73 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
   </div>
 </div>
 
-
-    <section class="ftco-section">
-            <div class="row intro-text left-0 text-center bg-faded p-5 rounded">
-                <div class="col-xl-7">
-                    <form action="#" class="billing-form">
-                        <h3 class="mb-4 billing-heading">Billing Details</h3>
-                        <div class="row align-items-end">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="firstname">First Name</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="lastname">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="country">State / Country</label>
-                                    <div class="select-wrap">
-                                        <select name="" id="" class="form-control">
-                                            <option value="">France</option>
-                                            <option value="">Italy</option>
-                                            <option value="">Philippines</option>
-                                            <option value="">South Korea</option>
-                                            <option value="">Hong Kong</option>
-                                            <option value="">Japan</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="streetaddress">Street Address</label>
-                                    <input type="text" class="form-control" placeholder="House number and street name">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Apartment, suite, unit etc: (optional)">
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="towncity">Town / City</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="postcodezip">Postcode / ZIP *</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phone">Phone</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="emailaddress">Email Address</label>
-                                    <input type="text" class="form-control" placeholder="">
-                                </div>
-                            </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-12">
-                                <div class="form-group mt-4">
-                                    <div class="radio">
-                                        <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
-                                        <label><input type="radio" name="optradio"> Ship to different address</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form><!-- END -->
-                </div>
-                <div class="col-xl-5">
-                    <div class="row mt-5 pt-3">
-                        <div class="col-md-12 d-flex mb-5">
-                            <div class="cart-detail cart-total p-3 p-md-4">
-                                <h3 class="billing-heading mb-4">Cart Total</h3>
-                                <p class="d-flex">
-                                    <span>Subtotal</span>
-                                    <span>$20.60</span>
-                                </p>
-                                <p class="d-flex">
-                                    <span>Delivery</span>
-                                    <span>$0.00</span>
-                                </p>
-                                <p class="d-flex">
-                                    <span>Discount</span>
-                                    <span>$3.00</span>
-                                </p>
-                                <hr>
-                                <p class="d-flex total-price">
-                                    <span>Total</span>
-                                    <span>$17.60</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="cart-detail p-3 p-md-4">
-                                <h3 class="billing-heading mb-4">Payment Method</h3>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="radio">
-                                            <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <div class="checkbox">
-                                            <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- .col-md-8 -->
+<section class="ftco-section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-7 col-lg-8 col-md-10">
+        <form action="#" class="billing-form">
+          <h3 class="billing-heading">Billing Details</h3>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="firstname">First Name*</label>
+                <input type="text" class="form-control" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="lastname">Last Name</label>
+                <input type="text" class="form-control" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address">Address*</label>
+                <input type="text" class="form-control" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="postcodezip">Landline</label>
+                <input type="text" class="form-control" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="phone">Phone *</label>
+                <input type="text" class="form-control" placeholder="">
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="emailaddress">Email Address *</label>
+                <input type="text" class="form-control" placeholder="">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-xl-7 col-lg-8 col-md-10">
+        <div class="cart-detail p-3 p-md-4">
+          <h3>Payment Method</h3>
+          <div class="payment-method-buttons">
+            <a href="#" class="btn btn-primary py-3 px-4">Cash on Delivery</a>
+            <a href="#" class="btn btn-primary py-3 px-4">Online Payment</a>
+          </div>
         </div>
-    </section> <!-- .section -->
+      </div>
+    </div>
+  </div>
+</section>
 
-    <?php
+<?php
    include('footer.php');
-   ?>
-    
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+?>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
