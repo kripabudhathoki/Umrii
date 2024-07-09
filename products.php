@@ -78,16 +78,15 @@ if (mysqli_num_rows($result) > 0) {
                             <p class="card-text"><?php echo $product_description; ?></p>
                             <p class="card-text">Price: $<?php echo $product_price; ?></p>
                         </div>
-                    </div></div>
-                    <div class="card-footer">
-                            <a href="product-detail.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="View Details">
-                                <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;">View Detail</i>
-                            </a>
-                            <a href="cart.php" title="Add to Cart">
-                                <i class="fas fa-cart-plus" style="margin: 0% 35%;font-size: small;">Add to Cart</i></a>
-                            </button>
-                        </div>
                     </div>
+                </div>
+                <div class="card-footer">
+                    <a href="product-detail.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="View Details">
+                        <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;">View Detail</i>
+                    </a>
+                    <a href="add_to_cart.php?pid=<?php echo $row['pid']; ?>" title="Add to Cart">
+                        <i class="fas fa-cart-plus" style="margin: 0% 35%;font-size: small;">Add to Cart</i>
+                    </a>
                 </div>
             </div>
         </div>
