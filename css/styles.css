@@ -7875,6 +7875,7 @@ textarea.form-control-lg {
 
 .p-5 {
   padding: 3rem !important;
+  border-radius: 20px;
 }
 
 .px-0 {
@@ -8321,7 +8322,7 @@ textarea.form-control-lg {
 }
 
 .bg-white {
-  --bs-bg-opacity: 1;
+  --bs-bg-opacity: 0.9;
   background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
 }
 

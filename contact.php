@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+    <title>UMRII</title>
+    <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -12,28 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
-<body class="goto-here">
-    <div class="py-1 bg-primary">
-        <div class="container">
-            <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-                <div class="col-lg-12 d-block">
-                    <div class="row d-flex">
-                        <div class="col-md pr-4 d-flex topper align-items-center">
-                            <div class="icon mr-2 d-flex justify-content-center align-items-center"><i class="fas fa-phone-alt"></i></div>
-                            <span class="text">+ 1235 2355 98</span>
-                        </div>
-                        <div class="col-md pr-4 d-flex topper align-items-center">
-                            <div class="icon mr-2 d-flex justify-content-center align-items-center"><i class="fas fa-paper-plane"></i></div>
-                            <span class="text">youremail@email.com</span>
-                        </div>
-                        <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right">
-                            <span class="text">3-5 Business days delivery &amp; Free Returns</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<body class="goto-here">    
     <?php 
     include('navbar.php')?>
     <!-- END nav -->
@@ -86,7 +67,7 @@
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="info bg-white p-4">
-                        <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+                        <p><span>Phone:</span> <a href="tel://1234567920">9828884567</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
@@ -102,7 +83,7 @@
             </div>
             <div class="row block-9">
                 <div class="col-md-6 order-md-last d-flex">
-                    <form action="#" class="bg-white p-5 contact-form">
+                    <form action="#" class="bg-white p-5 contact-form" style="margin-left: 20%; margin-top: -50px;margin-bottom: 25px;">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Your Name">
                         </div>
@@ -120,94 +101,20 @@
                         </div>
                     </form>
                 </div>
-
-                <div class="col-md-6 d-flex">
-                    <div id="map" class="bg-white"></div>
+                <div class="col-md-6 d-flex" style="margin-top: -50px;margin-bottom: 25px;">
+                    <div id="map" class="bg-white"> <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.9377926827437!2d85.306494874477!3d27.68831747619348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19429e09f9af%3A0xa131f4ae64c8d2ce!2sUmrii!5e0!3m2!1sne!2snp!4v1720519435024!5m2!1sne!2snp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <footer class="ftco-footer ftco-section">
-        <div class="container">
-            <div class="row">
-                <div class="mouse">
-                    <a href="#" class="mouse-icon">
-                        <div class="mouse-wheel"><i class="fas fa-arrow-up"></i></div>
-                    </a>
-                </div>
-            </div>
-            <div class="row mb-5">
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Vegefoods</h2>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                            <li class="ftco-animate"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li class="ftco-animate"><a href="#"><i class="fab fa-facebook"></i></a></li>
-                            <li class="ftco-animate"><a href="#"><i class="fab fa-instagram"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4 ml-md-5">
-                        <h2 class="ftco-heading-2">Menu</h2>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">Shop</a></li>
-                            <li><a href="#" class="py-2 d-block">About</a></li>
-                            <li><a href="#" class="py-2 d-block">Journal</a></li>
-                            <li><a href="#" class="py-2 d-block">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Help</h2>
-                        <div class="d-flex">
-                            <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
-                                <li><a href="#" class="py-2 d-block">Shipping Information</a></li>
-                                <li><a href="#" class="py-2 d-block">Returns &amp; Exchange</a></li>
-                                <li><a href="#" class="py-2 d-block">Terms &amp; Conditions</a></li>
-                                <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
-                            </ul>
-                            <ul class="list-unstyled">
-                                <li><a href="#" class="py-2 d-block">FAQs</a></li>
-                                <li><a href="#" class="py-2 d-block">Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md">
-                    <div class="ftco-footer-widget mb-4">
-                        <h2 class="ftco-heading-2">Have a Questions?</h2>
-                        <div class="block-23 mb-3">
-                            <ul>
-                                <li><i class="fas fa-map-marker-alt"></i><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                                <li><a href="#"><i class="fas fa-phone-alt"></i><span class="text">+2 392 3929 210</span></a></li>
-                                <li><a href="#"><i class="fas fa-envelope"></i><span class="text">info@yourdomain.com</span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p>
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fas fa-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
-
+<?php 
+include('footer.php')
+?>
+   
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-migrate-3.3.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="js/google-map.js"></script>
-    <script src="js/main.js"></script>
 </body>
 </html>
