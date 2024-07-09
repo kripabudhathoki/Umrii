@@ -31,22 +31,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
     }
 
     $quantity = intval($_POST['quantity']);
-    $cart_item = [
-        'pid' => $pid,
-        'product_name' => $product['product_name'],
-        'product_image' => $product['product_image'],
-        'product_price' => $product['product_price'],
-        'quantity' => $quantity
-    ];
 
-    // Initialize cart if not already
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
+    // Check if the product is already in the cart
+    if (isset($_SESSION['cart'][$pid])) {
+        $_SESSION['cart_alert'] = "Item is already in the cart.";
+    } else {
+        $cart_item = [
+            'pid' => $pid,
+            'product_name' => $product['product_name'],
+            'product_image' => $product['product_image'],
+            'product_price' => $product['product_price'],
+            'quantity' => $quantity
+        ];
+
+        // Initialize cart if not already
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
+        }
+
+        // Add item to cart
+        $_SESSION['cart'][$pid] = $cart_item;
+        $_SESSION['cart_alert'] = "Item added to the cart.";
     }
-
-    // Add item to cart
-    $_SESSION['cart'][$pid] = $cart_item;
-    header("Location: cart.php");
+    header("Location: product-detail.php?pid=$pid");
     exit;
 }
 ?>
@@ -148,6 +155,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                             </span>
                         </div>
                     </div>
+                    <?php if (isset($_SESSION['cart_alert'])): ?>
+                        <div class="alert alert-warning"><?php echo $_SESSION['cart_alert']; ?></div>
+                        <?php unset($_SESSION['cart_alert']); ?>
+                    <?php endif; ?>
                     <p><button type="submit" name="add_to_cart" class="btn btn-primary py-3 px-5">Add to Cart</button></p>
                 </form>
             </div>
