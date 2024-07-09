@@ -54,7 +54,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
   }
 
   .billing-form {
-    background: #c16569;
+    background:  #BB676B;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);

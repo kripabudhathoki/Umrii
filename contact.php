@@ -34,48 +34,48 @@
             </div>
         </div>
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="ftco-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Vegefoods</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="ftco-nav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" href="shop.html">Shop</a>
-                            <a class="dropdown-item" href="wishlist.html">Wishlist</a>
-                            <a class="dropdown-item" href="product-single.html">Single Product</a>
-                            <a class="dropdown-item" href="cart.html">Cart</a>
-                            <a class="dropdown-item" href="checkout.html">Checkout</a>
-                        </div>
-                    </li>
-                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                    <li class="nav-item active"><a href="contact.html" class="nav-link">Contact</a></li>
-                    <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><i class="fas fa-shopping-cart"></i>[0]</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <?php 
+    include('navbar.php')?>
     <!-- END nav -->
+    <style>
+        .hero-wrap {
+            position: relative;
+            overflow: hidden;
+        }
 
-    <div class="hero-wrap hero-bread" style="background-image: url('images/bg_1.jpg');">
+        .hero-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('assets/img/background1.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(1px); /* Adjust the blur intensity as needed */
+            z-index: -1;
+            padding: 5em 0;
+            margin: 0 5%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+    <div class="hero-wrap"style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
-            <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Contact us</span></p>
+                    <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
                     <h1 class="mb-0 bread">Contact us</h1>
                 </div>
             </div>
         </div>
     </div>
 
-    <section class="ftco-section contact-section bg-light">
+    <section class="ftco-section contact-section bg-light" style="margin: 0% 5%;">
         <div class="container">
             <div class="row d-flex mb-5 contact-info">
                 <div class="w-100"></div>
@@ -91,12 +91,12 @@
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="info bg-white p-4">
-                        <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+                        <p><span>Email:</span> <a href="umrii.np@gmail.com">umrii.np@gmail.com</a></p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
                     <div class="info bg-white p-4">
-                        <p><span>Website</span> <a href="#">yoursite.com</a></p>
+                        <p><span>Website</span> <a href="#">umrii.np</a></p>
                     </div>
                 </div>
             </div>
