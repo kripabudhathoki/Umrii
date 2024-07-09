@@ -62,7 +62,7 @@
                 <div class="w-100"></div>
                 <div class="col-md-3 d-flex">
                     <div class="info bg-white p-4">
-                        <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+                        <p><span>Address:</span> Umrii, Lalitpur 44700</p>
                     </div>
                 </div>
                 <div class="col-md-3 d-flex">
