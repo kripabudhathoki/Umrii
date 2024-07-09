@@ -44,10 +44,45 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
         .card-body {
             padding: 1rem;
         }
+        .hero-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('assets/img/background1.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(1px); /* Adjust the blur intensity as needed */
+            z-index: -1;
+            padding: 5em 0;
+            margin: 0 5%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
     <?php include('navbar.php'); ?>
+    <div class="hero-wrap"style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
+                <div class="col-md-9 text-center">
+                    <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
+                    <h1 class="mb-0 bread">Product</h1>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <section class="page-section">
     <?php
@@ -66,6 +101,7 @@ if (mysqli_num_rows($result) > 0) {
         $product_description = $row['product_description'];
         $product_price = $row['product_price'];
 ?>
+
         <div class="container">
             <div class="card">
                 <div class="row g-0" style="margin: -8% 0%;">
