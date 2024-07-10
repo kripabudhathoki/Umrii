@@ -13,6 +13,8 @@ session_start();
         <title>UMRII</title>
         <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
         <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
         <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
@@ -50,8 +52,12 @@ session_start();
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.php">About</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="products.php">Products</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="contact.php">Contact</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="product.php">Review</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="review.php">Review</a></li>
                     </ul>
+                    <form class="d-flex ms-auto my-auto">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
+            </form>
                     <?php
                         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                             $loggedin = true;
@@ -59,7 +65,8 @@ session_start();
                             $loggedin = false;
                         }
                         if (!$loggedin) {
-                            echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756;'><b>Log In</b></button></a>";
+                            echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756;margin-left: 12px;
+                            margin-right: -50px;'><b>Log In</b></button></a>";
                         } else {
                             echo "<a href='logout.php' class='position-relative ms-3 my-auto'>
                             <i class='fas fa-solid fa-right-from-bracket fa-2x'></i></a>";
