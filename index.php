@@ -83,10 +83,10 @@ session_start();
                     <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="assets/img/file.jpg" alt="..." />
                     <div class="intro-text left-0 text-center bg-faded p-5 rounded">
                         <h2 class="section-heading mb-4">
-                            <span class="section-heading-lower"><b>Worth Drinking</b></span>
+                            <span class="section-heading-lower" style="color: white;"><b>Worth Drinking</b></span>
                         </h2>
-                        <p class="mb-3">Every cup of our quality refreshing summer drinks starts with locally sourced, hand picked ingredients. Once you try it, our drinks will be a blissful addition to your everyday summer routine - we guarantee it!</p>
-                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" href="#!"><b>Visit Us Today!</b></a></div>
+                        <p class="mb-3" style="color: white;">Every cup of our quality refreshing summer drinks starts with locally sourced, hand picked ingredients. Once you try it, our drinks will be a blissful addition to your everyday summer routine - we guarantee it!</p>
+                        <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" style="color: white;" href="product.php"><b>Visit Us Today!</b></a></div>
                     </div>
                 </div>
             </div>
