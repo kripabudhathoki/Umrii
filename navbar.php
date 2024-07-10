@@ -1,4 +1,6 @@
 <link href="css/styles.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
 <header>
             <h1 class="site-heading text-center text-faded d-none d-lg-block">
                 <div class="topbar bg-primary">
@@ -28,8 +30,12 @@
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.php">About</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="products.php">Products</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="contact.php">Contact</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="product.php">Review</a></li>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="review.php">Review</a></li>
                     </ul>
+					<form class="d-flex ms-auto my-auto">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
+            </form>
                     <?php
 						if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 							$loggedin = true;
@@ -37,7 +43,7 @@
 							$loggedin = false;
 						}
 						if (!$loggedin) {
-							echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756;'><b>Log In</b></button></a>";
+							echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756; margin-left: 12px;margin-right: -50px;'><b>Log In</b></button></a>";
 						} else {
 							echo "<a href='logout.php' class='position-relative ms-3 my-auto'>
 							<i class='fas fa-solid fa-right-from-bracket fa-2x'></i></a>";
