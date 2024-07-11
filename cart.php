@@ -4,7 +4,13 @@ session_start();
 // Check if the user is logged in
 $is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
-// $email = $is_logged_in ? $_SESSION['email'] : '';
+
+// Handle removing an item from the cart
+if (isset($_POST['remove'])) {
+    $remove_index = $_POST['remove'];
+    unset($_SESSION['cart'][$remove_index]);
+    $_SESSION['cart'] = array_values($_SESSION['cart']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -113,44 +119,60 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
             <div class="row intro-text left-0 text-center bg-faded p-5 rounded">
                 <div class="col-md-12">
                     <div class="cart-list">
-                        <table class="table">
-                            <thead class="thead-primary">
-                                <tr class="text-center">
-                                    <th>&nbsp;</th>
-                                    <th>&nbsp;</th>
-                                    <th>Product name</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])): ?>
-                                    <?php foreach($_SESSION['cart'] as $item): ?>
-                                        <tr class="text-center">
-                                            <td class="product-remove"><a href="#"><span class="bi bi-x-circle"></span></td>
-                                            <td class="image-prod">
-                                                <div class="img" style="background-image:url('assets/img/<?php echo $item['product_image']; ?>');"></div>
-                                            </td>
-                                            <td class="product-name">
-                                                <h4><?php echo $item['product_name']; ?></h4>
-                                            </td>
-                                            <td class="price">Rs. <?php echo $item['product_price']; ?></td>
-                                            <td class="quantity">
-                                                <div class="input-group mb-3">
-                                                    <input type="text" name="quantity" class="quantity form-control input-number" value="<?php echo $item['quantity']; ?>" min="1" max="100">
-                                                </div>
-                                            </td>
-                                            <td class="total">Rs. <?php echo $item['product_price'] * $item['quantity']; ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
+                        <form method="POST" action="cart.php">
+                            <table class="table">
+                                <thead class="thead-primary">
                                     <tr class="text-center">
-                                        <td colspan="6">Your cart is empty</td>
+                                        <th>&nbsp;</th>
+                                        <th>&nbsp;</th>
+                                        <th>Product name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
                                     </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])): ?>
+                                        <?php foreach($_SESSION['cart'] as $index => $item): ?>
+                                            <tr class="text-center">
+                                                <td class="product-remove">
+                                                    <button type="submit" name="remove" value="<?php echo $index; ?>" class="btn btn-link">
+                                                        <span class="bi bi-x-circle"></span>
+                                                    </button>
+                                                </td>
+                                                <td class="image-prod">
+                                                    <div class="img" style="background-image:url('assets/img/<?php echo $item['product_image']; ?>');"></div>
+                                                </td>
+                                                <td class="product-name">
+                                                    <h4><?php echo $item['product_name']; ?></h4>
+                                                </td>
+                                                <td class="price">Rs. <?php echo $item['product_price']; ?></td>
+                                                <td class="quantity">
+                                                    <div class="input-group mb-3">
+                                                        <div class="input-group-prepend">
+                                                            <button type="button" class="quantity-left-minus btn btn-outline-secondary" data-type="minus" data-field="">
+                                                                <i class="bi bi-dash"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="text" name="quantity" class="quantity form-control input-number" value="<?php echo $item['quantity']; ?>" min="1" max="100" data-index="<?php echo $index; ?>" data-price="<?php echo $item['product_price']; ?>">
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="quantity-right-plus btn btn-outline-secondary" data-type="plus" data-field="">
+                                                                <i class="bi bi-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="total">Rs. <?php echo $item['product_price'] * $item['quantity']; ?></td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr class="text-center">
+                                            <td colspan="6">Your cart is empty</td>
+                                        </tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -165,7 +187,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                         <h3>Cart Total</h3>
                         <p class="d-flex">
                             <span>Subtotal: </span>
-                            <span>
+                            <span id="popup-subtotal">
                                 <?php
                                 $subtotal = 0;
                                 if(isset($_SESSION['cart'])) {
@@ -177,15 +199,10 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                 ?>
                             </span>
                         </p>
-                        <!-- <p class="d-flex">
-                            <span>Delivery</span>
-                            <span>Rs. 0.00</span>
-                        </p> -->
-
                         <hr>
                         <p class="d-flex total-price">
                             <span>Total</span>
-                            <span>Rs. <?php echo $subtotal; ?></span>
+                            <span id="popup-total">Rs. <?php echo $subtotal; ?></span>
                         </p>
                     </div>
                     <p><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
@@ -215,6 +232,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
 
     // When the user clicks the button, open the popup 
     btn.onclick = function() {
+        updatePopupTotal();
         popup.style.display = "block";
     }
 
@@ -228,6 +246,70 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
         if (event.target == popup) {
             popup.style.display = "none";
         }
+    }
+
+    // Handle quantity changes dynamically with plus and minus buttons
+    document.querySelectorAll('.quantity-left-minus').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var input = this.closest('.input-group').querySelector('.quantity');
+            var value = parseInt(input.value);
+            var index = input.getAttribute('data-index');
+            var price = parseFloat(input.getAttribute('data-price'));
+
+            if (value > 1) {
+                value--;
+                input.value = value;
+                var total = price * value;
+                this.closest('tr').querySelector('.total').innerText = 'Rs. ' + total;
+
+                // Update the session cart quantity
+                updateCartQuantity(index, value);
+            }
+        });
+    });
+
+    document.querySelectorAll('.quantity-right-plus').forEach(function(button) {
+        button.addEventListener('click', function() {
+            var input = this.closest('.input-group').querySelector('.quantity');
+            var value = parseInt(input.value);
+            var index = input.getAttribute('data-index');
+            var price = parseFloat(input.getAttribute('data-price'));
+
+            if (value < 100) {
+                value++;
+                input.value = value;
+                var total = price * value;
+                this.closest('tr').querySelector('.total').innerText = 'Rs. ' + total;
+
+                // Update the session cart quantity
+                updateCartQuantity(index, value);
+            }
+        });
+    });
+
+    function updateCartQuantity(index, quantity) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'update_cart_quantity.php', true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send('index=' + index + '&quantity=' + quantity);
+
+        // Update the cart total in the popup
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                updatePopupTotal();
+            }
+        };
+    }
+
+    function updatePopupTotal() {
+        var subtotal = 0;
+        document.querySelectorAll('.quantity').forEach(function(input) {
+            var value = parseInt(input.value);
+            var price = parseFloat(input.getAttribute('data-price'));
+            subtotal += value * price;
+        });
+        document.getElementById('popup-subtotal').innerText = 'Rs. ' + subtotal;
+        document.getElementById('popup-total').innerText = 'Rs. ' + subtotal;
     }
     </script>
 
