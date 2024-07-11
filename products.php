@@ -4,7 +4,6 @@ session_start();
 // Check if the user is logged in
 $is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
-// $email = $is_logged_in ? $_SESSION['email'] : '';
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +24,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     <link href="css/styles.css" rel="stylesheet">
     <style>
         .card {
-            max-width: 540px;
+            max-width: 100%; /* Adjust as needed */
             margin: 20px auto;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.3s;
@@ -44,6 +43,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
         .card-body {
             padding: 1rem;
         }
+
         .hero-wrap {
             position: relative;
             overflow: hidden;
@@ -73,7 +73,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
 </head>
 <body>
     <?php include('navbar.php'); ?>
-    <div class="hero-wrap"style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
+    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
@@ -85,25 +85,26 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     </div>
     
     <section class="page-section">
-    <?php
-include "dbconnect.php"; // Include your database connection file
-
-// Query to fetch products from the database
-$sql = "SELECT * FROM products";
-$result = mysqli_query($conn, $sql);
-
-// Check if there are any products
-if (mysqli_num_rows($result) > 0) {
-    // Output data of each row
-    while ($row = mysqli_fetch_assoc($result)) {
-        $product_name = $row['product_name'];
-        $product_image = $row['product_image'];
-        $product_description = $row['product_description'];
-        $product_price = $row['product_price'];
-?>
-
         <div class="container">
-            <div class="card">
+            <div class="row">
+                <?php
+                include "dbconnect.php"; // Include your database connection file
+
+                // Query to fetch products from the database
+                $sql = "SELECT * FROM products";
+                $result = mysqli_query($conn, $sql);
+
+                // Check if there are any products
+                if (mysqli_num_rows($result) > 0) {
+                    // Output data of each row
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $product_name = $row['product_name'];
+                        $product_image = $row['product_image'];
+                        $product_description = $row['product_description'];
+                        $product_price = $row['product_price'];
+                ?>
+                        <div class="col-md-6">
+                        <div class="card">
                 <div class="row g-0" style="margin: -8% 0%;">
                     <div class="col-md-4">
                         <img src="assets/img/<?php echo $product_image; ?>" class="img-fluid card-img-top" alt="<?php echo $product_name; ?>" style="margin: 24% 0%;">
@@ -125,15 +126,17 @@ if (mysqli_num_rows($result) > 0) {
                     </a>
                 </div>
             </div>
+                        </div>
+                <?php
+                    } // End of while loop
+                } else {
+                    echo "No products found";
+                }
+                mysqli_close($conn); // Close database connection
+                ?>
+            </div>
         </div>
     </section>
-    <?php
-    } // End of while loop
-} else {
-    echo "No products found";
-}
-mysqli_close($conn); // Close database connection
-?>
     
     <?php include('footer.php'); ?>
     
