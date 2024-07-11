@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
     // Check if the product is already in the cart
     if (isset($_SESSION['cart'][$pid])) {
         $_SESSION['cart_alert'] = "Item is already in the cart.";
+        header("Location: cart.php");
     } else {
         $cart_item = [
             'pid' => $pid,

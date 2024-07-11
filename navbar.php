@@ -36,6 +36,9 @@
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "search">
                 <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
             	</form>
+				<form class="d-flex ms-auto my-auto" action="cart.php" method = "POST">
+                <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-cart4"></i></i></button>
+            	</form>
                     <?php
 						if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 							$loggedin = true;
