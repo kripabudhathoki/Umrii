@@ -9,7 +9,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 include "dbconnect.php";
 
 if (isset($_GET['pid'])) {
-    $pid = $_GET['pid'];
+    $pid = intval($_GET['pid']);
 
     // Query to fetch the product details
     $sql = "SELECT * FROM products WHERE pid = $pid";
@@ -30,20 +30,11 @@ if (isset($_GET['pid'])) {
             $_SESSION['cart'] = [];
         }
 
-        $found = false;
-
         // Check if the product is already in the cart
-        foreach ($_SESSION['cart'] as &$cart_item) {
-            if ($cart_item['pid'] == $pid) {
-                $found = true;
-                break;
-            }
-        }
-
-        if ($found) {
+        if (array_key_exists($pid, $_SESSION['cart'])) {
             $_SESSION['cart_alert'] = "Item is already in the cart.";
         } else {
-            $_SESSION['cart'][] = $product;
+            $_SESSION['cart'][$pid] = $product;
             $_SESSION['cart_alert'] = "Item added to the cart.";
         }
     }
