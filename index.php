@@ -54,8 +54,8 @@ session_start();
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="contact.php">Contact</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="review.php">Review</a></li>
                     </ul>
-                    <form class="d-flex ms-auto my-auto">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="d-flex ms-auto my-auto" method="POST" action="search.php"> 
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "search">
                 <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
             </form>
                     <?php
@@ -159,6 +159,25 @@ session_start();
                     </div>
                 </article>
             </div>
+        </section>
+        <section class="page-section cta">
+        <div class="container-gallery">
+    <div class="popup popup-1">
+        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery1.jpg" />
+    </div>
+    <div class="popup popup-2">
+        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery2.jpg" />
+    </div>
+    <div class="popup popup-3">
+        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery5.jpg" />
+    </div>
+    <div class="popup popup-4">
+        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery3.jpg" />
+    </div>
+    <div class="popup popup-5">
+        <img class="img-responsive" alt="Pop Up Gallety" src="assets/img/gallery4.jpg" />
+    </div>
+</div>
         </section>
         <!-- Footer-->
         <footer class="footer text-faded text-center py-5">
