@@ -80,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['email'] = $user['email'];
             $_SESSION['username'] = $user['username'];
+            $_SESSION['uid'] = $user['uid'];
             $_SESSION['loggedin'] = true;
             header('Location: index.php');
             exit();

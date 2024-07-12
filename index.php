@@ -45,7 +45,9 @@ session_start();
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top py-lg-4" id="mainNav">
             <div class="container">
                 <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
@@ -54,38 +56,36 @@ session_start();
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="contact.php">Contact</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="review.php">Review</a></li>
                     </ul>
-                    <form class="d-flex ms-auto my-auto" method="POST" action="search.php"> 
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "search">
-                <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
-            </form>
-            <form class="d-flex ms-auto my-auto" action="cart.php" method = "POST">
-                <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-cart4"></i></i></button>
-            	</form>
-                    <?php
-                        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-                            $loggedin = true;
-                        } else {
-                            $loggedin = false;
-                        }
-                        if (!$loggedin) {
-                            echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756;margin-left: 12px;
-                            margin-right: -50px;'><b>Log In</b></button></a>";
-                        } else {
-                            echo "<a href='logout.php' class='position-relative ms-3 my-auto'>
-                            <i class='fas fa-solid fa-right-from-bracket fa-2x'></i></a>";
-                        }
-                    ?>
-                    <a>
-                        <?php if (isset($_SESSION['username'])) {
-                            echo
-                            '<a class="nav-link">
-                    <i class="bi bi-person"></i>' . " " . $_SESSION['username'];
-                            '</a>';
-                        }
-                        ?>
+                    <form class="d-flex ms-auto my-auto" action="search.php" method="POST">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+                        <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
+                    </form>
+                    <form class="d-flex ms-auto my-auto" action="cart.php" method="POST">
+                        <button class="btn btn-outline-light position-relative" type="submit" style="color: #A54A4E;">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>
+                                <span class="visually-hidden">items in cart</span>
+                            </span>
+                            <i class="bi bi-cart4"></i>
+                        </button>
+                    </form>
+                    <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) : ?>
+                        <a href='logout.php' class='position-relative ms-3 my-auto'>
+                            <i class='fas fa-solid fa-right-from-bracket fa-2x'></i>
+                        </a>
+                    <?php else : ?>
+                        <a href='login.php' class='nav-link text-uppercase'>
+                            <button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756; margin-left: 12px;margin-right: -50px;'><b>Log In</b></button>
+                        </a>
+                    <?php endif; ?>
+                    <?php if (isset($_SESSION['username'])) : ?>
+                        <a class="nav-link">
+                            <i class="bi bi-person"></i> <?= $_SESSION['username']; ?>
+                        </a>
+                    <?php endif; ?>
                 </div>
             </div>
-        </nav></div>
+        </nav>
         <!--nav end-->
         <section class="page-section clearfix">
             <div class="container">

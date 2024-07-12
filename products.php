@@ -122,8 +122,9 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                         <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;">View Detail</i>
                     </a>
                     <a href="add_to_cart.php?pid=<?php echo $row['pid']; ?>" title="Add to Cart">
-                        <i class="fas fa-cart-plus" style="margin: 0% 35%;font-size: small;">Add to Cart</i>
-                    </a>
+    <i class="fas fa-cart-plus" style="margin: 0% 35%;font-size: small;">Add to Cart</i>
+</a>
+
                 </div>
             </div>
                         </div>

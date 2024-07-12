@@ -1,47 +1,48 @@
 <?php
 session_start();
+include 'dbconnect.php'; // Include your database connection file
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
-    exit;
-}
+// Check if the user is logged in and uid is set in session
+if (isset($_SESSION['uid'])) {
+    $uid = $_SESSION['uid'];
 
-include "dbconnect.php";
+    if (isset($_GET['pid'])) {
+        $pid = $_GET['pid'];
+        $quantity = isset($_GET['quantity']) ? $_GET['quantity'] : 1; // Default quantity is 1
 
-if (isset($_GET['pid'])) {
-    $pid = intval($_GET['pid']);
-
-    // Query to fetch the product details
-    $sql = "SELECT * FROM products WHERE pid = $pid";
-    $result = mysqli_query($conn, $sql);
-
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-
-        $product = [
-            'pid' => $row['pid'],
-            'product_name' => $row['product_name'],
-            'product_image' => $row['product_image'],
-            'product_price' => $row['product_price'],
-            'quantity' => 1
-        ];
-
-        if (!isset($_SESSION['cart'])) {
-            $_SESSION['cart'] = [];
-        }
-
-        // Check if the product is already in the cart
-        if (array_key_exists($pid, $_SESSION['cart'])) {
-            $_SESSION['cart_alert'] = "Item is already in the cart.";
+        // Check if a cart already exists for the user
+        $cart_id_query = $conn->query("SELECT cart_id FROM cart WHERE uid = $uid");
+        if ($cart_id_query->num_rows > 0) {
+            // Cart exists, fetch cart_id
+            $cart_id_row = $cart_id_query->fetch_assoc();
+            $cart_id = $cart_id_row['cart_id'];
         } else {
-            $_SESSION['cart'][$pid] = $product;
-            $_SESSION['cart_alert'] = "Item added to the cart.";
+            // Cart does not exist, create a new cart
+            $conn->query("INSERT INTO cart (uid, created_at) VALUES ($uid, NOW())");
+            $cart_id = $conn->insert_id; // Retrieve the auto-generated cart_id
         }
+
+        // Check if the product exists
+        $result = $conn->query("SELECT * FROM products WHERE pid = $pid");
+        $product = $result->fetch_assoc();
+
+        if ($product) {
+            $unit_price = $product['product_price'];
+
+            // Use prepared statements to avoid SQL injection
+            $stmt = $conn->prepare("INSERT INTO cart_items (cart_id, pid, quantity, unit_price) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE quantity = quantity + ?");
+            $stmt->bind_param("iiidi", $cart_id, $pid, $quantity, $unit_price, $quantity);
+            $stmt->execute();
+            $stmt->close();
+
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Product not found']);
+        }
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Invalid request: pid parameter missing']);
     }
+} else {
+    echo json_encode(['success' => false, 'message' => 'User not authenticated']);
 }
-
-mysqli_close($conn);
-
-header("Location: cart.php");
-exit;
 ?>
