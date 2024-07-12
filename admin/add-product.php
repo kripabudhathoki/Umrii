@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_image = $_FILES['product_image']['name'];
     $product_price = mysqli_real_escape_string($conn, $_POST['product_price']);
     $product_description = mysqli_real_escape_string($conn, $_POST['product_description']);
+    $isFeatured = mysqli_real_escape_string($conn, $_POST['isFeatured']);
 
     // Validate file upload
     $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
@@ -23,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_file)) {
             try {
-                $stmt = $conn->prepare("INSERT INTO products (product_name, product_image, product_description, product_price) VALUES (?, ?, ?, ?)");
-                $stmt->bind_param("sssd", $product_name, $product_image, $product_description, $product_price);
+                $stmt = $conn->prepare("INSERT INTO products (product_name, product_image, product_description, product_price, isFeatured) VALUES (?, ?, ?, ?, ?)");
+                $stmt->bind_param("sssdi", $product_name, $product_image, $product_description, $product_price, $isFeatured);
 
                 if ($stmt->execute()) {
                     echo '<script>alert("Product Added Successfully");window.location.href="./dashboard.php";</script>';
@@ -140,6 +141,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <label>Description:</label>
                                     <textarea name="product_description" id="description" cols="10" rows="5" class="form-control border-1 border-secondary" required placeholder="Product Description"></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label>isFeatured</label>
+                                    <input type="number" name="isFeatured" id="isFeatured" required placeholder="0 1 and 2" class="form-control border-1 border-secondary">
+                                </div>
+                               
 
                                 <div class="form-group">
                                     <input type="submit" value="ADD" name="submit_prod" id="submit" class="btn bg-dark text-white" />
