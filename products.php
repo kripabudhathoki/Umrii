@@ -22,6 +22,14 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="css/styles.css" rel="stylesheet">
+    <script>
+        function limitWords(descriptionElement, limit) {
+            var words = descriptionElement.textContent.trim().split(/\s+/);
+            if (words.length > limit) {
+                descriptionElement.textContent = words.slice(0, limit).join(" ") + "..."; // Truncate and add ellipsis
+            }
+        }
+    </script>
     <style>
         .card {
             max-width: 100%; /* Adjust as needed */
@@ -104,28 +112,28 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                         $product_price = $row['product_price'];
                 ?>
                         <div class="col-md-6">
-                        <div class="card">
-                <div class="row g-0" style="margin: -8% 0%;">
-                    <div class="col-md-4">
-                        <img src="assets/img/<?php echo $product_image; ?>" class="img-fluid card-img-top" alt="<?php echo $product_name; ?>" style="margin: 24% 0%;">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body" style="margin: 20% 0%;">
-                            <h5 class="card-title"><?php echo $product_name; ?></h5>
-                            <p class="card-text"><?php echo $product_description; ?></p>
-                            <p class="card-text">Price: $<?php echo $product_price; ?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <a href="product-detail.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="View Details">
-                        <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;">View Detail</i>
-                    </a>
-                    <a href="add_to_cart.php?pid=<?php echo $row['pid']; ?>" title="Add to Cart">
-                        <i class="fas fa-cart-plus" style="margin: 0% 35%;font-size: small;">Add to Cart</i>
-                    </a>
-                </div>
-            </div>
+                            <div class="card">
+                                <div class="row g-0" style="margin: -8% 0%;">
+                                    <div class="col-md-4">
+                                        <img src="assets/img/<?php echo $product_image; ?>" class="img-fluid card-img-top" alt="<?php echo $product_name; ?>" style="margin: 24% 0%;">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body" style="margin: 20% 0%;">
+                                            <h5 class="card-title"><?php echo $product_name; ?></h5>
+                                            <p class="card-text" id="desc_<?php echo $row['pid']; ?>"><?php echo $product_description; ?></p>
+                                            <p class="card-text">Price: $<?php echo $product_price; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="product-detail.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="View Details">
+                                        <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;"> View Detail</i>
+                                    </a>
+                                    <a href="add_to_cart.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="Add to Cart">
+                                        <i class="fas fa-cart-plus" style="margin: 0% 35%;font-size: small;"> Add to Cart</i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                 <?php
                     } // End of while loop
@@ -142,5 +150,16 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     
     <!-- Bootstrap core JavaScript -->
     <script src="js/bootstrap.bundle.min.js"></script>
+    <!-- Initialize word limit for product descriptions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var productDescriptions = document.querySelectorAll('.card-text');
+            var wordLimit = 50; // Adjust word limit as needed
+
+            productDescriptions.forEach(function(description) {
+                limitWords(description, wordLimit);
+            });
+        });
+    </script>
 </body>
 </html>
