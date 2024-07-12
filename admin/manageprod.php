@@ -62,7 +62,8 @@ include '../dbconnect.php';
                         <th>Name</th>
                         <th>Photo</th>
                         <th>Description</th>
-                        <th>Price</th>                    
+                        <th>Price</th>
+                        <th>IsFeatured</th>
                         <th>Delete</th>
                         <th>Update</th>
                     </tr>
@@ -77,6 +78,7 @@ include '../dbconnect.php';
                     <?php
                         echo "<td>" . htmlspecialchars($row['product_description']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['product_price']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['isFeatured']) . "</td>";
                         ?>
                         <td><a href="javascript:DeleteProducts('<?php echo $row['pid']; ?>')" class="btn btn-danger">Delete</a></td>
                     <?php
