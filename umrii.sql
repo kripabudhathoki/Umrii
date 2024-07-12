@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2024 at 07:44 PM
+-- Generation Time: Jul 12, 2024 at 07:37 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -34,10 +34,6 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- RELATIONSHIPS FOR TABLE `admin`:
---
-
---
 -- Dumping data for table `admin`
 --
 
@@ -58,10 +54,6 @@ CREATE TABLE `orders` (
   `status` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- RELATIONSHIPS FOR TABLE `orders`:
---
-
 -- --------------------------------------------------------
 
 --
@@ -71,21 +63,20 @@ CREATE TABLE `orders` (
 CREATE TABLE `products` (
   `pid` int(11) NOT NULL,
   `product_name` varchar(50) NOT NULL,
-  `product_description` varchar(100) NOT NULL,
+  `product_description` varchar(600) NOT NULL,
   `product_price` decimal(10,0) NOT NULL,
-  `product_image` varchar(22) NOT NULL
+  `product_image` varchar(22) NOT NULL,
+  `isFeatured` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- RELATIONSHIPS FOR TABLE `products`:
---
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`pid`, `product_name`, `product_description`, `product_price`, `product_image`) VALUES
-(5, 'Peach Iced Tea', 'This peach iced tea is out of this world', '220', '2O0A1243.jpg');
+INSERT INTO `products` (`pid`, `product_name`, `product_description`, `product_price`, `product_image`, `isFeatured`) VALUES
+(5, 'Peach Iced Tea', 'Peach iced tea is a harmonious fusion of brisk tea and the luscious essence of ripe peaches. This chilled beverage combines the robust notes of tea with the mellow sweetness of peaches, delivering a revitalizing and flavorful experience. Garnished with peach slices and served over ice, it offers a delightful blend of fruity aroma and cool refreshment, making it a beloved choice to savor during warm weather or as a complement to any leisurely moment.', '220', '2O0A1243.jpg', 1),
+(8, 'Umrii Special', 'Indulge in the rich and creamy delight of our Umrii Special. This luxurious drink is crafted with a perfect blend of milk and chocolate, offering a smooth and decadent experience with every sip. Whether you are in the mood for a comforting treat or a satisfying pick-me-up, the Umrii Special is your go-to choice for a deliciously indulgent moment.', '220', 'special.jpg', 2),
+(9, 'Strawberry Iced Tea', 'Strawberry iced tea blends the refreshing qualities of chilled tea with the vibrant sweetness of ripe strawberries. This delightful beverage offers a perfect balance of fruity flavors and the soothing essence of tea, creating a refreshing and invigorating drink ideal for hot summer days. Garnished with fresh strawberry slices and ice cubes, its not only a treat for the taste buds but also a feast for the eyes, making it a popular choice for any occasion where cool, fruity refreshment is desired.', '230', 'gallery4.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -105,15 +96,14 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- RELATIONSHIPS FOR TABLE `users`:
---
-
---
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`uid`, `fname`, `lname`, `email`, `phone`, `password`, `address`, `username`) VALUES
-(3, 'Kripa', 'Dhungana', 'shushantadhungana0@gmail.com', 9865062545, '$2y$10$0ZP3tYtew3RkQDybjLsqSe88LoYD659pEur99BWIYRBcD0OI65Qvq', 'Boudha', 'Shushanta');
+(3, 'Kripa', 'Dhungana', 'shushantadhungana0@gmail.com', 9865062545, '$2y$10$0ZP3tYtew3RkQDybjLsqSe88LoYD659pEur99BWIYRBcD0OI65Qvq', 'Boudha', 'Shushanta'),
+(4, 'Hello', 'Dhungana', 'hello@gmail.com', 9865062545, '$2y$10$zIJkyTD3fBMaWXJbrvs1aegi0KlandWb3W0xeMutmiEgWcjtcf5w2', 'Boudha', 'KRIPASUCKS'),
+(5, 'Shushanta', 'Dhungana', 'haha@gmail.com', 9865062545, '$2y$10$2AbJ3ehXvD5tffNsbW6GPOv/jlnoQ2wj/iRavvLyrnUMrT2E7jPsq', 'ramhiti', 'hahahatry'),
+(10, 'Shushanta', 'Dhungana', 'kripa@gmail.com', 9865062545, '$2y$10$u0wAtxrZT8sN9vRr2PxarOTDsIRATPcisIfffF/P.NO7oqeMnMza6', 'Boudha', 'KripaDon');
 
 --
 -- Indexes for dumped tables
@@ -163,13 +153,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
