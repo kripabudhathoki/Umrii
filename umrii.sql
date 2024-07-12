@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2024 at 08:00 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Generation Time: Jul 05, 2024 at 07:44 PM
+-- Server version: 10.4.25-MariaDB
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -31,7 +31,11 @@ CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- RELATIONSHIPS FOR TABLE `admin`:
+--
 
 --
 -- Dumping data for table `admin`
@@ -112,25 +116,14 @@ INSERT INTO `contact` (`name`, `email`, `message`) VALUES
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `order_date` datetime(6) NOT NULL,
-  `uid` int(11) NOT NULL,
-  `total_price` double NOT NULL,
-  `status` varchar(20) NOT NULL,
-  `is_paid` bit(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
+  `uid` int(20) NOT NULL,
+  `price` double NOT NULL,
+  `status` varchar(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Table structure for table `order_items`
+-- RELATIONSHIPS FOR TABLE `orders`:
 --
-
-CREATE TABLE `order_items` (
-  `order_item_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `pid` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `unit_price` decimal(10,0) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -141,19 +134,21 @@ CREATE TABLE `order_items` (
 CREATE TABLE `products` (
   `pid` int(11) NOT NULL,
   `product_name` varchar(50) NOT NULL,
-  `product_description` varchar(100) NOT NULL,
+  `product_description` varchar(600) NOT NULL,
   `product_price` decimal(10,0) NOT NULL,
   `product_image` varchar(22) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- RELATIONSHIPS FOR TABLE `products`:
+--
 
 --
 -- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`pid`, `product_name`, `product_description`, `product_price`, `product_image`) VALUES
-(5, 'Peach Iced Tea', 'This peach iced tea is out of this world', 220, '2O0A1243.jpg'),
-(6, 'strawberry crush', 'kdfhngviurehgnjlksdhgviyrehgbvkjfdjhnjgkbfydsiu', 220, '2O0A1603.jpg'),
-(7, 'mango crush', 'kjdshgifhyrgefkjcvhndfjugvhruejfvjnlkds', 220, '2O0A1302.jpg');
+(5, 'Peach Iced Tea', 'This peach iced tea is out of this world', '220', '2O0A1243.jpg');
 
 -- --------------------------------------------------------
 
@@ -170,14 +165,21 @@ CREATE TABLE `users` (
   `password` varchar(225) NOT NULL,
   `address` varchar(20) NOT NULL,
   `username` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- RELATIONSHIPS FOR TABLE `users`:
+--
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`uid`, `fname`, `lname`, `email`, `phone`, `password`, `address`, `username`) VALUES
-(3, 'Kripa', 'Dhungana', 'shushantadhungana0@gmail.com', 9865062545, '$2y$10$0ZP3tYtew3RkQDybjLsqSe88LoYD659pEur99BWIYRBcD0OI65Qvq', 'Boudha', 'Shushanta');
+(3, 'Kripa', 'Dhungana', 'shushantadhungana0@gmail.com', 9865062545, '$2y$10$0ZP3tYtew3RkQDybjLsqSe88LoYD659pEur99BWIYRBcD0OI65Qvq', 'Boudha', 'Shushanta'),
+(4, 'Hello', 'Dhungana', 'hello@gmail.com', 9865062545, '$2y$10$zIJkyTD3fBMaWXJbrvs1aegi0KlandWb3W0xeMutmiEgWcjtcf5w2', 'Boudha', 'KRIPASUCKS'),
+(5, 'Shushanta', 'Dhungana', 'haha@gmail.com', 9865062545, '$2y$10$2AbJ3ehXvD5tffNsbW6GPOv/jlnoQ2wj/iRavvLyrnUMrT2E7jPsq', 'ramhiti', 'hahahatry'),
+(10, 'Shushanta', 'Dhungana', 'kripa@gmail.com', 9865062545, '$2y$10$u0wAtxrZT8sN9vRr2PxarOTDsIRATPcisIfffF/P.NO7oqeMnMza6', 'Boudha', 'KripaDon');
 
 --
 -- Indexes for dumped tables
@@ -269,43 +271,13 @@ ALTER TABLE `order_items`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `cart`
---
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`);
-
---
--- Constraints for table `cart_items`
---
-ALTER TABLE `cart_items`
-  ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`cart_id`),
-  ADD CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `products` (`pid`);
-
---
--- Constraints for table `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`);
-
---
--- Constraints for table `order_items`
---
-ALTER TABLE `order_items`
-  ADD CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`),
-  ADD CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`pid`) REFERENCES `products` (`pid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
