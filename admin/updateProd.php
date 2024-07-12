@@ -1,13 +1,13 @@
 <?php
 include '../dbconnect.php';
 session_start();
-$pid = $_GET['pid'];	
+$pid = $_GET['pid'];    
 
 if (isset($_POST['update'])) {
     // Sanitize and escape the input values
     $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
     $product_price = (int)$_POST['product_price'];
-    $product_stock = (int)$_POST['product_stock'];
+    $isFeatured = (int)$_POST['isFeatured'];
     $product_description = mysqli_real_escape_string($conn, $_POST['product_description']);
 
     // Initialize variables for the image
@@ -30,11 +30,11 @@ if (isset($_POST['update'])) {
 
     // Use prepared statement to avoid SQL injection
     if ($image_updated) {
-        $stmt = $conn->prepare("UPDATE products SET product_name=?, product_price=?, product_stock=?, product_description=?, product_image=? WHERE pid=?");
-        $stmt->bind_param("siissi", $product_name, $product_price, $product_stock, $product_description, $product_image, $pid);
+        $stmt = $conn->prepare("UPDATE products SET product_name=?, product_price=?, product_description=?, product_image=?, isFeatured=? WHERE pid=?");
+        $stmt->bind_param("sissii", $product_name, $product_price, $product_description, $product_image, $isFeatured, $pid);
     } else {
-        $stmt = $conn->prepare("UPDATE products SET product_name=?, product_price=?, product_stock=?, product_description=? WHERE pid=?");
-        $stmt->bind_param("siisi", $product_name, $product_price, $product_stock, $product_description, $pid);
+        $stmt = $conn->prepare("UPDATE products SET product_name=?, product_price=?, product_description=?, isFeatured=? WHERE pid=?");
+        $stmt->bind_param("sisii", $product_name, $product_price, $product_description, $isFeatured, $pid);
     }
 
     if ($stmt->execute()) {
@@ -44,96 +44,158 @@ if (isset($_POST['update'])) {
         window.location.href="manageProd.php";
         </script>';
     } else {
-        echo "Error updating product: " . $stmt->error;
+        $err = "<font color='red'>Could not update the product. Please try again later.</font>";
     }
 }
 
-// Select old product
-$q = mysqli_query($conn, "SELECT * FROM products WHERE pid='$pid'");
-$res = mysqli_fetch_array($q);
-?>
+// Fetch the product details
+$product = null;
+if ($pid) {
+    $stmt = $conn->prepare("SELECT * FROM products WHERE pid = ?");
+    $stmt->bind_param("i", $pid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $product = $result->fetch_assoc();
+    $stmt->close();
+}
 
-<?php
-include '../includes/aside.php'; ?>
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>FABBRIK | Update Product</title>
-	<link rel="stylesheet" href="../assets/css/style.css" />
-	<link rel="stylesheet" href="../assets/css/bootstrap.css" />
-	<link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-	<link rel="icon" type="image/x-icon" href="../assets/images/logos/webw.png" />
-	<!-- Google Font: Source Sans Pro -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
-	<link rel="stylesheet" href="css/adminlte.min.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Umrii | Add new product</title>
 
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="css/adminlte.min.css" />
+    <link rel="icon" type="image/x-icon" href="../assets/images/logos/webw.png" />
+    <style>
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-group {
+            flex: 1 1 calc(50% - 20px); /* Adjust width as needed */
+        }
+
+        .form-group.col-image {
+            display: flex;
+            align-items: center;
+        }
+
+        .image-preview {
+            width: 100px; /* Adjust the width as needed */
+            height: auto; /* Maintain aspect ratio */
+            margin-left: 20px; /* Adjust margin as needed */
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
-	<div class="container">
-		<!-- Content Header (Page header) -->
-		<section class="content-header">
-			<div class="container d-flex justify-content-center mt-3">
-				<b class="font">
-					<h1>Update Existing Product</h1>
-				</b>
-			</div>
-		</section>
+    <?php include '../includes/aside.php'; ?>
 
-		<!-- Main content -->
-		<section class="content">
-			<div class="container-fluid">
-				<!-- SELECT2 EXAMPLE -->
-				<div class="card card-default">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="container">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container d-flex justify-content-center">
+                <b class="font">
+                    <h1>Update Product</h1>
+                </b>
+            </div>
+        </section>
 
-				</div>
-			</div>
-			<!-- /.card-header -->
-			<div class="border border-secondary card-body font m-auto rounded-3 w-50">
-				<form method="POST" enctype="multipart/form-data">
-					<div class="form-group mb-3">
-						<div class="col-sm-4"><?php echo @$err; ?></div>
-					</div>
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="card card-default">
+                    <div class="card-body font">
+                        <?php if ($product): ?>
+                        <form method="POST" enctype="multipart/form-data">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Product Name</label>
+                                    <input type="text" name="product_name" id="product_name" class="form-control border-1 border-secondary" value="<?= htmlspecialchars($product['product_name']) ?>" required>
+                                </div>
 
-					<div class="form-group mb-3">
-						<b>Enter Product Name</b>
-						<input type="text" name="product_name" value="<?php echo htmlspecialchars($res['product_name']); ?>" class="mt-2 border-secondary form-control" />
-					</div>
+                                <div class="form-group col-image">
+                                    <label>Image</label>
+                                    <div class="input-group">
+                                        <input type="file" name="product_image" id="product_image" class="form-control border-1 border-secondary" onchange="previewImage();">
+                                    </div>
+                                    <div class="image-preview" id="imagePreview">
+                                        <img id="imgPreview" src="<?= '../assets/img/' . htmlspecialchars($product['product_image']) ?>" alt="Image Preview">
+                                    </div>
+                                </div>
 
-					<div class="form-group mb-3">
-						<b>Enter Price</b>
-						<input type="text" name="product_price" value="<?php echo htmlspecialchars($res['product_price']); ?>" class="mt-2 border-secondary form-control" />
-					</div>
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="number" name="product_price" id="price" class="form-control border-1 border-secondary" value="<?= htmlspecialchars($product['product_price']) ?>" required>
+                                </div>
 
-					<div class="form-group mb-3">
-						<b>Enter Available Stock</b>
-						<input type="text" name="product_stock" class="mt-2 border-secondary form-control" value="<?php echo htmlspecialchars($res['product_stock']); ?>">
-					</div>
+                                <div class="form-group">
+                                    <label>Description:</label>
+                                    <textarea name="product_description" id="description" cols="10" rows="5" class="form-control border-1 border-secondary" required><?= htmlspecialchars($product['product_description']) ?></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>isFeatured</label>
+                                    <input type="number" name="isFeatured" id="isFeatured" class="form-control border-1 border-secondary" value="<?= htmlspecialchars($product['isFeatured']) ?>" required>
+                                </div>
 
-					<div class="form-group mb-3">
-						<b>Enter Description</b>
-						<textarea name="product_description" cols="10" rows="5" class="mt-2 border-secondary form-control"><?php echo htmlspecialchars($res['product_description']); ?></textarea>
-					</div>
+                                <div class="form-group">
+                                    <input type="submit" value="Update" name="update" id="update" class="btn bg-dark text-white" />
+                                    <input type="reset" value="RESET" name="" id="reset" class="btn bg-purple" />
+                                </div>
+                            </div>
+                        </form>
+                        <?php else: ?>
+                        <p>Product not found.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-					<div class="form-group mb-3">
-						<b>Upload Product Image (optional)</b>
-						<input type="file" name="product_image" class="mt-2 border-secondary form-control" />
-					</div>
+    <?php require '../footer.php'; ?>
 
-					<div class="text-white form-group mt-4">
-						<input type="submit" value="Update" name="update" class="btn btn-primary" />
-						<input type="reset" class="btn btn-dark" />
-					</div>
-				</form>
-			</div>
-		</section>
+    <script>
+        function previewImage() {
+            var preview = document.getElementById('imgPreview');
+            var file = document.getElementById('product_image').files[0];
+            var reader = new FileReader();
 
-	</div>
-	<?php require '../footer.php'; ?>
+            reader.onloadend = function() {
+                preview.src = reader.result;
+                preview.style.display = 'block'; // Display the previewed image
+            }
+
+            if (file) {
+                reader.readAsDataURL(file); // Converts the file to a data URL.
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 
 </html>
