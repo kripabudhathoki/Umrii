@@ -86,7 +86,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
                     <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
-                    <h1 class="mb-0 bread">Product</h1>
+                    <h1 class="mb-0 bread"><b>Product</b></h1>
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                     <div class="col-md-4">
                                         <img src="assets/img/<?php echo $product_image; ?>" class="img-fluid card-img-top" alt="<?php echo $product_name; ?>" style="margin: 24% 0%;">
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-8 h-100">
                                         <div class="card-body" style="margin: 20% 0%;">
                                             <h5 class="card-title"><?php echo $product_name; ?></h5>
                                             <p class="card-text" id="desc_<?php echo $row['pid']; ?>"><?php echo $product_description; ?></p>

@@ -10,7 +10,8 @@ session_start();
     <title>UMRII</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
         <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
     <style>
         body {
             background-color: #BB676B !important;
@@ -140,11 +141,12 @@ session_start();
     <?php include('navbar.php'); ?>
     
 
-    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center; padding: 5em 0; margin: 0 5%; z-index: -1;">
+    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
-                    <h1 class="mb-0 bread">Reviews</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
+                    <h1 class="mb-0 bread"><b>Review</b></h1>
                 </div>
             </div>
         </div>

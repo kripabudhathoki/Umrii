@@ -35,6 +35,7 @@ if ($uid > 0) {
 
 // Display cart items
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,15 +46,15 @@ if ($uid > 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- Include full version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <style>
         .hero-wrap {
@@ -185,11 +186,12 @@ if ($uid > 0) {
 </head>
 <body>
     <!-- Hero Section -->
-    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center; padding: 5em 0; margin: 0 5%; z-index: -1;">
+    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
-                    <h1 class="mb-0 bread">My Cart</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
+                    <h1 class="mb-0 bread"><b>My Cart</b></h1>
                 </div>
             </div>
         </div>
@@ -197,60 +199,64 @@ if ($uid > 0) {
 
     <!-- Cart Items Section -->
     <section class="ftco-section ftco-cart">
-        <div class="container">
-            <div class="row intro-text left-0 text-center bg-faded p-5 rounded">
-                <div class="col-md-12">
-                    <div class="cart-list">
-                        <form method="POST" action="cart.php">
-                            <table class="table table-bordered">
-                                <thead class="thead-primary">
-                                    <tr class="text-center">
-                                        <th>&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                        <th>Product name</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    if (!empty($cart_items)) {
-                                        foreach ($cart_items as $item) {
-                                            ?>
-                                            <tr class="text-center">
-                                                <td class="product-remove">
-                                                    <button type="submit" name="remove" value="<?php echo $item['cart_item_id']; ?>" class="btn btn-link">
-                                                        <span class="bi bi-x-circle"></span>
-                                                    </button>
-                                                </td>
-                                                <td class="image-prod">
-                                                    <div class="img" style="background-image:url('assets/img/<?php echo $item['product_image']; ?>'); height: 100px; width:100px;"></div>
-                                                </td>
-                                                <td class="product-name">
-                                                    <h4><?php echo $item['product_name']; ?></h4>
-                                                </td>
-                                                <td class="price">$ <?php echo $item['unit_price']; ?></td>
-                                                <td class="quantity"><?php echo $item['quantity']; ?></td>
-                                                <td class="total">$ <?php echo $item['total_price']; ?></td>
-                                            </tr>
-                                            <?php
-                                        }
-                                    } else {
-                                        ?>
-                                        <tr class="text-center">
-                                            <td colspan="6">Your cart is empty</td>
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </form>
-                    </div>
+    <div class="container">
+    <div class="row intro-text left-0 text-center bg-faded p-5 rounded">
+        <div class="col-md-12">
+            <div class="cart-list">
+                <table class="table table-bordered" id="cartTable">
+                    <thead class="thead-primary">
+                        <tr class="text-center">
+                            <th>&nbsp;</th>
+                            <th>&nbsp;</th>
+                            <th>Product name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        if (!empty($cart_items)) {
+                            foreach ($cart_items as $item) {
+                                ?>
+                                <tr class="text-center">
+                                    <td class="product-remove">
+                                        <button class="btn btn-link remove-item" data-cart-item-id="<?php echo $item['cart_item_id']; ?>">
+                                            <span class="bi bi-x-circle"></span>
+                                        </button>
+                                    </td>
+                                    <td class="image-prod">
+                                        <img src="assets/img/<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?>" style="height: 100px; width: 100px;">
+                                    </td>
+                                    <td class="product-name">
+                                        <h4><?php echo $item['product_name']; ?></h4>
+                                    </td>
+                                    <td class="price">$ <?php echo $item['unit_price']; ?></td>
+                                    <td class="quantity">
+                                        <input type="number" class="form-control update-quantity" data-cart-item-id="<?php echo $item['cart_item_id']; ?>" value="<?php echo $item['quantity']; ?>" min="1">
+                                    </td>
+                                    <td class="total">$ <?php echo $item['total_price']; ?></td>
+                                </tr>
+                                <?php
+                            }
+                        } else {
+                            ?>
+                            <tr class="text-center">
+                                <td colspan="6">Your cart is empty</td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="text-right">
+                    <strong>Grand Total: <span id="grandTotal">$ <?php echo array_sum(array_column($cart_items, 'total_price')); ?></span></strong>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
     </section>
 
     <!-- Footer -->
@@ -258,7 +264,66 @@ if ($uid > 0) {
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- Include full version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- Replace the JavaScript section in cart.php with this updated script -->
+<script>
+$(document).ready(function() {
+    // AJAX call to update quantity
+    $('.update-quantity').change(function() {
+        var cartItemId = $(this).data('cart-item-id');
+        var quantity = $(this).val();
+
+        $.ajax({
+            url: 'update_cart.php',
+            method: 'POST',
+            data: { cartItemId: cartItemId, quantity: quantity },
+            success: function(response) {
+                response = JSON.parse(response); // Parse JSON response
+                if (response.success) {
+                    // Find the specific row and replace its HTML
+                    var $updatedRow = $(response.html);
+                    $('#cartTable').find('tr[data-cart-item-id="' + cartItemId + '"]').replaceWith($updatedRow);
+
+                    // Update item total
+                    var itemTotal = parseFloat(response.item_total);
+                    $('#cartTable').find('tr[data-cart-item-id="' + cartItemId + '"] .total').text('$ ' + itemTotal.toFixed(2));
+
+                    // Update grand total
+                    var grandTotal = parseFloat(response.grand_total);
+                    $('#grandTotal').text('$ ' + grandTotal.toFixed(2));
+                }
+            }
+        });
+    });
+
+    // AJAX call to remove item
+    $('.remove-item').click(function() {
+        var cartItemId = $(this).data('cart-item-id');
+
+        $.ajax({
+            url: 'delete_cart_item.php',
+            method: 'POST',
+            data: { cartItemId: cartItemId },
+            success: function(response) {
+                response = JSON.parse(response); // Parse JSON response
+                if (response.success) {
+                    $('#cartTable tbody').html(response.html);
+
+                    // Update grand total similarly as above
+                    var grandTotal = parseFloat(response.grand_total);
+                    $('#grandTotal').text('$ ' + grandTotal.toFixed(2));
+                }
+            }
+        });
+    });
+});
+
+</script>
+
+
 </body>
 </html>

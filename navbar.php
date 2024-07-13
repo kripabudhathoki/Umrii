@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar</title>
+    <title>UMRII</title>
+    <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
     <link href="css/styles.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
 <header>
             <h1 class="site-heading text-center text-faded d-none d-lg-block">
-                <div class="topbar bg-primary">
+                <div class="topbar">
                     <div class="d-flex justify-content-between">
                         <div class="top-info ps-2">
                             <small class="me-3"><a class="text-white"><b>Lalitpur, Nepal</b></a></small>
@@ -61,7 +65,7 @@
                         </a>
                     <?php else : ?>
                         <a href='login.php' class='nav-link text-uppercase'>
-                            <button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756; margin-left: 12px;margin-right: -50px;'><b>Log In</b></button>
+                            <button type='button' class='btn' style='color:#A54A4E; background-color:#e6a756; margin-left: 12px;margin-right: -50px;'><b>Log In</b></button>
                         </a>
                     <?php endif; ?>
                     <?php if (isset($_SESSION['username'])) : ?>
