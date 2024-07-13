@@ -26,11 +26,19 @@ if (mysqli_num_rows($result) > 0) {
 // Handle add to cart
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
     if (!$is_logged_in) {
+        $_SESSION['cart_alert'] = "Please log in to add items to your cart.";
         header("Location: login.php");
         exit;
     }
 
     $quantity = intval($_POST['quantity']);
+
+    // Validate quantity
+    if ($quantity <= 0 || $quantity > 100) {
+        $_SESSION['cart_alert'] = "Invalid quantity. Please enter a number between 1 and 100.";
+        header("Location: product-detail.php?pid=$pid");
+        exit;
+    }
 
     // Check if the product is already in the cart
     if (isset($_SESSION['cart'][$pid])) {
@@ -53,9 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
         // Add item to cart
         $_SESSION['cart'][$pid] = $cart_item;
         $_SESSION['cart_alert'] = "Item added to the cart.";
+        header("Location: product-detail.php?pid=$pid");
+        exit;
     }
-    header("Location: product-detail.php?pid=$pid");
-    exit;
 }
 ?>
 
@@ -68,12 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+        <!-- Include full version of jQuery -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <?php include('navbar.php'); ?>
@@ -106,11 +115,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
         }
     </style>
 
-    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
+<div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
-                    <h1 class="mb-0 bread">Product Details</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
+                    <h1 class="mb-0 bread"><b>Product Details</b></h1>
                 </div>
             </div>
         </div>
@@ -129,18 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                 <p><?php echo $product['product_description']; ?></p>
                 <form method="post" action="">
                     <div class="row mt-4">
-                        <div class="col-md-6">
-                            <div class="form-group d-flex">
-                                <div class="select-wrap">
-                                    <select name="size" id="size" class="form-control">
-                                        <option value="Small">Small</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="Large">Large</option>
-                                        <option value="Extra Large">Extra Large</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                      
                         <div class="w-100"></div>
                         <div class="input-group col-md-6 d-flex mb-3">
                             <span class="input-group-btn mr-2">
@@ -148,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                                     <span class="bi bi-dash"></span>
                                 </button>
                             </span>
-                            <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
+                            <input type="number" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
                             <span class="input-group-btn ml-2">
                                 <button type="button" class="quantity-right-plus btn btn-outline-secondary" data-type="plus" data-field="">
                                     <span class="bi bi-plus"></span>
@@ -166,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
         </div>
     </section>
 
-    <section class="ftco-section">
+    <!-- <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center mb-3 pb-3">
                 <div class="col-md-12 heading-section text-center ftco-animate">
@@ -179,9 +178,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
         <div class="container">
             <div class="row">
                 <!-- Add related products here -->
-            </div>
+            <!-- </div>
         </div>
-    </section>
+    </section>  -->
 
 <?php include('footer.php'); ?>
 
