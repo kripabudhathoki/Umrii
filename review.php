@@ -1,5 +1,53 @@
 <?php
 session_start();
+include("dbconnect.php");
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST['name'];
+    $product_name = $_POST['product_name'];
+    $rating = $_POST['rating'];
+    $review = $_POST['review'];
+    $product_image = $_POST['image'];
+    
+    $sql = "INSERT INTO review (name, product_name, rating, review, image) VALUES (?, ?, ?, ?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssiss", $name, $product_name, $rating, $review,$product_image);
+
+    if ($stmt->execute()) {
+        echo "<script>
+                alert('New review created successfully');
+                window.location.href = 'review.php';
+              </script>";
+    } else {
+        $signup_error['database'] = "Error: " . $stmt->error;
+        echo "<script>
+                alert('Error: " . $stmt->error . "');
+              </script>";
+    }
+    $stmt->close();
+}
+
+// Fetch 5-star reviews
+$sql = "SELECT * FROM review WHERE rating = 5";
+$result = $conn->query($sql);
+$reviews = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $reviews[] = $row;
+    }
+}
+
+// Fetch product names
+$sql_products = "SELECT pid, product_name FROM products";
+$result_products = $conn->query($sql_products);
+$product_names = [];
+if ($result_products->num_rows > 0) {
+    while ($row = $result_products->fetch_assoc()) {
+        $product_names[] = $row;
+    }
+    
+}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -10,15 +58,19 @@ session_start();
     <title>UMRII</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
+<<<<<<< HEAD
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+=======
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
     <style>
         body {
             background-color: #BB676B !important;
         }
         .form-container {
-            background:#BB676B !important;
+            background: #BB676B !important;
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -37,7 +89,7 @@ session_start();
             transform: scale(1.05);
         }
         .review-rating {
-            color:#BB676B !important;
+            color: #BB676B !important;
             font-size: 1.2rem;
         }
         .review-text {
@@ -85,7 +137,11 @@ session_start();
             background-image: url('assets/img/background1.jpg');
             background-size: cover;
             background-position: center;
+<<<<<<< HEAD
+            filter: blur(1px);
+=======
             filter: blur(1px); /* Adjust the blur intensity as needed */
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
             z-index: -1;
             padding: 5em 0;
             margin: 0 5%;
@@ -94,6 +150,30 @@ session_start();
             position: relative;
             z-index: 1;
         }
+<<<<<<< HEAD
+        .cart-popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .cart-popup-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+=======
         /* The Popup (background) */
         .cart-popup {
             display: none; /* Hidden by default */
@@ -119,6 +199,7 @@ session_start();
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
         }
         /* The Close Button */
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
         .close {
             color: #aaa;
             float: right;
@@ -149,6 +230,27 @@ session_start();
 
     <div class="container mt-5">
         <div class="row">
+<<<<<<< HEAD
+            <?php foreach ($reviews as $review): ?>
+                <div class="col-md-4">
+                    <div class="review-card d-flex align-items-center" style="background:#bdadad9e;">
+                        <img src="assets/img/<?php echo htmlspecialchars($review['image']); ?>" alt="Reviewer Image" class="reviewer-image mr-3">
+                        <div>
+                            <h4 class="mb-0"><?php echo htmlspecialchars($review['product_name']); ?></h4>
+                            <div class="review-rating">
+                                &#9733; &#9733; &#9733; &#9733; &#9733;
+                            </div>
+                            <div class="review-text mt-2">
+                                "<?php echo htmlspecialchars($review['review']); ?>"
+                            </div>
+                            <div class="reviewer-name mt-3">
+                                - <?php echo htmlspecialchars($review['name']); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+=======
             <div class="col-md-4">
                 <div class="review-card d-flex align-items-center">
                     <img src="assets/img/1.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
@@ -197,6 +299,7 @@ session_start();
                     </div>
                 </div>
             </div>
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
         </div>
     </div>
 
@@ -205,42 +308,58 @@ session_start();
             <div class="col-md-6 order-md-last d-flex">
                 <div class="bg-white p-5 contact-form" style="margin-left: 20%; margin-top: -20px;margin-bottom: 25px;">
                     <h2>Submit Your Review</h2>
-                    <form id="reviewForm">
+                    <form id="reviewForm" method="POST" action="review.php">
                         <div class="form-group">
                             <br>
-                            <input type="text" class="form-control" id="reviewerName" placeholder="Your Name" required>
+                            <input type="text" class="form-control" id="reviewerName" name="name" placeholder="Your Name" required>
                         </div>
                         <div class="form-group">
-                        <br>
-                            <input type="text" class="form-control" id="reviewerImage" placeholder="Product Name" required>
+                            <br>
+                            <select class="form-control" id="product_name" name="product_name" required>
+                                <option value="">Select Product</option>
+                                <?php foreach ($product_names as $product): ?>
+                                    <option value="<?php echo htmlspecialchars($product['product_name']); ?>"><?php echo htmlspecialchars($product['product_name']); ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="reviewRating">Rating</label>
+                            <label for="reviewRating" class="mr-3">Rating:</label>
                             <div class="star-rating">
-                                <input type="radio" id="5-stars" name="rating" value="5" required>
-                                <label for="5-stars" class="star">&#9733;</label>
-                                <input type="radio" id="4-stars" name="rating" value="4">
-                                <label for="4-stars" class="star">&#9733;</label>
-                                <input type="radio" id="3-stars" name="rating" value="3">
-                                <label for="3-stars" class="star">&#9733;</label>
-                                <input type="radio" id="2-stars" name="rating" value="2">
-                                <label for="2-stars" class="star">&#9733;</label>
+                                <input type="radio" id="5-star" name="rating" value="5">
+                                <label for="5-star" class="star">&#9733;</label>
+                                <input type="radio" id="4-star" name="rating" value="4">
+                                <label for="4-star" class="star">&#9733;</label>
+                                <input type="radio" id="3-star" name="rating" value="3">
+                                <label for="3-star" class="star">&#9733;</label>
+                                <input type="radio" id="2-star" name="rating" value="2">
+                                <label for="2-star" class="star">&#9733;</label>
                                 <input type="radio" id="1-star" name="rating" value="1">
                                 <label for="1-star" class="star">&#9733;</label>
                             </div>
                         </div>
                         <div class="form-group">
-                        
-                            <textarea class="form-control" id="reviewText" rows="3" placeholder="Your Review" required></textarea>
+                            <textarea class="form-control" id="reviewText" rows="3" name="review" placeholder="Your Review" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary justify-content-center" style="margin: 2% 40%;">Submit</button>
+                        <div class="form-group">
+                            <input type="FILE" class="form-control" id="image" rows="3" name="image" placeholder="image" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary justify-content-center" name="submit" style="margin: 2% 40%;">Submit</button>
                     </form>
                 </div>
             </div>
             <div class="col-md-6 d-flex" style="margin-top: -50px;margin-bottom: 25px;">
-                    <div id="map" class="img-popup"><img src="assets/img/review1.jpg"alt="img-fluid" class="reviewer-image mr-3" style="max-width: 70%;margin-top: 5%;margin-left: 17%;"></div>
-                </div>
+                <div id="map" class="img-popup"><img src="assets/img/review1.jpg" alt="img-fluid" class="reviewer-image mr-3" style="max-width: 70%;margin-top: 5%;margin-left: 17%;"></div>
+            </div>
         </div>
+<<<<<<< HEAD
+        <div id="reviewsContainer" class="row"></div>
+    </div>
+
+    <?php include('footer.php') ?>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+=======
 
     <?php include('footer.php'); ?>
 
@@ -304,5 +423,6 @@ session_start();
             });
         });
     </script>
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
 </body>
 </html>
