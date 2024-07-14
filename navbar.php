@@ -3,10 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar</title>
+    <title>UMRII</title>
+    <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include full version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        
+        $(document).ready(function() {
+            function updateCartCount() {
+                $.ajax({
+                    url: 'get_cart_count.php', 
+                    type: 'GET',
+                    success: function(response) {
+                        $('#cart-count').text(response); 
+                    }
+                });
+            }
+
+            updateCartCount();
+        });
+    </script>
 </head>
 <body>
 <header>
@@ -47,14 +67,13 @@
                         <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
                     </form>
                     <form class="d-flex ms-auto my-auto" action="cart.php" method="POST">
-                        <button class="btn btn-outline-light position-relative" type="submit" style="color: #A54A4E;">
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                <?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>
-                                <span class="visually-hidden">items in cart</span>
-                            </span>
-                            <i class="bi bi-cart4"></i>
-                        </button>
-                    </form>
+                <button class="btn btn-outline-light position-relative" type="submit" style="color: #A54A4E;">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
+                        <!-- Cart count will be updated dynamically -->
+                    </span>
+                    <i class="bi bi-cart4"></i>
+                </button>
+            </form>
                     <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) : ?>
                         <a href='logout.php' class='position-relative ms-3 my-auto'>
                             <i class='fas fa-solid fa-right-from-bracket fa-2x'></i>
