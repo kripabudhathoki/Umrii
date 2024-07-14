@@ -58,7 +58,13 @@ $conn->close();
     <title>UMRII</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
+<<<<<<< HEAD
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+=======
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
     <style>
         body {
             background-color: #BB676B !important;
@@ -77,6 +83,7 @@ $conn->close();
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.3s;
             margin-top: 20px;
+            background: #bdadad9e;
         }
         .review-card:hover {
             transform: scale(1.05);
@@ -130,7 +137,11 @@ $conn->close();
             background-image: url('assets/img/background1.jpg');
             background-size: cover;
             background-position: center;
+<<<<<<< HEAD
             filter: blur(1px);
+=======
+            filter: blur(1px); /* Adjust the blur intensity as needed */
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
             z-index: -1;
             padding: 5em 0;
             margin: 0 5%;
@@ -139,6 +150,7 @@ $conn->close();
             position: relative;
             z-index: 1;
         }
+<<<<<<< HEAD
         .cart-popup {
             display: none;
             position: fixed;
@@ -161,6 +173,33 @@ $conn->close();
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
+=======
+        /* The Popup (background) */
+        .cart-popup {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+        /* Popup Content */
+        .cart-popup-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 400px; /* Set a max-width for better design */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+        }
+        /* The Close Button */
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
         .close {
             color: #aaa;
             float: right;
@@ -178,17 +217,20 @@ $conn->close();
 <body>
     <?php include('navbar.php'); ?>
 
-    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center; padding: 5em 0; margin: 0 5%; z-index: -1;">
+    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
-                    <h1 class="mb-0 bread">Reviews</h1>
+                    <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
+                    <h1 class="mb-0 bread"><b>Review</b></h1>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="container mt-5">
         <div class="row">
+<<<<<<< HEAD
             <?php foreach ($reviews as $review): ?>
                 <div class="col-md-4">
                     <div class="review-card d-flex align-items-center" style="background:#bdadad9e;">
@@ -208,6 +250,56 @@ $conn->close();
                     </div>
                 </div>
             <?php endforeach; ?>
+=======
+            <div class="col-md-4">
+                <div class="review-card d-flex align-items-center">
+                    <img src="assets/img/1.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
+                    <div>
+                        <div class="review-rating">
+                            &#9733; &#9733; &#9733; &#9733; &#9734;
+                        </div>
+                        <div class="review-text mt-2">
+                            "This product exceeded my expectations. The quality is top-notch and the customer service was excellent!"
+                        </div>
+                        <div class="reviewer-name mt-3">
+                            - John Doe
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="review-card d-flex align-items-center">
+                    <img src="assets/img/gallery2.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
+                    <div>
+                        <div class="review-rating">
+                            &#9733; &#9733; &#9733; &#9734; &#9734;
+                        </div>
+                        <div class="review-text mt-2">
+                            "Good value for money. I am satisfied with my purchase and would recommend it to others."
+                        </div>
+                        <div class="reviewer-name mt-3">
+                            - Jane Smith
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="review-card d-flex align-items-center">
+                    <img src="assets/img/bestseller1.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
+                    <div>
+                        <div class="review-rating">
+                            &#9733; &#9733; &#9733; &#9733; &#9733;
+                        </div>
+                        <div class="review-text mt-2">
+                            "Absolutely amazing! This product has changed my life. Five stars!"
+                        </div>
+                        <div class="reviewer-name mt-3">
+                            - Alex Johnson
+                        </div>
+                    </div>
+                </div>
+            </div>
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
         </div>
     </div>
 
@@ -259,6 +351,7 @@ $conn->close();
                 <div id="map" class="img-popup"><img src="assets/img/review1.jpg" alt="img-fluid" class="reviewer-image mr-3" style="max-width: 70%;margin-top: 5%;margin-left: 17%;"></div>
             </div>
         </div>
+<<<<<<< HEAD
         <div id="reviewsContainer" class="row"></div>
     </div>
 
@@ -266,5 +359,70 @@ $conn->close();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+=======
+
+    <?php include('footer.php'); ?>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to update cart count dynamically
+            function updateCartCount() {
+                $.ajax({
+                    url: 'get_cart_count.php',
+                    type: 'GET',
+                    success: function(response) {
+                        $('#cart-count').text(response);
+                    }
+                });
+            }
+
+            updateCartCount(); // Call initially on page load
+
+            // Optionally, you can set an interval to update cart count periodically
+            // setInterval(updateCartCount, 30000); // Update every 30 seconds
+
+            // Submit review form handler
+            $('#reviewForm').submit(function(event) {
+                event.preventDefault();
+
+                var reviewerName = $('#reviewerName').val();
+                var reviewerImage = $('#reviewerImage').val();
+                var rating = $('input[name="rating"]:checked').val();
+                var reviewText = $('#reviewText').val();
+
+                // Assuming AJAX to submit review to backend
+                // Example AJAX call (replace with your actual implementation)
+                $.ajax({
+                    url: 'submit_review.php',
+                    type: 'POST',
+                    data: {
+                        reviewerName: reviewerName,
+                        reviewerImage: reviewerImage,
+                        rating: rating,
+                        reviewText: reviewText
+                    },
+                    success: function(response) {
+                        // Show success message or handle response
+                        alert('Review submitted successfully!');
+                        // Clear form fields
+                        $('#reviewerName').val('');
+                        $('#reviewerImage').val('');
+                        $('input[name="rating"]').prop('checked', false);
+                        $('#reviewText').val('');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error('Error:', error);
+                        alert('Error submitting review. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+>>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
 </body>
 </html>

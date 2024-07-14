@@ -10,8 +10,8 @@ include "dbconnect.php";
     <title>Umrii</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
     <style>
         .card {
             max-width: 540px;
@@ -33,6 +33,31 @@ include "dbconnect.php";
         .card-body {
             padding: 1rem;
         }
+        .hero-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('assets/img/background1.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(1px); /* Adjust the blur intensity as needed */
+            z-index: -1;
+            padding: 5em 0;
+            margin: 0 5%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 
@@ -46,7 +71,17 @@ include "dbconnect.php";
         if (!$result) {
             echo "Error: " . $sql . "<br>" . $conn->error;
         } elseif ($result->num_rows > 0) {
-            echo "<h2 class='text-center'>Search Results:</h2>";
+            echo " <div class='hero-wrap' style='background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;'>
+            <div class='container'>
+                <div class='row no-gutters slider-text align-items-center justify-content-center hero-content'>
+                    <div class='col-md-9 text-center'>
+                        <p class='breadcrumbs'><span class='mr-2'><a></a></span> <span></span></p>
+                        <h1 class='mb-0 bread'><b>Search Product</b></h1>
+                    </div>
+                </div>
+            </div>
+        </div>";
+        
             echo "<div class='container'>";
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='card'>";
