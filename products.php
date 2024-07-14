@@ -22,6 +22,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="css/styles.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         function limitWords(descriptionElement, limit) {
             var words = descriptionElement.textContent.trim().split(/\s+/);
@@ -86,7 +87,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
                     <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
-                    <h1 class="mb-0 bread"><b>Product</b></h1>
+                    <h1 class="mb-0 bread">Product</h1>
                 </div>
             </div>
         </div>
@@ -129,9 +130,9 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                     <a href="product-detail.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="View Details">
                                         <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;"> View Detail</i>
                                     </a>
-                                    <a href="add_to_cart.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="Add to Cart">
-                                        <i class="fas fa-cart-plus" style="margin: 0% 35%;font-size: small;"> Add to Cart</i>
-                                    </a>
+                                    <a href="add_to_cart.php?pid=<?php echo $row['pid']; ?>" class="btn-icon btn-add-to-cart" title="Add to Cart">
+    <i class="fas fa-cart-plus" style="margin: 0% 35%; font-size: small;"> Add to Cart</i>
+</a>
                                 </div>
                             </div>
                         </div>
@@ -161,5 +162,46 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
             });
         });
     </script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+        <script>
+    $(document).ready(function() {
+        $('.btn-add-to-cart').on('click', function(e) {
+            e.preventDefault();  
+            var url = $(this).attr('href'); 
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json', 
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message); 
+                        updateCartCount(); 
+                    } else {
+                        alert(response.message); 
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('Error: ' + error); 
+                }
+            });
+        });
+
+        function updateCartCount() {
+            $.ajax({
+                url: 'get_cart_count.php', 
+                type: 'GET',
+                success: function(response) {
+                    $('#cart-count').text(response); 
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching cart count:', error);
+                }
+            });
+        }
+    });
+</script>
+
 </body>
 </html>

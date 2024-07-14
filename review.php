@@ -9,9 +9,10 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UMRII</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
-        <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             background-color: #BB676B !important;
@@ -30,6 +31,7 @@ session_start();
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.3s;
             margin-top: 20px;
+            background: #bdadad9e;
         }
         .review-card:hover {
             transform: scale(1.05);
@@ -69,77 +71,70 @@ session_start();
         .star-rating label:hover ~ label {
             color: #f8d64e;
         }
-    .hero-wrap {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .hero-wrap::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('assets/img/background1.jpg');
-        background-size: cover;
-        background-position: center;
-        filter: blur(1px); /* Adjust the blur intensity as needed */
-        z-index: -1;
-        padding: 5em 0;
-        margin: 0 5%;
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    /* The Popup (background) */
-    .cart-popup {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1000; /* Sit on top */
-        left: 0;
-        top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0); /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-    }
-
-    /* Popup Content */
-    .cart-popup-content {
-        background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%; /* Could be more or less, depending on screen size */
-        max-width: 400px; /* Set a max-width for better design */
-        border-radius: 10px; /* Rounded corners */
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
-    }
-
-    /* The Close Button */
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+        .hero-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-wrap::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('assets/img/background1.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(1px); /* Adjust the blur intensity as needed */
+            z-index: -1;
+            padding: 5em 0;
+            margin: 0 5%;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        /* The Popup (background) */
+        .cart-popup {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0); /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+        }
+        /* Popup Content */
+        .cart-popup-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 400px; /* Set a max-width for better design */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+        }
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <?php include('navbar.php'); ?>
-    
 
     <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
@@ -151,10 +146,11 @@ session_start();
             </div>
         </div>
     </div>
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-4">
-                <div class="review-card d-flex align-items-center" style="background:#bdadad9e;">
+                <div class="review-card d-flex align-items-center">
                     <img src="assets/img/1.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
                     <div>
                         <div class="review-rating">
@@ -170,7 +166,7 @@ session_start();
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="review-card d-flex align-items-center" style="background: #bdadad9e;">
+                <div class="review-card d-flex align-items-center">
                     <img src="assets/img/gallery2.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
                     <div>
                         <div class="review-rating">
@@ -186,7 +182,7 @@ session_start();
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="review-card d-flex align-items-center" style="background: #bdadad9e;">
+                <div class="review-card d-flex align-items-center">
                     <img src="assets/img/bestseller1.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
                     <div>
                         <div class="review-rating">
@@ -245,50 +241,68 @@ session_start();
                     <div id="map" class="img-popup"><img src="assets/img/review1.jpg"alt="img-fluid" class="reviewer-image mr-3" style="max-width: 70%;margin-top: 5%;margin-left: 17%;"></div>
                 </div>
         </div>
-        
 
-        <div id="reviewsContainer" class="row"></div>
-    </div>
+    <?php include('footer.php'); ?>
 
-    <!-- <script>
-        document.getElementById('reviewForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to update cart count dynamically
+            function updateCartCount() {
+                $.ajax({
+                    url: 'get_cart_count.php',
+                    type: 'GET',
+                    success: function(response) {
+                        $('#cart-count').text(response);
+                    }
+                });
+            }
 
-            const name = document.getElementById('reviewerName').value;
-            const imageUrl = document.getElementById('reviewerImage').value;
-            const rating = document.querySelector('input[name="rating"]:checked').value;
-            const reviewText = document.getElementById('reviewText').value;
+            updateCartCount(); // Call initially on page load
 
-            const ratingStars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+            // Optionally, you can set an interval to update cart count periodically
+            // setInterval(updateCartCount, 30000); // Update every 30 seconds
 
-            const reviewCard = `
-                <div class="col-md-4">
-                    <div class="review-card d-flex align-items-center">
-                        <img src="${imageUrl}" alt="Reviewer Image" class="reviewer-image mr-3">
-                        <div>
-                            <div class="review-rating">
-                                ${ratingStars}
-                            </div>
-                            <div class="review-text mt-2">
-                                "${reviewText}"
-                            </div>
-                            <div class="reviewer-name mt-3">
-                                - ${name}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
+            // Submit review form handler
+            $('#reviewForm').submit(function(event) {
+                event.preventDefault();
 
-            document.getElementById('reviewsContainer').insertAdjacentHTML('beforeend', reviewCard);
+                var reviewerName = $('#reviewerName').val();
+                var reviewerImage = $('#reviewerImage').val();
+                var rating = $('input[name="rating"]:checked').val();
+                var reviewText = $('#reviewText').val();
 
-            document.getElementById('reviewForm').reset();
+                // Assuming AJAX to submit review to backend
+                // Example AJAX call (replace with your actual implementation)
+                $.ajax({
+                    url: 'submit_review.php',
+                    type: 'POST',
+                    data: {
+                        reviewerName: reviewerName,
+                        reviewerImage: reviewerImage,
+                        rating: rating,
+                        reviewText: reviewText
+                    },
+                    success: function(response) {
+                        // Show success message or handle response
+                        alert('Review submitted successfully!');
+                        // Clear form fields
+                        $('#reviewerName').val('');
+                        $('#reviewerImage').val('');
+                        $('input[name="rating"]').prop('checked', false);
+                        $('#reviewText').val('');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error('Error:', error);
+                        alert('Error submitting review. Please try again.');
+                    }
+                });
+            });
         });
-    </script> -->
-<?php
-include('footer.php') ?>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </script>
 </body>
 </html>
