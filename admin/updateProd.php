@@ -16,15 +16,25 @@ if (isset($_POST['update'])) {
 
     // Check if a new image is uploaded
     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == UPLOAD_ERR_OK) {
-        $target_path = "uploads/products/";
+        $target_path = "../assets/img/";
         $target_file = $target_path . basename($_FILES['product_image']['name']);
-        
+
+        // Check if the directory exists and is writable
+        if (!is_dir($target_path) || !is_writable($target_path)) {
+            die("Upload directory does not exist or is not writable.");
+        }
+
         // Move the uploaded file to the target directory
         if (move_uploaded_file($_FILES['product_image']['tmp_name'], $target_file)) {
             $product_image = $_FILES['product_image']['name'];
             $image_updated = true;
         } else {
             echo "Error uploading image.";
+        }
+    } else {
+        // Debugging information for upload error
+        if (isset($_FILES['product_image'])) {
+            echo "Upload Error: " . $_FILES['product_image']['error'] . "<br>";
         }
     }
 
