@@ -1,34 +1,9 @@
 <?php
 session_start();
-include("dbconnect.php");
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $product_name = $_POST['product_name'];
-    $rating = $_POST['rating'];
-    $review = $_POST['review'];
-    $product_image = $_POST['image'];
-    
-    $sql = "INSERT INTO review (name, product_name, rating, review, image) VALUES (?, ?, ?, ?,?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssiss", $name, $product_name, $rating, $review,$product_image);
-
-    if ($stmt->execute()) {
-        echo "<script>
-                alert('New review created successfully');
-                window.location.href = 'review.php';
-              </script>";
-    } else {
-        $signup_error['database'] = "Error: " . $stmt->error;
-        echo "<script>
-                alert('Error: " . $stmt->error . "');
-              </script>";
-    }
-    $stmt->close();
-}
+include "dbconnect.php";
 
 // Fetch 5-star reviews
-$sql = "SELECT * FROM review WHERE rating = 5";
+$sql = "SELECT * FROM review WHERE rating = 5 ORDER BY review_id DESC LIMIT 3";
 $result = $conn->query($sql);
 $reviews = [];
 if ($result->num_rows > 0) {
@@ -58,161 +33,11 @@ $conn->close();
     <title>UMRII</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
-<<<<<<< HEAD
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-=======
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
->>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
-    <style>
-        body {
-            background-color: #BB676B !important;
-        }
-        .form-container {
-            background: #BB676B !important;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-top: 0%;
-        }
-        .review-card {
-            border: 1px solid #dee2e6;
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-            margin-top: 20px;
-            background: #bdadad9e;
-        }
-        .review-card:hover {
-            transform: scale(1.05);
-        }
-        .review-rating {
-            color: #BB676B !important;
-            font-size: 1.2rem;
-        }
-        .review-text {
-            font-style: italic;
-        }
-        .reviewer-name {
-            font-weight: bold;
-        }
-        .reviewer-image {
-            max-width: 80px;
-            border-radius: 50%;
-        }
-        .star-rating {
-            direction: rtl;
-            display: inline-block;
-        }
-        .star-rating input[type="radio"] {
-            display: none;
-        }
-        .star-rating label {
-            color: #bbb;
-            font-size: 2rem;
-            padding: 0;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .star-rating input[type="radio"]:checked ~ label {
-            color: #f8d64e;
-        }
-        .star-rating label:hover,
-        .star-rating label:hover ~ label {
-            color: #f8d64e;
-        }
-        .hero-wrap {
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-wrap::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('assets/img/background1.jpg');
-            background-size: cover;
-            background-position: center;
-<<<<<<< HEAD
-            filter: blur(1px);
-=======
-            filter: blur(1px); /* Adjust the blur intensity as needed */
->>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
-            z-index: -1;
-            padding: 5em 0;
-            margin: 0 5%;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-<<<<<<< HEAD
-        .cart-popup {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-        .cart-popup-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-=======
-        /* The Popup (background) */
-        .cart-popup {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0); /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-        }
-        /* Popup Content */
-        .cart-popup-content {
-            background-color: #fefefe;
-            margin: 15% auto; /* 15% from the top and centered */
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%; /* Could be more or less, depending on screen size */
-            max-width: 400px; /* Set a max-width for better design */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
-        }
-        /* The Close Button */
->>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/review.css">
 </head>
 <body>
     <?php include('navbar.php'); ?>
@@ -230,11 +55,11 @@ $conn->close();
 
     <div class="container mt-5">
         <div class="row">
-<<<<<<< HEAD
+
             <?php foreach ($reviews as $review): ?>
                 <div class="col-md-4">
                     <div class="review-card d-flex align-items-center" style="background:#bdadad9e;">
-                        <img src="assets/img/<?php echo htmlspecialchars($review['image']); ?>" alt="Reviewer Image" class="reviewer-image mr-3">
+                        <img src="uploads/<?php echo htmlspecialchars($review['image']); ?>" alt="Reviewer Image" class="reviewer-image mr-3">
                         <div>
                             <h4 class="mb-0"><?php echo htmlspecialchars($review['product_name']); ?></h4>
                             <div class="review-rating">
@@ -250,57 +75,8 @@ $conn->close();
                     </div>
                 </div>
             <?php endforeach; ?>
-=======
-            <div class="col-md-4">
-                <div class="review-card d-flex align-items-center">
-                    <img src="assets/img/1.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
-                    <div>
-                        <div class="review-rating">
-                            &#9733; &#9733; &#9733; &#9733; &#9734;
-                        </div>
-                        <div class="review-text mt-2">
-                            "This product exceeded my expectations. The quality is top-notch and the customer service was excellent!"
-                        </div>
-                        <div class="reviewer-name mt-3">
-                            - John Doe
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="review-card d-flex align-items-center">
-                    <img src="assets/img/gallery2.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
-                    <div>
-                        <div class="review-rating">
-                            &#9733; &#9733; &#9733; &#9734; &#9734;
-                        </div>
-                        <div class="review-text mt-2">
-                            "Good value for money. I am satisfied with my purchase and would recommend it to others."
-                        </div>
-                        <div class="reviewer-name mt-3">
-                            - Jane Smith
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="review-card d-flex align-items-center">
-                    <img src="assets/img/bestseller1.jpg" alt="Reviewer Image" class="reviewer-image mr-3">
-                    <div>
-                        <div class="review-rating">
-                            &#9733; &#9733; &#9733; &#9733; &#9733;
-                        </div>
-                        <div class="review-text mt-2">
-                            "Absolutely amazing! This product has changed my life. Five stars!"
-                        </div>
-                        <div class="reviewer-name mt-3">
-                            - Alex Johnson
-                        </div>
-                    </div>
-                </div>
-            </div>
->>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
-        </div>
+
+           
     </div>
 
     <div class="container mt-5">
@@ -308,7 +84,7 @@ $conn->close();
             <div class="col-md-6 order-md-last d-flex">
                 <div class="bg-white p-5 contact-form" style="margin-left: 20%; margin-top: -20px;margin-bottom: 25px;">
                     <h2>Submit Your Review</h2>
-                    <form id="reviewForm" method="POST" action="review.php">
+                    <form id="reviewForm" method="POST" action="review_func.php" enctype="multipart/form-data">
                         <div class="form-group">
                             <br>
                             <input type="text" class="form-control" id="reviewerName" name="name" placeholder="Your Name" required>
@@ -351,7 +127,6 @@ $conn->close();
                 <div id="map" class="img-popup"><img src="assets/img/review1.jpg" alt="img-fluid" class="reviewer-image mr-3" style="max-width: 70%;margin-top: 5%;margin-left: 17%;"></div>
             </div>
         </div>
-<<<<<<< HEAD
         <div id="reviewsContainer" class="row"></div>
     </div>
 
@@ -359,9 +134,8 @@ $conn->close();
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-=======
 
-    <?php include('footer.php'); ?>
+
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -385,44 +159,9 @@ $conn->close();
             // Optionally, you can set an interval to update cart count periodically
             // setInterval(updateCartCount, 30000); // Update every 30 seconds
 
-            // Submit review form handler
-            $('#reviewForm').submit(function(event) {
-                event.preventDefault();
-
-                var reviewerName = $('#reviewerName').val();
-                var reviewerImage = $('#reviewerImage').val();
-                var rating = $('input[name="rating"]:checked').val();
-                var reviewText = $('#reviewText').val();
-
-                // Assuming AJAX to submit review to backend
-                // Example AJAX call (replace with your actual implementation)
-                $.ajax({
-                    url: 'submit_review.php',
-                    type: 'POST',
-                    data: {
-                        reviewerName: reviewerName,
-                        reviewerImage: reviewerImage,
-                        rating: rating,
-                        reviewText: reviewText
-                    },
-                    success: function(response) {
-                        // Show success message or handle response
-                        alert('Review submitted successfully!');
-                        // Clear form fields
-                        $('#reviewerName').val('');
-                        $('#reviewerImage').val('');
-                        $('input[name="rating"]').prop('checked', false);
-                        $('#reviewText').val('');
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle errors
-                        console.error('Error:', error);
-                        alert('Error submitting review. Please try again.');
-                    }
-                });
-            });
+            
         });
     </script>
->>>>>>> f549ce123f4d18be8b1fff485115b80fb14df4bd
+
 </body>
 </html>
