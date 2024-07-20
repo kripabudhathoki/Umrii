@@ -14,6 +14,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     <meta name="description" content="">
     <meta name="author" content="">
     <title>UMRII</title>
+    <link rel="stylesheet" href="css/products.css" type="text/css">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png">
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -31,54 +32,6 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
             }
         }
     </script>
-    <style>
-        .card {
-            max-width: 100%; /* Adjust as needed */
-            margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
-
-        .card-img-top {
-            object-fit: cover;
-            height: 200px;
-        }
-
-        .card-body {
-            padding: 1rem;
-        }
-
-        .hero-wrap {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-wrap::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('assets/img/background1.jpg');
-            background-size: cover;
-            background-position: center;
-            filter: blur(1px); /* Adjust the blur intensity as needed */
-            z-index: -1;
-            padding: 5em 0;
-            margin: 0 5%;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-    </style>
 </head>
 <body>
     <?php include('navbar.php'); ?>
@@ -122,7 +75,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                         <div class="card-body" style="margin: 20% 0%;">
                                             <h5 class="card-title"><?php echo $product_name; ?></h5>
                                             <p class="card-text" id="desc_<?php echo $row['pid']; ?>"><?php echo $product_description; ?></p>
-                                            <p class="card-text">Price: $<?php echo $product_price; ?></p>
+                                            <p class="card-text">Price: Rs <?php echo $product_price; ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -131,8 +84,8 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                         <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;"> View Detail</i>
                                     </a>
                                     <a href="add_to_cart.php?pid=<?php echo $row['pid']; ?>" class="btn-icon btn-add-to-cart" title="Add to Cart">
-    <i class="fas fa-cart-plus" style="margin: 0% 35%; font-size: small;"> Add to Cart</i>
-</a>
+                                        <i class="fas fa-cart-plus" style="margin: 0% 35%; font-size: small;"> Add to Cart</i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
