@@ -1,9 +1,9 @@
 <?php
 session_start();
-include("dbconnect.php");
+include "dbconnect.php";
 
 // Fetch 5-star reviews
-$sql = "SELECT * FROM review WHERE rating = 5";
+$sql = "SELECT * FROM review WHERE rating = 5 ORDER BY review_id DESC LIMIT 3";
 $result = $conn->query($sql);
 $reviews = [];
 if ($result->num_rows > 0) {
