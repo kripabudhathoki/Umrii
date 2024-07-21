@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
             <h3><?php echo $product['product_name']; ?></h3>
             <p class="price" style="font-size: x-large;"><span>Rs. <?php echo $product['product_price']; ?></span></p>
             <p><?php echo $product['product_description']; ?></p>
-            <form method="post" action="">
+            <form method="post" action="add_to_cart.php">
                 <div class="row mt-4">
                     <div class="w-100"></div>
                     <div class="input-group col-md-6 d-flex mb-3">

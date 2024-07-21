@@ -141,14 +141,13 @@ if ($uid > 0) {
         margin-bottom: 10px;
     }
 </style>
-
 </head>
 <body>
     <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center; padding: 5em 0; margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
-                    <h1 class="mb-0 bread">My Cart</h1>
+                    <h1 class="mb-0 bread"><b>My Cart</b></h1>
                 </div>
             </div>
         </div>
@@ -206,7 +205,10 @@ if ($uid > 0) {
                             </tbody>
                         </table>
                         <div class="text-right">
+                        <button type="button" id="clearAll" class="btn btn-danger clear-all-btn d-flex justify-content-start">Clear All</button>
                             <strong>Grand Total: <span id="grandTotal">$ <?php echo array_sum(array_column($cart_items, 'total_price')); ?></span></strong>
+                            <a href="checkout.php"><button type="submit" name="checkout" class="btn btn-success d-flex justify-content-center" style="margin-left: 40%;">Proceed to checkout</button></a>
+            
                         </div>
                     </div>
                 </div>
@@ -220,66 +222,83 @@ if ($uid > 0) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-    $(document).ready(function() {
-        function updateTotals(response) {
-            if (response.success) {
-                var cartItemId = response.cartItemId;
-                var $row = $('#cartTable').find('tr[data-cart-item-id="' + cartItemId + '"]');
-                $row.find('.quantity input').val(response.quantity);
-                $row.find('.total').text('$ ' + parseFloat(response.totalPrice).toFixed(0));
-                $('#grandTotal').text('$ ' + parseFloat(response.grandTotal).toFixed(0));
-            }
+   $(document).ready(function() {
+    function updateTotals(response) {
+        if (response.success) {
+            var cartItemId = response.cartItemId;
+            var $row = $('#cartTable').find('tr[data-cart-item-id="' + cartItemId + '"]');
+            $row.find('.quantity input').val(response.quantity);
+            $row.find('.total').text('$ ' + parseFloat(response.totalPrice).toFixed(0));
+            $('#grandTotal').text('$ ' + parseFloat(response.grandTotal).toFixed(0));
         }
+    }
 
-        $('.update-quantity').change(function() {
-            var cartItemId = $(this).data('cart-item-id');
-            var quantity = $(this).val();
-            $.ajax({
-                url: 'update_cart.php',
-                method: 'POST',
-                data: {
-                    cart_item_id: cartItemId,
-                    quantity: quantity
-                },
-                success: function(response) {
-                    response = JSON.parse(response);
-                    updateTotals(response);
-                }
-            });
+    $('.update-quantity').change(function() {
+        var cartItemId = $(this).data('cart-item-id');
+        var quantity = $(this).val();
+        $.ajax({
+            url: 'update_cart.php',
+            method: 'POST',
+            data: {
+                cart_item_id: cartItemId,
+                quantity: quantity
+            },
+            success: function(response) {
+                response = JSON.parse(response);
+                updateTotals(response);
+            }
         });
-
-        $('.remove-item').click(function() {
-    var cartItemId = $(this).data('cart-item-id');
-    $.ajax({
-        url: 'delete_cart_item.php',
-        method: 'POST',
-        data: {
-            cart_item_id: cartItemId
-        },
-        success: function(response) {
-            response = JSON.parse(response);
-            if (response.success) {
-                var $row = $('#cartTable').find('tr[data-cart-item-id="' + cartItemId + '"]');
-                $row.remove();
-                $('#grandTotal').text('$ ' + parseFloat(response.grandTotal).toFixed(0)); 
-                if (response.grandTotal === 0) {
-                    $('#cartTable tbody').html('<tr class="text-center"><td colspan="6">Your cart is empty</td></tr>');
-                }
-                updateCartCount();
-            }
-        }
     });
-}); function updateCartCount() {
-                $.ajax({
-                    url: 'get_cart_count.php', 
-                    type: 'GET',
-                    success: function(response) {
-                        $('#cart-count').text(response); 
+
+    $('.remove-item').click(function() {
+        var cartItemId = $(this).data('cart-item-id');
+        $.ajax({
+            url: 'delete_cart_item.php',
+            method: 'POST',
+            data: {
+                cart_item_id: cartItemId
+            },
+            success: function(response) {
+                response = JSON.parse(response);
+                if (response.success) {
+                    var $row = $('#cartTable').find('tr[data-cart-item-id="' + cartItemId + '"]');
+                    $row.remove();
+                    $('#grandTotal').text('$ ' + parseFloat(response.grandTotal).toFixed(0));
+                    if (response.grandTotal === 0) {
+                        $('#cartTable tbody').html('<tr class="text-center"><td colspan="6">Your cart is empty</td></tr>');
                     }
-                });
+                    updateCartCount();
+                }
             }
-
+        });
     });
+
+    function updateCartCount() {
+        $.ajax({
+            url: 'get_cart_count.php',
+            type: 'GET',
+            success: function(response) {
+                $('#cart-count').text(response);
+            }
+        });
+    }
+
+    $('#clearAll').click(function() {
+        $.ajax({
+            url: 'clear_cart.php',
+            method: 'POST',
+            success: function(response) {
+                response = JSON.parse(response);
+                if (response.success) {
+                    $('#cartTable tbody').html('<tr class="text-center"><td colspan="6">Your cart is empty</td></tr>');
+                    $('#grandTotal').text('$ 0');
+                    updateCartCount();
+                }
+            }
+        });
+    });
+});
+
     </script>
 </body>
 </html>

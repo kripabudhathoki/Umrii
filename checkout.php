@@ -134,13 +134,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                 <input type="text" class="form-control" placeholder="">
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="postcodezip">Landline</label>
-                <input type="text" class="form-control" placeholder="">
-              </div>
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
                 <label for="phone">Phone *</label>
                 <input type="text" class="form-control" placeholder="">
@@ -162,7 +156,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
           <h3>Payment Method</h3>
           <div class="payment-method-buttons">
             <a href="#" class="btn btn-primary py-3 px-4">Cash on Delivery</a>
-            <a href="#" class="btn btn-primary py-3 px-4">Online Payment</a>
+            <a href="#" class="btn btn-primary py-3 px-3"><img src="assets/img/khaltilogo.svg" style="height: 35px;"></a>
           </div>
         </div>
       </div>
