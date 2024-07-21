@@ -1,17 +1,8 @@
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@OLD_COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 -- Database: `umrii`
 
 -- Table structure for table `admin`
 CREATE TABLE `admin` (
-  `admin_id` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(200) NOT NULL,
   PRIMARY KEY (`admin_id`)
@@ -24,6 +15,42 @@ CREATE TABLE `contact` (
   `message` varchar(225) NOT NULL
 );
 
+
+-- Table structure for table `users`
+CREATE TABLE `users` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `fname` varchar(20) NOT NULL,
+  `lname` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` bigint(15) NOT NULL,
+  `password` varchar(225) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  PRIMARY KEY (`uid`)
+);
+
+-- Table structure for table `products`
+CREATE TABLE `products` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `product_name` varchar(50) NOT NULL,
+  `product_description` varchar(100) NOT NULL,
+  `product_price` decimal(10,2) NOT NULL,
+  `product_image` varchar(255) NOT NULL,
+  isFeatured int(11) NOT NULL,
+  PRIMARY KEY (`pid`)
+);
+
+-- Table structure for table `checkouts`
+CREATE TABLE `checkouts` (
+  `checkout_id` int(11) NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` bigint(15) NOT NULL,
+  `address` varchar(100) NOT NULL,
+  PRIMARY KEY (`checkout_id`)
+);
+
 -- Table structure for table `orders`
 CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -33,9 +60,10 @@ CREATE TABLE `orders` (
   `total_price` double NOT NULL,
   `status` varchar(20) NOT NULL,
   `is_paid` bit(1) NOT NULL,
+  `payment_method` varchar(20),
   PRIMARY KEY (`order_id`),
-  FOREIGN KEY (`uid`) REFERENCES `users`(`uid`)
-  FOREIGN KEY (`checkout_id`) REFERENCES `checkout_id`(`checkout_id`)
+  FOREIGN KEY (`uid`) REFERENCES `users`(`uid`),
+  FOREIGN KEY (`checkout_id`) REFERENCES `checkouts`(`checkout_id`)
 );
 
 -- Table structure for table `order_items`
@@ -44,38 +72,19 @@ CREATE TABLE `order_items` (
   `order_id` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `unit_price` decimal(10,0) NOT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`order_item_id`),
   FOREIGN KEY (`order_id`) REFERENCES `orders`(`order_id`),
   FOREIGN KEY (`pid`) REFERENCES `products`(`pid`)
 );
 
--- Table structure for table `products`
-CREATE TABLE `products` (
-  `pid` int(11) NOT NULL,
-  `product_name` varchar(50) NOT NULL,
-  `product_description` varchar(100) NOT NULL,
-  `product_price` decimal(10,0) NOT NULL,
-  `product_image` varchar(22) NOT NULL,
-  PRIMARY KEY (`pid`)
-);
 
--- Table structure for table `users`
-CREATE TABLE `users` (
-  `uid` int(11) NOT NULL,
-  `fname` varchar(20) NOT NULL,
-  `lname` varchar(20) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `phone` bigint(225) NOT NULL,
-  `password` varchar(225) NOT NULL,
-  `address` varchar(20) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  PRIMARY KEY (`uid`)
-);
+
+
 
 -- Table structure for table `cart`
 CREATE TABLE `cart` (
-   `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
   `uid` int(11) NOT NULL,
   `created_at` datetime(6) NOT NULL,
   PRIMARY KEY (`cart_id`),
@@ -88,23 +97,17 @@ CREATE TABLE `cart_items` (
   `cart_id` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `unit_price` decimal(10,0) NOT NULL,
+  `unit_price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`cart_item_id`),
   FOREIGN KEY (`cart_id`) REFERENCES `cart`(`cart_id`),
   FOREIGN KEY (`pid`) REFERENCES `products`(`pid`)
 );
 
-CREATE TABLE `checkouts` (
-  `checkout_id` int(11) NOT NULL,
-  `first_name` varchar(20) NOT NULL,
-  `last_name` varchar(20) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `phone` bigint(225) NOT NULL,
-  `address` varchar(20) NOT NULL,
-  PRIMARY KEY (`checkout_id`)
-);
+
+
+-- Table structure for table `review`
 CREATE TABLE `review` (
-  `review_id` int(11) NOT NULL,
+  `review_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,
   `product_name` varchar(30) NOT NULL,
   `rating` int(11) NOT NULL,
@@ -117,7 +120,7 @@ CREATE TABLE `review` (
 
 -- AUTO_INCREMENT for table `admin`
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- AUTO_INCREMENT for table `orders`
 ALTER TABLE `orders`
@@ -125,31 +128,30 @@ ALTER TABLE `orders`
 
 -- AUTO_INCREMENT for table `order_items`
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- AUTO_INCREMENT for table `products`
 ALTER TABLE `products`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT;
 
 -- AUTO_INCREMENT for table `users`
 ALTER TABLE `users`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT;
 
 -- AUTO_INCREMENT for table `cart`
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- AUTO_INCREMENT for table `cart_items`
 ALTER TABLE `cart_items`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- AUTO_INCREMENT for table `checkouts`
 ALTER TABLE `checkouts`
-  MODIFY `checkout_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `checkout_id` int(11) NOT NULL AUTO_INCREMENT;
 
 -- AUTO_INCREMENT for table `review`
 ALTER TABLE `review`
-  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
 
 COMMIT;
-

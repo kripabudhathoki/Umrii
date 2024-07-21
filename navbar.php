@@ -9,6 +9,7 @@
     <link href="css/styles.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
     <!-- Include full version of jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
@@ -31,7 +32,7 @@
 <body>
 <header>
             <h1 class="site-heading text-center text-faded d-none d-lg-block">
-                <div class="topbar bg-primary">
+                <div class="topbar">
                     <div class="d-flex justify-content-between">
                         <div class="top-info ps-2">
                             <small class="me-3"><a class="text-white"><b>Lalitpur, Nepal</b></a></small>
@@ -76,11 +77,11 @@
             </form>
                     <?php if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) : ?>
                         <a href='logout.php' class='position-relative ms-3 my-auto'>
-                            <i class='fas fa-solid fa-right-from-bracket fa-2x'></i>
+                            <i class="fas fa-solid fa-right-from-bracket fa-2x" style="color: var(--bs-link-color);"></i>
                         </a>
                     <?php else : ?>
                         <a href='login.php' class='nav-link text-uppercase'>
-                            <button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756; margin-left: 12px;margin-right: -50px;'><b>Log In</b></button>
+                            <button type='button' class='btn' style='color:#A54A4E; background-color:#e6a756; margin-left: 12px;margin-right: -50px;'><b>Log In</b></button>
                         </a>
                     <?php endif; ?>
                     <?php if (isset($_SESSION['username'])) : ?>

@@ -68,8 +68,13 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
                 </form>
                 <form class="d-flex ms-auto my-auto" action="cart.php" method="POST">
-                    <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-cart4"></i></i></button>
-                </form>
+                <button class="btn btn-outline-light position-relative" type="submit" style="color: #A54A4E;">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
+                        <!-- Cart count will be updated dynamically -->
+                    </span>
+                    <i class="bi bi-cart4"></i>
+                </button>
+            </form>
                 <?php
                     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
                         $loggedin = true;
@@ -150,12 +155,40 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
     </section>
     <!-- Footer-->
-    <footer class="footer text-faded text-center py-5">
-        <div class="container"><p class="m-0 small">Copyright &copy; UMRII 2024</p></div>
-    </footer>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <?php 
+    include('footer.php')
+    ?>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to update cart count dynamically
+            function updateCartCount() {
+                $.ajax({
+                    url: 'get_cart_count.php',
+                    type: 'GET',
+                    success: function(response) {
+                        $('#cart-count').text(response);
+                    }
+                });
+            }
+
+            updateCartCount(); // Call initially on page load
+
+            // Optionally, you can set an interval to update cart count periodically
+            // setInterval(updateCartCount, 30000); // Update every 30 seconds
+
+            
+        });
+    </script>
+
 </body>
 </html>

@@ -1,15 +1,47 @@
+<?php
+
+    session_start();
+
+
+// Check if the user is logged in
+$is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+$username = $is_logged_in ? $_SESSION['username'] : 'Guest';
+
+include('dbconnect.php');
+
+
+// Fetch orders
+$sql = "SELECT o.order_id, o.order_date, o.status, o.payment_method, o.is_paid, 
+               u.fname, u.lname, u.address, 
+               GROUP_CONCAT(DISTINCT CONCAT(p.product_name, ' (', oi.quantity, ')') ORDER BY p.product_name SEPARATOR ', ') AS product_details
+        FROM orders o
+        JOIN users u ON o.uid = u.uid
+        JOIN order_items oi ON o.order_id = oi.order_id
+        JOIN products p ON oi.pid = p.pid
+        GROUP BY o.order_id, u.fname, u.lname, u.address, o.status, o.payment_method, o.is_paid, o.order_date
+        ORDER BY o.order_date DESC";
+
+$result = $conn->query($sql);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
     <title>UMRII</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet"/>
+
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
     <style>
         h5 {
             font-size: 24px;
@@ -50,27 +82,22 @@
     </style>
 </head>
 <body>
-    <?php
-    include('navbar.php')
-    ?>
-    <div class="myorders" style="margin: 0 100px;">
-    <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
-        <div class="container">
-            <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
-                <div class="col-md-9 text-center">
-                    <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
-                    <h1 class="mb-0 bread"><b>My Order</b></h1>
+    <?php include('navbar.php'); ?>
+
+    <div class="myorders">
+        <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
+            <div class="container">
+                <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
+                    <div class="col-md-9 text-center">
+                        <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
+                        <h1 class="mb-0 bread"><b>My Order</b></h1>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-        <!-- <div class="alert alert-success text-center" role="alert">
-            Order placed successfully!
-        </div> -->
-
-        <table class="table table-hover table-bordered text-center">
-            <thead class="thead-dark">
+        <table class="table table-hover table-bordered text-center" style="width: 88%;margin-bottom: 1rem;color: #212529;margin:2em 5em;">
+            <thead class="" style="background: #bfaeae;">
                 <tr>
                     <th>Create Date</th>
                     <th>Status</th>
@@ -81,56 +108,69 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>2024-07-13</td>
-                    <td>Shipped</td>
-                    <td>John Doe</td>
-                    <td>123 Main St, Anytown, USA</td>
-                    <td>Credit Card</td>
-                    <td>
-                        <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#details-1" aria-expanded="false" aria-controls="details-1">
-                            View Details
-                        </button>
-                    </td>
-                </tr>
-                <tr class="collapse" id="details-1">
-                    <td colspan="6">
-                        <table class="table table-sm table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Product Image</th>
-                                    <th>Product Name</th>
-                                    <th>Quantity</th>
-                                    <th>Unit Price</th>
-                                    <th>Subtotal</th>
+            <?php if ($result->num_rows > 0): ?>
+                            <?php while ($row = $result->fetch_assoc()): ?>
+                                <tr style="background: azure;">
+                                    <td><?php echo date('Y-m-d', strtotime($row['order_date'])); ?></td>
+                                    <td><?php echo $row['status']; ?></td>
+                                    <td><?php echo $row['fname'] . ' ' . $row['lname']; ?></td>
+                                    <td><?php echo $row['address']; ?></td>
+                                    <td><?php echo $row['payment_method']; ?></td>
+                                    <td>
+                                        <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#details-<?php echo $row['order_id']; ?>" aria-expanded="false" aria-controls="details-<?php echo $row['order_id']; ?>">
+                                            View Details
+                                        </button>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/100" alt="Product Image" style="max-width: 100px; max-height: 100px;"></td>
-                                    <td>Product 1</td>
-                                    <td>2</td>
-                                    <td>Rs 100.00</td>
-                                    <td>Rs 200.00</td>
+                                <tr class="collapse" id="details-<?php echo $row['order_id']; ?>">
+                                    <td colspan="6">
+                                        <table class="table table-sm table-bordered">
+                                            <thead class="" style="background: #bfaeae;">
+                                                <tr>
+                                                <th>Product Image</th>
+                                                    <th>Product Name</th>
+                                                    <th>Quantity</th>
+                                                    <th>Unit Price</th>
+                                                    <th>Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                // Fetch order items for this order
+                                                $orderId = $row['order_id'];
+                                                $itemSql = "SELECT p.product_name, oi.quantity, oi.unit_price, (oi.quantity * oi.unit_price) AS subtotal
+                                                            FROM order_items oi
+                                                            JOIN products p ON oi.pid = p.pid
+                                                            WHERE oi.order_id = $orderId";
+                                                $itemResult = $conn->query($itemSql);
+                                                ?>
+                                                <?php while ($itemRow = $itemResult->fetch_assoc()): ?>
+                                                    <tr style="background: gainsboro;">
+                                                    <td><img src="assets/img/<?php echo $itemRow['product_image'];?>" alt="<?php echo $itemRow['product_name']; ?>" style="width: 100px; height: auto;"></td>
+                                                        <td><?php echo $itemRow['product_name']; ?></td>
+                                                        <td><?php echo $itemRow['quantity']; ?></td>
+                                                        <td>Rs <?php echo number_format($itemRow['unit_price'], 2); ?></td>
+                                                        <td>Rs <?php echo number_format($itemRow['subtotal'], 2); ?></td>
+                                                    </tr>
+                                                <?php endwhile; ?>
+                                            </tbody>
+                                        </table>
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td><img src="https://via.placeholder.com/100" alt="Product Image" style="max-width: 100px; max-height: 100px;"></td>
-                                    <td>Product 2</td>
-                                    <td>1</td>
-                                    <td>Rs 150.00</td>
-                                    <td>Rs 150.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <!-- Repeat for more orders as needed -->
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6">No orders found</td>
+                            </tr>
+                        <?php endif; ?>
             </tbody>
         </table>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

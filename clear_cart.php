@@ -1,40 +1,32 @@
 <?php
+// Include database connection
+include('dbconnect.php');
+
 session_start();
-include 'dbconnect.php';
+$uid = $_SESSION['uid'];
 
-$uid = isset($_SESSION['uid']) ? $_SESSION['uid'] : 0;
+// Fetch the most recent cart for the user
+$stmt = $conn->prepare("SELECT cart_id FROM cart WHERE uid = ? ORDER BY created_at DESC LIMIT 1");
+$stmt->bind_param('i', $uid);
+$stmt->execute();
+$result = $stmt->get_result();
+$cart = $result->fetch_assoc();
 
-$response = ['success' => false];
+if ($cart) {
+    $cart_id = $cart['cart_id'];
 
-if ($uid > 0) {
-    // Get the cart_id for the current user
-    $query = "SELECT cart_id FROM cart WHERE uid = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $uid);
-    $stmt->execute();
-    $stmt->bind_result($cart_id);
-    $stmt->fetch();
-    $stmt->close();
+    // Delete all items from the cart
+    $stmt_items = $conn->prepare("DELETE FROM cart_items WHERE cart_id = ?");
+    $stmt_items->bind_param('i', $cart_id);
+    $stmt_items->execute();
+    $stmt_items->close();
 
-    if ($cart_id) {
-        // Delete all items in the cart
-        $query = "DELETE FROM cart_items WHERE cart_id = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $cart_id);
-        $stmt->execute();
-        $stmt->close();
-
-        // Delete the cart entry
-        $query = "DELETE FROM cart WHERE cart_id = ? AND uid = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("ii", $cart_id, $uid);
-        if ($stmt->execute()) {
-            $response['success'] = true;
-            $response['grandTotal'] = 0;
-        }
-        $stmt->close();
-    }
+    // Delete the cart itself
+    $stmt_cart = $conn->prepare("DELETE FROM cart WHERE cart_id = ?");
+    $stmt_cart->bind_param('i', $cart_id);
+    $stmt_cart->execute();
+    $stmt_cart->close();
 }
 
-echo json_encode($response);
+$stmt->close();
 ?>
