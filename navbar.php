@@ -86,7 +86,7 @@
                     <?php endif; ?>
                     <?php if (isset($_SESSION['username'])) : ?>
                         <a class="nav-link">
-                            <i class="bi bi-person"></i> <?= $_SESSION['username']; ?>
+                        <i class="bi bi-person"></i> <?= $_SESSION['username']; ?>
                         </a>
                     <?php endif; ?>
                 </div>

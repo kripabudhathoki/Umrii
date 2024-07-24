@@ -40,7 +40,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
                 <div class="col-md-9 text-center">
                     <p class="breadcrumbs"><span class="mr-2"><a></a></span> <span></span></p>
-                    <h1 class="mb-0 bread">Product</h1>
+                    <h1 class="mb-0 bread"><b>Product</b></h1>
                 </div>
             </div>
         </div>

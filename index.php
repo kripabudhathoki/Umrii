@@ -105,7 +105,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                         <span class="section-heading-lower" style="color: white;"><b>Worth Drinking</b></span>
                     </h2>
                     <p class="mb-3" style="color: white;">Every cup of our quality refreshing summer drinks starts with locally sourced, hand picked ingredients. Once you try it, our drinks will be a blissful addition to your everyday summer routine - we guarantee it!</p>
-                    <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" style="color: white;" href="product.php"><b>Visit Us Today!</b></a></div>
+                    <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" style="color: white;" href="index.php"><b>Visit Us Today!</b></a></div>
                 </div>
             </div>
         </div>

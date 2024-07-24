@@ -10,7 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" rel="stylesheet">
     <style>
@@ -89,11 +91,19 @@
 <body>
 <?php include('navbar.php'); ?>
 
-<div class="hero-wrap">
+<div class="hero-wrap" style="
+    background-image: url(assets/img/background1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding: 5em 0;
+    margin: 0 5%;
+    z-index: -1;
+">
   <div class="container">
     <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
       <div class="col-md-9 text-center">
-        <h1 class="mb-0 bread">Checkout</h1>
+        <h1 class="mb-0 bread"><b>Checkout</b></h1>
       </div>
     </div>
   </div>
@@ -103,9 +113,9 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-xl-7 col-lg-8 col-md-10">
-        <form id="billing-form" class="billing-form" method="POST" action="process_payment.php">
+        <form id="billing-form" class="bg-white p-5 contact-form" method="POST" action="process_payment.php" style="margin-top: 5%;">
           <h3 class="billing-heading">Billing Details</h3>
-          <div class="row">
+          <div class="row block-9">
             <div class="col-md-6">
               <div class="form-group">
                 <label for="firstname">First Name*</label>
