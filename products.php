@@ -83,9 +83,12 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                     <a href="product-detail.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="View Details">
                                         <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;"> View Detail</i>
                                     </a>
-                                    <a href="add_to_cart.php?pid=<?php echo $row['pid']; ?>" class="btn-icon btn-add-to-cart" title="Add to Cart">
-                                        <i class="fas fa-cart-plus" style="margin: 0% 35%; font-size: small;"> Add to Cart</i>
-                                    </a>
+                                    <a href="#" class="btn-icon btn-add-to-cart" data-pid="<?php echo $row['pid']; ?>" title="Add to Cart">
+    <i class="fas fa-cart-plus" style="margin: 0% 35%; font-size: small;"> Add to Cart</i>
+</a>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -118,42 +121,49 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
         <script>
-    $(document).ready(function() {
-        $('.btn-add-to-cart').on('click', function(e) {
-            e.preventDefault();  
-            var url = $(this).attr('href'); 
+ $(document).ready(function() {
+    $('.btn-add-to-cart').on('click', function(e) {
+        e.preventDefault();  
+        var url = 'add_to_cart.php'; 
+        var pid = $(this).data('pid'); // Use data attribute to pass PID
+        var quantity = 1; // Default quantity
 
-            $.ajax({
-                url: url,
-                type: 'GET',
-                dataType: 'json', 
-                success: function(response) {
-                    if (response.success) {
-                        alert(response.message); 
-                        updateCartCount(); 
-                    } else {
-                        alert(response.message); 
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert('Error: ' + error); 
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                pid: pid,
+                quantity: quantity
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert(response.message);
+                    updateCartCount(); 
+                } else {
+                    alert(response.message); 
                 }
-            });
+            },
+            error: function(xhr, status, error) {
+                alert('Error: ' + error); 
+            }
         });
-
-        function updateCartCount() {
-            $.ajax({
-                url: 'get_cart_count.php', 
-                type: 'GET',
-                success: function(response) {
-                    $('#cart-count').text(response); 
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching cart count:', error);
-                }
-            });
-        }
     });
+
+    function updateCartCount() {
+        $.ajax({
+            url: 'get_cart_count.php',
+            type: 'GET',
+            success: function(response) {
+                $('#cart-count').text(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching cart count:', error);
+            }
+        });
+    }
+});
+
 </script>
 
 </body>

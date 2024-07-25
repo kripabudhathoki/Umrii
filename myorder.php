@@ -170,7 +170,8 @@ $result = $conn->query($sql);
             </tbody>
         </table>
     </div>
-
+    <?php
+include('footer.php')?>
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap JS -->

@@ -104,18 +104,16 @@ include '../dbconnect.php';
                             echo "<td>" . $row['phone'] . "</td>";
                             echo "<td>" . $row['payment_method'] . "</td>";
                         ?>
-                         <td>
-    <select name="status" id="status">
-      <option value="<?php echo $row['status']?>">Pending</option>
-      <option value="<?php echo $row['status']?>">Cancelled</option>
-      <option value="<?php echo $row['status']?>">Delivered</option>
-
-
-    </select>
-    </td>
-
-                            <td><a href="javascript:DeleteOrder('<?php echo $row['order_id']; ?>')" class="btn btn-danger">Delete</a></td>
-                           
+                                 <td>
+            <select class="status-select" data-order-id="<?php echo $row['order_id']; ?>">
+                <option value="Pending" <?php echo $row['status'] == 'Pending' ? 'selected' : ''; ?>>Pending</option>
+                <option value="Cancelled" <?php echo $row['status'] == 'Cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+                <option value="Delivered" <?php echo $row['status'] == 'Delivered' ? 'selected' : ''; ?>>Delivered</option>
+            </select>
+        </td>
+        <td>
+            <a href="javascript:DeleteOrder('<?php echo $row['order_id']; ?>')" class="btn btn-danger">Delete</a>
+        </td>
                         <?php
                             echo "</tr>";
                             $i++;
@@ -129,6 +127,37 @@ include '../dbconnect.php';
     </div>
     <?php
     require '../footer.php'; ?>
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.status-select').change(function() {
+        var orderId = $(this).data('order-id');
+        var newStatus = $(this).val();
+
+        $.ajax({
+            url: 'update_status.php', // PHP file to handle the status update
+            type: 'POST',
+            data: {
+                order_id: orderId,
+                status: newStatus
+            },
+            success: function(response) {
+                alert('Status updated successfully!');
+            },
+            error: function(xhr, status, error) {
+                alert('Error updating status: ' + xhr.responseText);
+            }
+        });
+    });
+});
+
+function DeleteOrder(id) {
+    if (confirm("Do you want to delete this order?")) {
+        alert("Order Deleted Successfully");
+        window.location.href = "deleteorder.php?order_id=" + id;
+    }
+}
+</script>
 </body>
 
 </html>
