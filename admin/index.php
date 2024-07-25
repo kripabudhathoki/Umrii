@@ -21,13 +21,15 @@ if (isset($login)) {
 <html lang="en">
 
 <head>
-    <title>Umrii | Admin Login</title>
+    <title>UMRII | Admin Login</title>
+    <link rel="shortcut icon" href="../assets/img/logoW.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Umrii | Log In</title>
+    <title>UMRII | Log In</title>
 </head>
 
 
@@ -41,7 +43,7 @@ if (isset($login)) {
         <h3><a href="#" class="nav-link text-white">
                 <span class="hov" style="color: black; display: flex;justify-content:center;">Admin Login</span>
             </a></h3>
-        <img src="../img/Umrii.png" style="width: 500px;">
+        <img src="../assets/img/logoB.png" style="width: 30%; display: flex;justify-content:center;">
         <!-- <h1 class="text-center" style="    top: 1rem; position:relative;">Welcome to</h1> -->
         <form action="index.php" method="POST">
             <form method="POST" class="mt-2">
