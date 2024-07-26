@@ -43,20 +43,19 @@ $address = $_SESSION['address'];
         <div class="profile-bg"></div>
         <div class="container-profile">
             <div class="profile-image">
-            <img class="intro-img img-fluid mb-3 mb-lg-0 rounded d-flex justify-content-center" src="assets/img/logoW.png" alt="..." style="margin-top: 50%;"/>
-                <i class="fas fa-camera camera"></i>
+            <img class="intro-img img-fluid mb-3 mb-lg-0 rounded d-flex justify-content-center" src="assets/img/logoW.png" alt="..." style="margin-top: 45%;"/>
             </div>
-            <div class="profile-info text-uppercase">
-                <h1 class="first-name"><?php echo htmlspecialchars($firstName); ?></h1>
-                <h1 class="second-name"><?php echo htmlspecialchars($lastName); ?></h1>
+            <div class="profile-info">
+                <h1 class="first-name text-uppercase"><?php echo htmlspecialchars($firstName); ?></h1>
+                <h1 class="second-name text-uppercase"><?php echo htmlspecialchars($lastName); ?></h1>
                 <h2>User Profile</h2>
                 <div class="user-details">
                     <p>Email: <span id="email"><?php echo htmlspecialchars($email); ?></span></p>
-                    <p>First Name: <span id="first-name"><?php echo htmlspecialchars($firstName); ?></span></p>
-                    <p>Last Name: <span id="last-name"><?php echo htmlspecialchars($lastName); ?></span></p>
+                    <!-- <p>First Name: <span id="first-name"><?php echo htmlspecialchars($firstName); ?></span></p>
+                    <p>Last Name: <span id="last-name"><?php echo htmlspecialchars($lastName); ?></span></p> -->
                     <p>Phone Number: <span id="phone-number"><?php echo htmlspecialchars($phoneNumber); ?></span></p>
                     <p>Address: <span id="address"><?php echo htmlspecialchars($address); ?></span></p>
-                    <p>username <span id="username"><?php echo htmlspecialchars($username); ?></span></p>
+                    <p>Username <span id="username"><?php echo htmlspecialchars($username); ?></span></p>
                   </div>
                 <button class="edit-button">Edit Profile</button>
             </div>
