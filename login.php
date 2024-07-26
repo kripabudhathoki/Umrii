@@ -81,6 +81,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['email'] = $user['email'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['uid'] = $user['uid'];
+            $_SESSION['fname'] = $user['fname'];
+            $_SESSION['lname'] = $user['lname'];
+            $_SESSION['phone'] = $user['phone'];
+            $_SESSION['address'] = $user['address'];
             $_SESSION['loggedin'] = true;
             header('Location: index.php');
             exit();
