@@ -43,9 +43,10 @@ $address = $_SESSION['address'];
         <div class="profile-bg"></div>
         <div class="container-profile">
             <div class="profile-image">
+            <img class="intro-img img-fluid mb-3 mb-lg-0 rounded d-flex justify-content-center" src="assets/img/logoW.png" alt="..." style="margin-top: 50%;"/>
                 <i class="fas fa-camera camera"></i>
             </div>
-            <div class="profile-info">
+            <div class="profile-info text-uppercase">
                 <h1 class="first-name"><?php echo htmlspecialchars($firstName); ?></h1>
                 <h1 class="second-name"><?php echo htmlspecialchars($lastName); ?></h1>
                 <h2>User Profile</h2>
