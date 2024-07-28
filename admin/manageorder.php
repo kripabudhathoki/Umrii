@@ -50,7 +50,7 @@ include '../dbconnect.php';
 
 
                 <?php
-                $q = mysqli_query($conn, "SELECT SUM(oi.quantity) AS quantity, oi.unit_price, o.total_price, o.order_id,u.username, CONCAT(c.first_name,' ',c.last_name) AS orderedby, c.address,c.phone, o.payment_method,o.status
+                $q = mysqli_query($conn, "SELECT SUM(oi.quantity) AS quantity, oi.unit_price, o.total_price, o.order_id,u.username, CONCAT(c.first_name,' ',c.last_name) AS orderedby, c.address,c.phone, o.payment_method,o.status,o.is_paid
                 FROM orders o
                 JOIN order_items oi ON oi.order_id = o.order_id
                 JOIN checkouts c ON c.checkout_id = o.checkout_id
@@ -84,6 +84,7 @@ include '../dbconnect.php';
                             <th>Address</th>
                             <th>Phone Number</th>
                             <th>Payment Method</th>
+                            <th>Payment Status</th>
                             <th>Status</th>
                             <th>Delete</th>
                         </tr>
@@ -103,6 +104,7 @@ include '../dbconnect.php';
                             echo "<td>" . $row['address'] . "</td>";
                             echo "<td>" . $row['phone'] . "</td>";
                             echo "<td>" . $row['payment_method'] . "</td>";
+                            echo "<td>" . $row['is_paid'] . "</td>";
                         ?>
                                  <td>
             <select class="status-select" data-order-id="<?php echo $row['order_id']; ?>">

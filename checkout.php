@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    // Redirect to login page if not logged in
+    header('Location: login.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -146,6 +157,7 @@
                 <input type="email" name="email" id="email" class="form-control" placeholder="" required>
               </div>
             </div>
+            <label for="delivery" style="color:#A54A4E;"><b>**Note: Delivery charge will be add automatically i.e Rs. 100 **</b></label>
           </div>
           <div class="cart-detail p-3 p-md-4">
             <h3>Payment Method</h3>

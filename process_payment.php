@@ -2,7 +2,7 @@
 include('dbconnect.php');
 
 function calculateTotalPrice($conn, $uid) {
-    $total_price = 0;
+    $total_price = 100;
     $stmt = $conn->prepare("SELECT cart_id FROM cart WHERE uid = ? ORDER BY created_at DESC LIMIT 1");
     if (!$stmt) {
         die("Error preparing statement: " . $conn->error);

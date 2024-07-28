@@ -186,11 +186,11 @@ if ($uid > 0) {
                                             <td class="product-name">
                                                 <h4><?php echo $item['product_name']; ?></h4>
                                             </td>
-                                            <td class="price">$ <?php echo $item['unit_price']; ?></td>
+                                            <td class="price">Rs. <?php echo $item['unit_price']; ?></td>
                                             <td class="quantity">
                                                 <input type="number" class="form-control update-quantity" data-cart-item-id="<?php echo $item['cart_item_id']; ?>" value="<?php echo $item['quantity']; ?>" min="1">
                                             </td>
-                                            <td class="total">$ <?php echo $item['total_price']; ?></td>
+                                            <td class="total">Rs. <?php echo $item['total_price']; ?></td>
                                         </tr>
                                         <?php
                                     }
@@ -206,7 +206,7 @@ if ($uid > 0) {
                         </table>
                         <div class="text-right">
                         <button type="button" id="clearAll" class="btn btn-danger clear-all-btn d-flex justify-content-start">Clear All</button>
-                            <strong>Grand Total: <span id="grandTotal">$ <?php echo array_sum(array_column($cart_items, 'total_price')); ?></span></strong>
+                            <strong>Grand Total: <span id="grandTotal">Rs. <?php echo array_sum(array_column($cart_items, 'total_price')); ?></span></strong>
                             <a href="checkout.php"><button type="submit" name="checkout" class="btn btn-success d-flex justify-content-center" style="margin-left: 40%;">Proceed to checkout</button></a>
             
                         </div>
@@ -228,8 +228,8 @@ if ($uid > 0) {
             var cartItemId = response.cartItemId;
             var $row = $('#cartTable').find('tr[data-cart-item-id="' + cartItemId + '"]');
             $row.find('.quantity input').val(response.quantity);
-            $row.find('.total').text('$ ' + parseFloat(response.totalPrice).toFixed(0));
-            $('#grandTotal').text('$ ' + parseFloat(response.grandTotal).toFixed(0));
+            $row.find('.total').text('Rs. ' + parseFloat(response.totalPrice).toFixed(0));
+            $('#grandTotal').text('Rs. ' + parseFloat(response.grandTotal).toFixed(0));
         }
     }
 
@@ -263,7 +263,7 @@ if ($uid > 0) {
                 if (response.success) {
                     var $row = $('#cartTable').find('tr[data-cart-item-id="' + cartItemId + '"]');
                     $row.remove();
-                    $('#grandTotal').text('$ ' + parseFloat(response.grandTotal).toFixed(0));
+                    $('#grandTotal').text('Rs. ' + parseFloat(response.grandTotal).toFixed(0));
                     if (response.grandTotal === 0) {
                         $('#cartTable tbody').html('<tr class="text-center"><td colspan="6">Your cart is empty</td></tr>');
                     }
@@ -291,7 +291,7 @@ if ($uid > 0) {
                 response = JSON.parse(response);
                 if (response.success) {
                     $('#cartTable tbody').html('<tr class="text-center"><td colspan="6">Your cart is empty</td></tr>');
-                    $('#grandTotal').text('$ 0');
+                    $('#grandTotal').text('Rs. 0');
                     updateCartCount();
                 }
             }

@@ -164,7 +164,10 @@ if ($signup_success) {
                                     <div class="foot">
                                         <a href="#">Forgot Password?</a>
                                     </div>
-                                </form>
+                                    <div class="foot" style="margin-top:2em">
+                                        <label for="tab-2" >Register Now?</label>
+                                    </div>
+                                </form> 
                             </div>
                             <div class="sign-up-form">
                                 <form id="signup-form" action="" method="POST" onsubmit="return validateSignUp()">
@@ -231,7 +234,7 @@ if ($signup_success) {
                                     <div class="group">
                                         <input type="submit" name="signup" class="button" value="Sign Up">
                                     </div>
-                                    <div class="hr"></div>
+                                    <!-- <div class="hr"></div> -->
                                     <div class="foot">
                                         <label for="tab-1">Already Member?</label>
                                     </div>

@@ -69,6 +69,7 @@ if (isset($_SESSION['uid'])) {
     }
 } else {
     $response = ['success' => false, 'message' => 'User not authenticated'];
+   
 }
 
 // Output JSON response

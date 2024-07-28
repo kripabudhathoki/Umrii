@@ -112,7 +112,7 @@
                     </a>
                 <?php else : ?>
                     <a href='login.php' class='nav-link'>
-                        <button type='button' class='btn btn-warning'><b>Log In</b></button>
+                        <button type='button' class="btn btn-primary" style="color:#A54A4E; background-color:#e6a756;margin-left: 12px; margin-right: -50px;"><b>Log In</b></button>
                     </a>
                 <?php endif; ?>
                 <?php if (isset($_SESSION['username'])) : ?>

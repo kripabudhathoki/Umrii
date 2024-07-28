@@ -11,7 +11,7 @@ include('dbconnect.php');
 
 
 // Fetch orders
-$sql = "SELECT o.order_id, o.order_date, o.status, o.payment_method, o.is_paid, 
+$sql = "SELECT o.order_id, o.order_date, o.status, o.payment_method, o.is_paid,o.total_price, 
               CONCAT(c.first_name,' ',c.last_name) AS username, c.address,c.phone,
                GROUP_CONCAT(DISTINCT CONCAT(p.product_name, ' (', oi.quantity, ')') ORDER BY p.product_name SEPARATOR ', ') AS product_details
         FROM orders o
@@ -105,7 +105,7 @@ $result = $conn->query($sql);
                     <th>Status</th>
                     <th>Name</th>
                     <th>Address</th>
-                    <!-- <th>Phone Number</th> -->
+                    <th>Total Price</th>
                     <th>Payment Method</th>
                     <th>Details</th>
                 </tr>
@@ -118,7 +118,7 @@ $result = $conn->query($sql);
                                     <td><?php echo $row['status']; ?></td>
                                     <td><?php echo $row['username']; ?></td>
                                     <td><?php echo $row['address'] ; ?></td>
-                                    <!-- <td><?php echo $row['phone']; ?></td> -->
+                                    <td><?php echo $row['total_price']; ?></td>
                                     <td><?php echo $row['payment_method']; ?></td>
                                     <td>
                                         <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#details-<?php echo $row['order_id']; ?>" aria-expanded="false" aria-controls="details-<?php echo $row['order_id']; ?>">
@@ -127,7 +127,7 @@ $result = $conn->query($sql);
                                     </td>
                                 </tr>
                                 <tr class="collapse" id="details-<?php echo $row['order_id']; ?>">
-                                    <td colspan="6">
+                                    <td colspan="7">
                                         <table class="table table-sm table-bordered">
                                             <thead class="" style="background: #bfaeae;">
                                                 <tr>

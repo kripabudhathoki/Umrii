@@ -71,18 +71,22 @@ include "dbconnect.php";
         if (!$result) {
             echo "Error: " . $sql . "<br>" . $conn->error;
         } elseif ($result->num_rows > 0) {
-            echo " <div class='hero-wrap' style='background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;'>
-            <div class='container'>
-                <div class='row no-gutters slider-text align-items-center justify-content-center hero-content'>
-                    <div class='col-md-9 text-center'>
-                        <p class='breadcrumbs'><span class='mr-2'><a></a></span> <span></span></p>
-                        <h1 class='mb-0 bread'><b>Search Product</b></h1>
-                    </div>
-                </div>
+            echo "<div class='hero-wrap' style='background-image: url(assets/img/background1.jpg);background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            padding: 5em 0;
+            margin: 0 5%;
+            z-index: -1;'>
+          <div class='container'>
+            <div class='row no-gutters slider-text align-items-center justify-content-center hero-content'>
+              <div class='col-md-9 text-center'>
+                <h1 class='mb-0 bread'><b>Search</b></h1>
+              </div>
             </div>
+          </div>
         </div>";
         
-            echo "<div class='container'>";
+            echo "<div class='container d-flex'>";
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='card'>";
                 echo "<div class='row g-0'>";
@@ -116,6 +120,7 @@ include "dbconnect.php";
     <?php include "footer.php"; ?>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 

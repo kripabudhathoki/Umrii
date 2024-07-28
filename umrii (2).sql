@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2024 at 04:21 AM
+-- Generation Time: Jul 28, 2024 at 07:12 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -57,7 +57,7 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cart_id`, `uid`, `created_at`) VALUES
-(1, 3, '2024-07-12 23:24:47.000000');
+(14, 1, '2024-07-28 22:25:00.000000');
 
 -- --------------------------------------------------------
 
@@ -70,7 +70,7 @@ CREATE TABLE `cart_items` (
   `cart_id` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `unit_price` decimal(10,0) NOT NULL
+  `unit_price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -78,9 +78,43 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`cart_item_id`, `cart_id`, `pid`, `quantity`, `unit_price`) VALUES
-(1, 1, 7, 1, 220),
-(2, 1, 6, 1, 220),
-(3, 1, 6, 1, 220);
+(25, 14, 1, 2, 220.00);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `checkouts`
+--
+
+CREATE TABLE `checkouts` (
+  `checkout_id` int(11) NOT NULL,
+  `first_name` varchar(20) NOT NULL,
+  `last_name` varchar(20) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `phone` bigint(15) NOT NULL,
+  `address` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `checkouts`
+--
+
+INSERT INTO `checkouts` (`checkout_id`, `first_name`, `last_name`, `email`, `phone`, `address`) VALUES
+(1, 'kripa', 'budhathoki', 'kripa.budhathoki10@gmail.com', 9800000002, 'kapan'),
+(2, 'kripa', 'budhathoki', 'kripa.budhathoki10@gmail.com', 9800000002, 'kapan'),
+(3, 'kripa', 'budhathoki', 'kripa.budhathoki10@gmail.com', 9800000002, 'kapan'),
+(4, 'kripa', 'budhathoki', 'kripa.budhathoki10@gmail.com', 9800000002, 'kapan'),
+(5, 'pragati', 'dahal', 'pragatidahal2058@gmail.com', 9800000002, 'bhaktapur'),
+(6, 'pragati', 'dahal', 'pragatidahal2058@gmail.com', 9800000002, 'bhaktapur'),
+(7, 'pragati', 'dahal', 'pragatidahal2058@gmail.com', 9800000002, 'bhaktapur'),
+(8, 'pragati', 'dahal', 'pragatidahal2058@gmail.com', 9800000002, 'bhaktapur'),
+(10, 'pragati', 'dahal', 'pragatidahal2058@gmail.com', 9800000002, 'bhaktapur'),
+(11, 'susmita', 'katuwal', 'k@gmail.com', 9800000002, 'kathmandu'),
+(12, 'susmita', 'katuwal', 'k@gmail.com', 9800000002, 'kathmandu'),
+(13, 'pragati', 'dahal', 'pragatidahal2058@gmail.com', 9800000002, 'bhaktapur'),
+(14, 'pragati', 'dahal', 'pragatidahal2058@gmail.com', 9800000002, 'bhaktapur'),
+(15, 'Kripa', 'Budhathoki', 'kripa.budhathoki10@gmail.com', 9800000002, 'kathmandu'),
+(16, 'Kripa', 'Budhathoki', 'kripa.budhathoki10@gmail.com', 9800000002, 'kathmandu');
 
 -- --------------------------------------------------------
 
@@ -99,10 +133,7 @@ CREATE TABLE `contact` (
 --
 
 INSERT INTO `contact` (`name`, `email`, `message`) VALUES
-('', '', ''),
-('', '', ''),
-('', '', ''),
-('kripa', 'kripak.budhathoki@apexcollege.', 'hiiiii');
+('', '', '');
 
 -- --------------------------------------------------------
 
@@ -114,10 +145,20 @@ CREATE TABLE `orders` (
   `order_id` int(11) NOT NULL,
   `order_date` datetime(6) NOT NULL,
   `uid` int(11) NOT NULL,
+  `checkout_id` int(11) NOT NULL,
   `total_price` double NOT NULL,
   `status` varchar(20) NOT NULL,
-  `is_paid` bit(1) NOT NULL
+  `is_paid` bit(1) NOT NULL,
+  `payment_method` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `order_date`, `uid`, `checkout_id`, `total_price`, `status`, `is_paid`, `payment_method`) VALUES
+(13, '2024-07-28 21:44:25.000000', 2, 14, 640, 'Pending', b'1', 'khalti'),
+(15, '2024-07-28 21:51:28.000000', 1, 16, 540, 'Pending', b'1', 'khalti');
 
 -- --------------------------------------------------------
 
@@ -130,8 +171,18 @@ CREATE TABLE `order_items` (
   `order_id` int(11) NOT NULL,
   `pid` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `unit_price` decimal(10,0) NOT NULL
+  `unit_price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`order_item_id`, `order_id`, `pid`, `quantity`, `unit_price`) VALUES
+(14, 13, 1, 1, 220.00),
+(15, 13, 2, 1, 220.00),
+(18, 15, 1, 1, 220.00),
+(19, 15, 2, 1, 220.00);
 
 -- --------------------------------------------------------
 
@@ -143,8 +194,8 @@ CREATE TABLE `products` (
   `pid` int(11) NOT NULL,
   `product_name` varchar(50) NOT NULL,
   `product_description` varchar(100) NOT NULL,
-  `product_price` decimal(10,0) NOT NULL,
-  `product_image` varchar(22) NOT NULL,
+  `product_price` decimal(10,2) NOT NULL,
+  `product_image` varchar(255) NOT NULL,
   `isFeatured` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -153,9 +204,31 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`pid`, `product_name`, `product_description`, `product_price`, `product_image`, `isFeatured`) VALUES
-(5, 'Peach Iced Tea', 'This peach iced tea is out of this world', 220, '2O0A1243.jpg', 0),
-(6, 'strawberry crush', 'kdfhngviurehgnjlksdhgviyrehgbvkjfdjhnjgkbfydsiu', 220, '2O0A1603.jpg', 1),
-(7, 'mango crush', 'kjdshgifhyrgefkjcvhndfjugvhruejfvjnlkds', 220, '2O0A1302.jpg', 2);
+(1, 'forest fruit', 'Best Seller drink!!', 220.00, '2O0A1294.jpg', 1),
+(2, 'Strawberry Crush', 'Our most demanded product!', 220.00, '2O0A1350.jpg', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `review`
+--
+
+CREATE TABLE `review` (
+  `review_id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `product_name` varchar(30) NOT NULL,
+  `rating` int(11) NOT NULL,
+  `review` varchar(400) NOT NULL,
+  `image` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `review`
+--
+
+INSERT INTO `review` (`review_id`, `name`, `product_name`, `rating`, `review`, `image`) VALUES
+(1, 'kripa', 'forest fruit', 5, 'I loved it!!!!', 'about2.jpg'),
+(2, 'pragati dahal', 'Strawberry Crush', 5, 'wow!! It\'s refreshing!', '2O0A1603.jpg');
 
 -- --------------------------------------------------------
 
@@ -168,9 +241,9 @@ CREATE TABLE `users` (
   `fname` varchar(20) NOT NULL,
   `lname` varchar(20) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `phone` bigint(225) NOT NULL,
+  `phone` bigint(15) NOT NULL,
   `password` varchar(225) NOT NULL,
-  `address` varchar(20) NOT NULL,
+  `address` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -179,7 +252,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`uid`, `fname`, `lname`, `email`, `phone`, `password`, `address`, `username`) VALUES
-(3, 'Kripa', 'Dhungana', 'shushantadhungana0@gmail.com', 9865062545, '$2y$10$0ZP3tYtew3RkQDybjLsqSe88LoYD659pEur99BWIYRBcD0OI65Qvq', 'Boudha', 'Shushanta');
+(1, 'susmita', 'katuwal', 'k@gmail.com', 9800000000, '$2y$10$NnJFU5LrvIn83V8biCjAteRAic6tFuP3Vv1D9MHefZb6k3gTXIqmi', 'kathmandu', 'susmita'),
+(2, 'pragati', 'dahal', 'pragatidahal2058@gmail.com', 9800000002, '$2y$10$FlEfeita2NT3M4UEsPtFfeB8AX30pDqGHOxN/RdY7785.FbL/RYf2', 'bhaktapur', 'pragati');
 
 --
 -- Indexes for dumped tables
@@ -207,11 +281,18 @@ ALTER TABLE `cart_items`
   ADD KEY `pid` (`pid`);
 
 --
+-- Indexes for table `checkouts`
+--
+ALTER TABLE `checkouts`
+  ADD PRIMARY KEY (`checkout_id`);
+
+--
 -- Indexes for table `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
-  ADD KEY `uid` (`uid`);
+  ADD KEY `uid` (`uid`),
+  ADD KEY `checkout_id` (`checkout_id`);
 
 --
 -- Indexes for table `order_items`
@@ -226,6 +307,12 @@ ALTER TABLE `order_items`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`pid`);
+
+--
+-- Indexes for table `review`
+--
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`review_id`);
 
 --
 -- Indexes for table `users`
@@ -247,37 +334,49 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `checkouts`
+--
+ALTER TABLE `checkouts`
+  MODIFY `checkout_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -300,7 +399,8 @@ ALTER TABLE `cart_items`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`);
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`uid`) REFERENCES `users` (`uid`),
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`checkout_id`) REFERENCES `checkouts` (`checkout_id`);
 
 --
 -- Constraints for table `order_items`
