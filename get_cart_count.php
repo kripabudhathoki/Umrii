@@ -17,7 +17,7 @@ if (isset($_SESSION['uid'])) {
     // Output cart count
     echo $row['cart_count'];
 } else {
-    echo 0; // Default to 0 if user is not logged in or no cart items found
+    echo ""; // Default to 0 if user is not logged in or no cart items found
 }
 
 mysqli_close($conn); // Close database connection

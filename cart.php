@@ -143,6 +143,7 @@ if ($uid > 0) {
 </style>
 </head>
 <body>
+<div class="myorders" style="min-height: 100vh;">
     <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center; padding: 5em 0; margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
@@ -215,11 +216,12 @@ if ($uid > 0) {
             </div>
         </div>
     </section>
-
+                            </div>
     <?php include('footer.php'); ?>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
     <script>
    $(document).ready(function() {

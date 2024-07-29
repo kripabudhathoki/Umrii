@@ -5,6 +5,12 @@ session_start();
 $is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
 
+
+if (!$is_logged_in) {
+    header('Location: login.php');
+    exit;
+}
+
 // Include your database connection file
 include "dbconnect.php";
 
@@ -113,7 +119,7 @@ if (mysqli_num_rows($result) > 0) {
         border-radius: 50%;
     }
 </style>
-
+<div class="myorders" style="min-height: 100vh;">
 <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
     <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
@@ -172,7 +178,7 @@ if (mysqli_num_rows($result) > 0) {
         </div>
     </div>
 </section>
-
+</div>
 <?php include('footer.php'); ?>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

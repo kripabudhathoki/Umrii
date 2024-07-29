@@ -38,7 +38,7 @@ $address = $_SESSION['address'];
 </head>
 <body>
     <?php include('navbar.php'); ?>
-
+    <div class="myorders" style="min-height: 100vh;">
     <div class="profile" style="margin-top: 5%; margin-bottom: 5%;">
         <div class="profile-bg"></div>
         <div class="container-profile">
@@ -81,7 +81,7 @@ $address = $_SESSION['address'];
             <button type="button" class="cancel-button">Cancel</button>
         </form>
     </div>
-
+</div>
     <?php include('footer.php'); ?>
     <script>
         document.querySelector('.edit-button').addEventListener('click', function() {

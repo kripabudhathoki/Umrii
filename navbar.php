@@ -47,13 +47,17 @@
             color: #000000; /* Text color on hover */
         }
 
-        /* Toggle button styles */
+
         .navbar-toggler {
-            border-color: #ffffff; /* Border color for the toggle button */
+            border-color: #ffffff;
         }
 
         .navbar-toggler-icon {
-            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="%23ffffff" stroke-width="2" d="M5 7h20M5 15h20M5 23h20"/%3E%3C/svg%3E'); /* White lines for the icon */
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30"%3E%3Cpath stroke="%23ffffff" stroke-width="2" d="M5 7h20M5 15h20M5 23h20"/%3E%3C/svg%3E'); 
+        }
+
+        .dropdown-toggle::after {
+            display: none !important;
         }
     </style>
 </head>
@@ -116,9 +120,15 @@
                     </a>
                 <?php endif; ?>
                 <?php if (isset($_SESSION['username'])) : ?>
-                    <a class="nav-link ">
-                        <i class="bi bi-person"></i> <?= $_SESSION['username']; ?>
-                    </a>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-right: 0; display: flex; align-items: center;">
+                            <i class="bi bi-person"></i> <?= $_SESSION['username']; ?>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="myprofile.php"><i class="bi bi-person-circle"></i> My Profile</a>
+                            <a class="dropdown-item" href="myorder.php"><i class="bi bi-box-seam"></i> My Orders</a>
+                        </div>
+                    </div>
                 <?php endif; ?>
             </div>
         </div>

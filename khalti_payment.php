@@ -9,7 +9,7 @@ if (!$order_id) {
 }
 
 $stmt = $conn->prepare("
-    SELECT o.total_price, c.first_name AS customer_name, c.email AS customer_email, c.phone AS customer_phone 
+    SELECT o.total_price, c.first_name AS customer_name, c.email AS customer_email, c.phone AS customer_phone, o.transaction_id 
     FROM orders o
     JOIN checkouts c ON o.checkout_id = c.checkout_id
     WHERE o.order_id = ?
@@ -34,7 +34,7 @@ $data = [
     'website_url' => 'http://localhost/',
     'amount' => $order['total_price']*10 ,
     'purchase_order_id' => $order_id,
-    'purchase_order_name' => 'Order #' . $order_id,
+    'purchase_order_name' => 'Order #' . $order['transaction_id'],
     'customer_info' => [
         'name' => $order['customer_name'], 
         'email' => $order['customer_email'],

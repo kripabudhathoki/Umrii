@@ -68,7 +68,7 @@ if (isset($_SESSION['uid'])) {
         $response = ['success' => false, 'message' => 'Invalid request: pid or quantity parameter missing'];
     }
 } else {
-    $response = ['success' => false, 'message' => 'User not authenticated'];
+    $response = ['success' => false, 'message' => 'User not authenticated','redirect' => 'login.php'];
    
 }
 

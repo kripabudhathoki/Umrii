@@ -43,6 +43,7 @@ $conn->close();
 <body>
     <?php include('navbar.php'); ?>
 
+<div class="myorders" style="min-height: 100vh;">
     <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
@@ -130,7 +131,8 @@ $conn->close();
         </div>
         <div id="reviewsContainer" class="row"></div>
     </div>
-
+                                </div>
+                                </div>
     <?php include('footer.php') ?>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

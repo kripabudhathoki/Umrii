@@ -32,69 +32,8 @@ while ($row = mysqli_fetch_assoc($result)) {
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <h1 class="site-heading text-center text-faded d-none d-lg-block">
-            <div class="topbar bg-primary">
-                <div class="d-flex justify-content-between">
-                    <div class="top-info ps-2">
-                        <small class="me-3"><a class="text-white"><b>Lalitpur, Nepal</b></a></small>
-                        <small class="me-3"><a class="text-white"><b>umrii.np@gmail.com</b></a></small>
-                    </div>
-                    <div class="top-link pe-2">
-                        <small class="me-3"><a class="text-white"><b>+977 9828884567</b></a></small>
-                    </div>
-                </div>
-            </div>
-            <a href="index.php" class="navbar-brand">
-                <h1 class="display-6"><img src="assets/img/logoW.png" class="main-logo" /></h1>
-            </a>
-        </h1>
-    </header>
-    <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top py-lg-4" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand text-uppercase fw-bold d-lg-none" href="index.html"></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
-                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.php">About</a></li>
-                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="products.php">Products</a></li>
-                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="contact.php">Contact</a></li>
-                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="review.php">Review</a></li>
-                </ul>
-                <form class="d-flex ms-auto my-auto" method="POST" action="search.php"> 
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name = "search">
-                    <button class="btn btn-outline-light" type="submit" style="color: #A54A4E;"><i class="bi bi-search"></i></button>
-                </form>
-                <form class="d-flex ms-auto my-auto" action="cart.php" method="POST">
-                <button class="btn btn-outline-light position-relative" type="submit" style="color: #A54A4E;">
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cart-count">
-                        <!-- Cart count will be updated dynamically -->
-                    </span>
-                    <i class="bi bi-cart4"></i>
-                </button>
-            </form>
-                <?php
-                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-                        $loggedin = true;
-                    } else {
-                        $loggedin = false;
-                    }
-                    if (!$loggedin) {
-                        echo "<a href='login.php' class='nav-link text-uppercase'><button type='button' class='btn btn-primary' style='color:#A54A4E; background-color:#e6a756;margin-left: 12px; margin-right: -50px;'><b>Log In</b></button></a>";
-                    } else {
-                        echo "<a href='logout.php' class='position-relative ms-3 my-auto'><i class='fas fa-solid fa-right-from-bracket fa-2x'></i></a>";
-                    }
-                ?>
-                <a>
-                    <?php if (isset($_SESSION['username'])) {
-                        echo '<a class="nav-link"><i class="bi bi-person"></i>' . " " . $_SESSION['username'] . '</a>';
-                    }
-                    ?>
-            </div>
-        </div>
-    </nav></div>
+    <?php
+    include('navbar.php')?>
     <!--nav end-->
     <section class="page-section clearfix">
         <div class="container">

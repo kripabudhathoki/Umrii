@@ -28,13 +28,14 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
         function limitWords(descriptionElement, limit) {
             var words = descriptionElement.textContent.trim().split(/\s+/);
             if (words.length > limit) {
-                descriptionElement.textContent = words.slice(0, limit).join(" ") + "..."; // Truncate and add ellipsis
+                descriptionElement.textContent = words.slice(0, limit).join(" ") + "...";
             }
         }
     </script>
 </head>
 <body>
     <?php include('navbar.php'); ?>
+    <div class="myorders" style="min-height: 100vh;">
     <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
@@ -102,7 +103,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
             </div>
         </div>
     </section>
-    
+            </div>
     <?php include('footer.php'); ?>
     
     <!-- Bootstrap core JavaScript -->
@@ -141,7 +142,11 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                     alert(response.message);
                     updateCartCount(); 
                 } else {
-                    alert(response.message); 
+                    if (response.redirect) {
+                        window.location.href = response.redirect;
+                    } else {
+                        alert(response.message); 
+                    } 
                 }
             },
             error: function(xhr, status, error) {

@@ -71,7 +71,8 @@ include "dbconnect.php";
         if (!$result) {
             echo "Error: " . $sql . "<br>" . $conn->error;
         } elseif ($result->num_rows > 0) {
-            echo "<div class='hero-wrap' style='background-image: url(assets/img/background1.jpg);background-size: cover;
+            echo "<div class='myorders' style='min-height: 100vh;'>
+            <div class='hero-wrap' style='background-image: url(assets/img/background1.jpg);background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
             padding: 5em 0;
@@ -108,6 +109,7 @@ include "dbconnect.php";
                 echo "</div>";
                 echo "</div>";
             }
+            echo "</div>";
             echo "</div>";
         } else {
             echo "<div class='container'>";

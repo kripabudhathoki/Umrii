@@ -54,6 +54,20 @@ function insertOrderItems($conn, $order_id, $cart_id) {
     $stmt->close();
 }
 
+function generateUniqueId($length = 16) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[random_int(0, $charactersLength - 1)];
+    }
+    
+    return $randomString;
+}
+
+$transaction_id= generateUniqueId();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -82,11 +96,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $status = 'Pending';
         $is_paid = 0;
 
-        $stmt = $conn->prepare("INSERT INTO orders (order_date, uid, checkout_id, total_price, status, is_paid, payment_method) VALUES (NOW(), ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO orders (order_date, uid, checkout_id, total_price, status, is_paid, payment_method, transaction_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?,?)");
         if (!$stmt) {
             die("Error preparing statement: " . $conn->error);
         }
-        $stmt->bind_param('iidsis', $uid, $checkout_id, $total_price, $status, $is_paid, $payment_method);
+        $stmt->bind_param('iidsiss', $uid, $checkout_id, $total_price, $status, $is_paid, $payment_method,$transaction_id);
         if ($stmt->execute() === FALSE) {
             throw new Exception("Error inserting order: " . $stmt->error);
         }

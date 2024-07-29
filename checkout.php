@@ -101,7 +101,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 </head>
 <body>
 <?php include('navbar.php'); ?>
-
+<div class="myorders" style="min-height: 100vh;">
 <div class="hero-wrap" style="
     background-image: url(assets/img/background1.jpg);
     background-size: cover;
@@ -172,12 +172,13 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     </div>
   </div>
 </section>
-
+    </div>
 <?php include('footer.php'); ?>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 <script>
 $(document).ready(function() {

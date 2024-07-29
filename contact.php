@@ -47,6 +47,7 @@ session_start();
             z-index: 1;
         }
     </style>
+    <div class="myorders" style="min-height: 100vh;">
     <div class="hero-wrap"style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
         <div class="container">
             <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
@@ -108,7 +109,7 @@ session_start();
             </div>
         </div>
     </section>
-
+                    </div>
 <?php 
 include('footer.php')
 ?>

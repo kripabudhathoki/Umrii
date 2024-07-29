@@ -318,7 +318,7 @@ a:not([href]):not([class]), a:not([href]):not([class]):hover {
         -ms-flex-pack: center;
         justify-content: center;
         position: relative;
-        margin: 0 67px;
+        margin: 0 5%;
     }
     .carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
       display: block;
@@ -11109,7 +11109,7 @@ p {
   padding-top: 5rem;
   padding-bottom: 5rem;
   background-color: rgba(230, 167, 86, 0.9);
-  margin: 0px 67px;
+  margin: 0 5%;
 }
 .cta .cta-inner {
   position: relative;
@@ -11129,7 +11129,7 @@ p {
 }
 
 .footer { 
-  background-color: transparent;
+  background-color: currentColor;
   
 }
 .socialMediaIcon {
