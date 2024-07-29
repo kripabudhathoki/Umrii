@@ -12,53 +12,15 @@ include "dbconnect.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
-    <style>
-        .card {
-            max-width: 540px;
-            margin: 20px auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+    <link href="css/search.css" rel="stylesheet" />
+    <script>
+        function limitWords(descriptionElement, limit) {
+            var words = descriptionElement.textContent.trim().split(/\s+/);
+            if (words.length > limit) {
+                descriptionElement.textContent = words.slice(0, limit).join(" ") + "...click buy";
+            }
         }
-
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .card-img-top {
-            object-fit: cover;
-            height: 200px;
-        }
-
-        .card-body {
-            padding: 1rem;
-        }
-        .hero-wrap {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-wrap::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('assets/img/background1.jpg');
-            background-size: cover;
-            background-position: center;
-            filter: blur(1px); /* Adjust the blur intensity as needed */
-            z-index: -1;
-            padding: 5em 0;
-            margin: 0 5%;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-    </style>
+    </script>
 </head>
 
 <body>
@@ -118,6 +80,17 @@ include "dbconnect.php";
         }
     }
     ?>
+    <!-- Initialize word limit for product descriptions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var productDescriptions = document.querySelectorAll('.card-text');
+            var wordLimit = 20; // Adjust word limit as needed
+
+            productDescriptions.forEach(function(description) {
+                limitWords(description, wordLimit);
+            });
+        });
+    </script>
 
     <?php include "footer.php"; ?>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
