@@ -24,14 +24,6 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="css/styles.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script>
-        function limitWords(descriptionElement, limit) {
-            var words = descriptionElement.textContent.trim().split(/\s+/);
-            if (words.length > limit) {
-                descriptionElement.textContent = words.slice(0, limit).join(" ") + "...";
-            }
-        }
-    </script>
 </head>
 <body>
     <?php include('navbar.php'); ?>
@@ -76,7 +68,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                         <div class="card-body" style="margin: 20% 0%;">
                                             <h5 class="card-title"><?php echo $product_name; ?></h5>
                                             <p class="card-text" id="desc_<?php echo $row['pid']; ?>"><?php echo $product_description; ?></p>
-                                            <p class="card-text">Price: Rs <?php echo $product_price; ?></p>
+                                            <p class="card-price">Price: Rs <?php echo $product_price; ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -85,11 +77,8 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                         <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;"> View Detail</i>
                                     </a>
                                     <a href="#" class="btn-icon btn-add-to-cart" data-pid="<?php echo $row['pid']; ?>" title="Add to Cart">
-    <i class="fas fa-cart-plus" style="margin: 0% 35%; font-size: small;"> Add to Cart</i>
-</a>
-
-
-
+                                        <i class="fas fa-cart-plus" style="margin: 0% 35%; font-size: small;"> Add to Cart</i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -110,15 +99,23 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
     <script src="js/bootstrap.bundle.min.js"></script>
     <!-- Initialize word limit for product descriptions -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var productDescriptions = document.querySelectorAll('.card-text');
-            var wordLimit = 50; // Adjust word limit as needed
+function limitWords(descriptionElement, limit) {
+    var words = descriptionElement.textContent.trim().split(/\s+/);
+    if (words.length > limit) {
+        descriptionElement.textContent = words.slice(0, limit).join(" ") + "... click view details";
+    }
+}
 
-            productDescriptions.forEach(function(description) {
-                limitWords(description, wordLimit);
-            });
-        });
-    </script>
+document.addEventListener('DOMContentLoaded', function() {
+    var productDescriptions = document.querySelectorAll('.card-text');
+    var wordLimit = 40; // Adjust word limit as needed
+
+    productDescriptions.forEach(function(description) {
+        limitWords(description, wordLimit);
+    });
+});
+</script>
+
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
         <script>
