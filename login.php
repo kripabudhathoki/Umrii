@@ -17,6 +17,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $address = mysqli_real_escape_string($conn, $_POST['signup-address']);
         $username = mysqli_real_escape_string($conn, $_POST['signup-username']);
 
+        if (!preg_match("/^[a-zA-Z]*$/", $fname)) {
+            $signup_error['fname'] = "This field should only contain letters";
+        }
+
+        if (!preg_match("/^[a-zA-Z]*$/", $lname)) {
+            $signup_error['lname'] = "This field should only contain letters";
+        }
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $signup_error['email'] = "Invalid email format";
         }
