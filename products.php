@@ -66,9 +66,9 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                     </div>
                                     <div class="col-md-8 h-100">
                                         <div class="card-body" style="margin: 20% 0%;">
-                                            <h5 class="card-title"><?php echo $product_name; ?></h5>
+                                            <h5 class="card-title"><b><?php echo $product_name; ?></b></h5>
                                             <p class="card-text" id="desc_<?php echo $row['pid']; ?>"><?php echo $product_description; ?></p>
-                                            <p class="card-price">Price: Rs <?php echo $product_price; ?></p>
+                                            <p class="card-price" style="color:#A54A4E;"><b>Price: Rs <?php echo $product_price; ?></b></p>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +108,7 @@ function limitWords(descriptionElement, limit) {
 
 document.addEventListener('DOMContentLoaded', function() {
     var productDescriptions = document.querySelectorAll('.card-text');
-    var wordLimit = 40; // Adjust word limit as needed
+    var wordLimit = 10; // Adjust word limit as needed
 
     productDescriptions.forEach(function(description) {
         limitWords(description, wordLimit);
