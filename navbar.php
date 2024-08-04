@@ -94,7 +94,7 @@
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="index.php">Home</a></li>
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="about.php">About</a></li>
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="products.php">Products</a></li>
-                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="contact.php">Contact</a></li>
+                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="contact.php">Contacts</a></li>
                 <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="review.php">Review</a></li>
             </ul>
             <form class="d-flex ms-lg-3 my-2 my-lg-0" action="search.php" method="POST">

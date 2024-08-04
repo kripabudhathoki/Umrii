@@ -157,7 +157,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                 <input type="email" name="email" id="email" class="form-control" placeholder="" required>
               </div>
             </div>
-            <label for="delivery" style="color:#A54A4E;"><b>**Note: Delivery charge will be add automatically i.e Rs. 100 **</b></label>
+            <label for="delivery" style="color:#A54A4E;"><b>**Note: Delivery charge will be added automatically i.e Rs. 100 **</b></label>
           </div>
           <div class="cart-detail p-3 p-md-4">
             <h3>Payment Method</h3>
@@ -172,7 +172,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     </div>
   </div>
 </section>
-    </div>
+</div>
 <?php include('footer.php'); ?>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -191,23 +191,20 @@ $(document).ready(function() {
 });
 </script>
 <script>
-        $(document).ready(function() {
-           
-            function updateCartCount() {
-                $.ajax({
-                    url: 'get_cart_count.php',
-                    type: 'GET',
-                    success: function(response) {
-                        $('#cart-count').text(response);
-                    }
-                });
+$(document).ready(function() {
+    function updateCartCount() {
+        $.ajax({
+            url: 'get_cart_count.php',
+            type: 'GET',
+            success: function(response) {
+                $('#cart-count').text(response);
             }
-
-            updateCartCount(); s
-
-            
         });
-    </script>
+    }
+
+    updateCartCount();
+});
+</script>
 
 </body>
 </html>
