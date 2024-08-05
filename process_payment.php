@@ -1,6 +1,9 @@
+<!-- main.php -->
 <?php
 session_start();
 require 'dbconnect.php';
+include 'email_service.php';
+
 
 function calculateTotalPrice($conn, $uid) {
     $total_price = 0;
@@ -56,40 +59,13 @@ function insertOrderItems($conn, $order_id, $cart_id) {
 }
 
 function generateUniqueId($length = 16) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[random_int(0, $charactersLength - 1)];
     }
     return $randomString;
-}
-
-function sendConfirmationEmail($email, $first_name, $last_name, $order_id, $transaction_id, $total_price, $payment_method, $address) {
-    $subject = "Order Confirmation - Your Order with Transaction ID $transaction_id";
-    $message = "
-    Hello $first_name $last_name,
-
-    Thank you for your order!
-
-    Your order has been placed successfully. Here are your order details:
-
-    Order ID: $order_id
-    Transaction ID: $transaction_id
-    Total Price: $total_price
-    Payment Method: $payment_method
-    Delivery Address: $address
-
-    We will notify you once your order is shipped.
-
-    Thank you for shopping with us!
-
-    Best regards,
-    UMRII
-    ";
-    $headers = "From: kripa.budhathoki10@gmail.com";
-
-    return mail($email, $subject, $message, $headers);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -105,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $conn->begin_transaction();
     try {
-        // Insert into checkouts
+     
         $stmt = $conn->prepare("INSERT INTO checkouts (first_name, last_name, email, phone, address) VALUES (?, ?, ?, ?, ?)");
         if (!$stmt) {
             die("Error preparing statement: " . $conn->error);
@@ -117,12 +93,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $checkout_id = $stmt->insert_id;
         $stmt->close();
 
-        // Calculate total price
+    
         $total_price = calculateTotalPrice($conn, $uid);
         $status = 'Pending';
         $is_paid = 0;
 
-        // Insert into orders
+       
         $stmt = $conn->prepare("INSERT INTO orders (order_date, uid, checkout_id, total_price, status, is_paid, payment_method, transaction_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?)");
         if (!$stmt) {
             die("Error preparing statement: " . $conn->error);
@@ -134,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $order_id = $stmt->insert_id;
         $stmt->close();
 
-        // Get cart ID
+     
         $stmt = $conn->prepare("SELECT cart_id FROM cart WHERE uid = ? ORDER BY created_at DESC LIMIT 1");
         if (!$stmt) {
             die("Error preparing statement: " . $conn->error);
@@ -146,20 +122,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cart_id = $cart['cart_id'];
         $stmt->close();
 
-        // Insert order items
+       
         insertOrderItems($conn, $order_id, $cart_id);
-
-        // Send confirmation email
-        if (sendConfirmationEmail($email, $first_name, $last_name, $order_id, $transaction_id, $total_price, $payment_method, $address)) {
-            echo "Confirmation email sent.";
-        } else {
-            echo "Failed to send confirmation email.";
-        }
-
         $conn->commit();
         include('clear_cart.php');
         $_SESSION['order_id'] = $order_id;
         if ($payment_method === 'cod') {
+            if (sendOrderConfirmationEmail($conn)) {
+                echo "Confirmation email sent.";
+            } else {
+                echo "Failed to send confirmation email.";
+            }
             header('Location: myorder.php');
         } else {
             $_SESSION['purchase_order_id'] = $order_id;

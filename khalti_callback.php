@@ -1,6 +1,7 @@
 <?php
 
 include('dbconnect.php');
+include('email_service.php');
 
 if (!isset($_GET['status']) || !isset($_GET['purchase_order_id']) || !isset($_GET['purchase_order_name'])) {
     die("Invalid request.");
@@ -20,6 +21,11 @@ if ($order_id) {
         $stmt->bind_param('is', $order_id, $tid);
         $stmt->execute();
         $stmt->close();
+        if (sendOrderConfirmationEmail($conn)) {
+            echo "Confirmation email sent.";
+        } else {
+            echo "Failed to send confirmation email.";
+        }
     } else {
         
         $stmt = $conn->prepare("UPDATE orders SET is_paid = 0, status = 'Failed' WHERE order_id = ? and transaction_id= ?");
