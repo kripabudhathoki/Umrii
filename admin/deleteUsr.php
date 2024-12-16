@@ -1,6 +1,6 @@
 <?php
 include '../dbconnect.php';
-$uid = $_GET['id'];
+$uid = $_GET['uid'];
 
 $q = mysqli_query($conn, "DELETE FROM users where uid='$uid'");
 

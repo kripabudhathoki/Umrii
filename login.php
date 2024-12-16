@@ -170,7 +170,7 @@ if ($signup_success) {
                                     </div>
                                     <div class="hr"></div>
                                     <div class="foot">
-                                        <a href="#">Forgot Password?</a>
+                                        <a href="forgot_password.php">Forgot Password?</a>
                                     </div>
                                     <div class="foot" style="margin-top:2em">
                                         <label for="tab-2" >Register Now?</label>

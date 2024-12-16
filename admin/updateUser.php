@@ -52,7 +52,9 @@ $res = mysqli_fetch_array($q);
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Umrii | Update User</title>
+    <title>UMRII | Update User</title>
+    <link rel="shortcut icon" href="../assets/img/logoW.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />

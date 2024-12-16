@@ -9,7 +9,9 @@ include '../dbconnect.php';
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Umrii | Manage User</title>
+    <title>UMRII | Manage User</title>
+    <link rel="shortcut icon" href="../assets/img/logoW.png" type="image/x-icon">
+    <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
@@ -55,10 +57,10 @@ include '../dbconnect.php';
                 } else {
                 ?>
                     <script>
-                        function DeleteUser(id) {
+                        function DeleteUser(uid) {
                             if (confirm("Do you want to delete this user?")) {
                                 alert("User Deleted Successfully")
-                                window.location.href = "deleteUsr.php?id=" + id;
+                                window.location.href = "deleteUsr.php?uid=" + uid;
                             }
                         }
                     </script>
@@ -74,7 +76,6 @@ include '../dbconnect.php';
                             <th>Username</th>
                             <th>Address</th>
                             <th>Contact</th>
-                            <th>Password</th>
                             <th>Delete</th>
                             <th>Update</th>
                         </tr>
@@ -89,7 +90,6 @@ include '../dbconnect.php';
                             echo "<td>" . $row['username'] . "</td>";
                             echo "<td>" . $row['address'] . "</td>";
                             echo "<td>" . $row['phone'] . "</td>";
-                            echo "<td>" . $row['password'] . "</td>";
                         ?>
 
                             <td><a href="javascript:DeleteUser('<?php echo $row['uid']; ?>')" class="btn btn-danger">Delete</a></td>

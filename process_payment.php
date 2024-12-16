@@ -1,8 +1,12 @@
+<!-- main.php -->
 <?php
-include('dbconnect.php');
+session_start();
+require 'dbconnect.php';
+include 'email_service.php';
+
 
 function calculateTotalPrice($conn, $uid) {
-    $total_price = 100;
+    $total_price = 0;
     $stmt = $conn->prepare("SELECT cart_id FROM cart WHERE uid = ? ORDER BY created_at DESC LIMIT 1");
     if (!$stmt) {
         die("Error preparing statement: " . $conn->error);
@@ -55,18 +59,14 @@ function insertOrderItems($conn, $order_id, $cart_id) {
 }
 
 function generateUniqueId($length = 16) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
     $randomString = '';
-    
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[random_int(0, $charactersLength - 1)];
     }
-    
     return $randomString;
 }
-
-$transaction_id= generateUniqueId();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $first_name = $_POST['first_name'];
@@ -76,11 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $payment_method = $_POST['payment_method'];
 
-    session_start();
     $uid = $_SESSION['uid'];
+    $transaction_id = generateUniqueId();
 
     $conn->begin_transaction();
     try {
+     
         $stmt = $conn->prepare("INSERT INTO checkouts (first_name, last_name, email, phone, address) VALUES (?, ?, ?, ?, ?)");
         if (!$stmt) {
             die("Error preparing statement: " . $conn->error);
@@ -92,21 +93,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $checkout_id = $stmt->insert_id;
         $stmt->close();
 
+    
         $total_price = calculateTotalPrice($conn, $uid);
         $status = 'Pending';
         $is_paid = 0;
 
-        $stmt = $conn->prepare("INSERT INTO orders (order_date, uid, checkout_id, total_price, status, is_paid, payment_method, transaction_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?,?)");
+       
+        $stmt = $conn->prepare("INSERT INTO orders (order_date, uid, checkout_id, total_price, status, is_paid, payment_method, transaction_id) VALUES (NOW(), ?, ?, ?, ?, ?, ?, ?)");
         if (!$stmt) {
             die("Error preparing statement: " . $conn->error);
         }
-        $stmt->bind_param('iidsiss', $uid, $checkout_id, $total_price, $status, $is_paid, $payment_method,$transaction_id);
+        $stmt->bind_param('iidsiss', $uid, $checkout_id, $total_price, $status, $is_paid, $payment_method, $transaction_id);
         if ($stmt->execute() === FALSE) {
             throw new Exception("Error inserting order: " . $stmt->error);
         }
         $order_id = $stmt->insert_id;
         $stmt->close();
 
+     
         $stmt = $conn->prepare("SELECT cart_id FROM cart WHERE uid = ? ORDER BY created_at DESC LIMIT 1");
         if (!$stmt) {
             die("Error preparing statement: " . $conn->error);
@@ -118,21 +122,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $cart_id = $cart['cart_id'];
         $stmt->close();
 
+       
         insertOrderItems($conn, $order_id, $cart_id);
-
+        $conn->commit();
+        include('clear_cart.php');
+        $_SESSION['order_id'] = $order_id;
         if ($payment_method === 'cod') {
-            $conn->commit();
-            include('clear_cart.php');
+            if (sendOrderConfirmationEmail($conn)) {
+                echo "Confirmation email sent.";
+            } else {
+                echo "Failed to send confirmation email.";
+            }
             header('Location: myorder.php');
-            exit();
         } else {
-            $conn->commit();
-            include('clear_cart.php');
-            $_SESSION['order_id'] = $order_id;
             $_SESSION['purchase_order_id'] = $order_id;
             header('Location: khalti_payment.php?order_id=' . $order_id);
-            exit();
         }
+        exit();
     } catch (Exception $e) {
         $conn->rollback();
         echo "Error: " . $e->getMessage();
