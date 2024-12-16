@@ -1268,6 +1268,7 @@ progress {
   .col-md-6 {
     flex: 0 0 auto;
     width: 50%;
+    margin-bottom: 20px;
   }
   .col-md-7 {
     flex: 0 0 auto;
@@ -4388,6 +4389,7 @@ textarea.form-control-lg {
   color: var(--bs-card-cap-color);
   background-color: var(--bs-card-cap-bg);
   border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  
 }
 .card-footer:last-child {
   border-radius: 0 0 var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius);

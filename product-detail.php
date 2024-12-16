@@ -85,7 +85,7 @@ if (mysqli_num_rows($result) > 0) {
     padding: 0.1em;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 80%;
+    height: 90%;
     margin-top: 5%;
 }
 
