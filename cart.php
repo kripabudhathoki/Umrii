@@ -27,6 +27,7 @@ if ($uid > 0) {
 <head>
     <title>UMRII - My Cart</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
+    <link rel="stylesheet" href ="css/cart.css">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -35,112 +36,7 @@ if ($uid > 0) {
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <style>
-    /* Hero Section */
-    .hero-wrap {
-        position: relative;
-        overflow: hidden;
-    }
-    .hero-wrap::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('assets/img/background1.jpg');
-        background-size: cover;
-        background-position: center;
-        filter: blur(1px);
-        z-index: -1;
-        padding: 5em 0;
-        margin: 0 5%;
-    }
-    .hero-content {
-        position: relative;
-        z-index: 1;
-    }
 
-    /* Cart Popup */
-    .cart-popup {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-    .cart-popup-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 400px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-    .close:hover, .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    /* Table Styles */
-    .table {
-        width: 100%;
-        margin-bottom: 1rem;
-        color: #212529;
-    }
-    .table th, .table td {
-        padding: 0.75rem;
-        vertical-align: top;
-        border-top: 1px solid #dee2e6;
-    }
-    .table thead th {
-        vertical-align: bottom;
-        border-bottom: 2px solid #dee2e6;
-    }
-    .table tbody + tbody {
-        border-top: 2px solid #dee2e6;
-    }
-    .table .table {
-        background-color: #fff;
-    }
-    .table-sm th, .table-sm td {
-        padding: 0.3rem;
-    }
-    .table-bordered {
-        border: 1px solid #dee2e6;
-    }
-    .table-bordered th, .table-bordered td {
-        border: 1px solid #dee2e6;
-    }
-    .table-bordered thead th, .table-bordered thead td {
-        border-bottom-width: 2px;
-    }
-
-    .text-center {
-        text-align: center !important;
-    }
-    .text-right {
-        text-align: right !important;
-    }
-
-    .clear-all-btn {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-</style>
 </head>
 <body>
 <div class="myorders" style="min-height: 100vh;">
@@ -182,7 +78,7 @@ if ($uid > 0) {
                                                 </button>
                                             </td>
                                             <td class="image-prod">
-                                                <img src="assets/img/<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?>" style="height: 100px; width: 100px;">
+                                                <img src="assets/img/<?php echo $item['product_image']; ?>" alt="<?php echo $item['product_name']; ?>" style="height: 150px; width: 100px;">
                                             </td>
                                             <td class="product-name">
                                                 <h4><?php echo $item['product_name']; ?></h4>

@@ -103,15 +103,15 @@ $conn->close();
                         <div class="form-group">
                             <label for="reviewRating" class="mr-3">Rating:</label>
                             <div class="star-rating">
-                                <input type="radio" id="5-star" name="rating" value="5">
+                                <input type="radio" id="5-star" name="rating" value="5" required>
                                 <label for="5-star" class="star">&#9733;</label>
-                                <input type="radio" id="4-star" name="rating" value="4">
+                                <input type="radio" id="4-star" name="rating" value="4" required>
                                 <label for="4-star" class="star">&#9733;</label>
-                                <input type="radio" id="3-star" name="rating" value="3">
+                                <input type="radio" id="3-star" name="rating" value="3" required>
                                 <label for="3-star" class="star">&#9733;</label>
-                                <input type="radio" id="2-star" name="rating" value="2">
+                                <input type="radio" id="2-star" name="rating" value="2" required>
                                 <label for="2-star" class="star">&#9733;</label>
-                                <input type="radio" id="1-star" name="rating" value="1">
+                                <input type="radio" id="1-star" name="rating" value="1" required>
                                 <label for="1-star" class="star">&#9733;</label>
                             </div>
                         </div>
