@@ -79,7 +79,7 @@ function sendOrderConfirmationEmail($conn) {
     Best regards,
     UMRII
     ";
-    $headers = "From: kripa.budhathoki10@gmail.com";
+    $headers = "From: shushantadhungana0@gmail.com";
 
     return mail($email, $subject, $message, $headers);
 }

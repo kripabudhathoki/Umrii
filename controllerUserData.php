@@ -44,7 +44,7 @@ $errors = array();
             if($run_query){
                 $subject = "Password Reset Code";
                 $message = "Your password reset code is $code";
-                $sender = "From: umrii.np@gmail.com";
+                $sender = "From: shushantadhungana0@gmail.com";
                 if(mail($email, $subject, $message, $sender)){
                     $info = "We've sent a password reset otp to your email - $email";
                     $_SESSION['info'] = $info;

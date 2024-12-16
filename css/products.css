@@ -1,11 +1,18 @@
 .card {
     max-width: 100%; /* Adjust as needed */
-    margin: 20px auto;
+    /* margin: 20px auto; */
+    height: 450px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: transform 0.3s;
 }
 
-.card:hover {
+.card img {
+    width: 100%;       /* Ensures the image takes up the full width of the container */
+    height: 250px;     /* Sets a fixed height */
+    object-fit: cover; /* Crops the image to fit within the dimensions */
+}
+
+.card:hover {   
     transform: scale(1.02);
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
@@ -16,7 +23,10 @@
 }
 
 .card-body {
-    padding: 1rem;
+    /* padding: 1rem; */
+    overflow: hidden;       /* Ensures content doesn’t overflow */
+    text-overflow: ellipsis;
+    align-items: center;
 }
 
 .hero-wrap {
@@ -43,4 +53,10 @@
 .hero-content {
     position: relative;
     z-index: 1;
+}
+.card-footer{
+    display: flex;
+    flex-direction: column;   /* Aligns buttons vertically */
+    align-items: center;  /* Aligns buttons to the left */
+    gap: 5px;
 }

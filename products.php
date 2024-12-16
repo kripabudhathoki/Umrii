@@ -4,6 +4,16 @@ session_start();
 // Check if the user is logged in
 $is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
+
+// Set the number of products to show per page
+$productsPerPage = 6;
+
+// Get the current page number from the URL, default 1 
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+// Calculate the offset based on the current page
+$offset = ($page - 1) * $productsPerPage;
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +56,7 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                 include "dbconnect.php"; // Include your database connection file
 
                 // Query to fetch products from the database
-                $sql = "SELECT * FROM products";
+                $sql = "SELECT * FROM products LIMIT $offset, $productsPerPage";
                 $result = mysqli_query($conn, $sql);
 
                 // Check if there are any products
@@ -60,12 +70,12 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                 ?>
                         <div class="col-md-6">
                             <div class="card">
-                                <div class="row g-0" style="margin: -8% 0%;">
+                                <div class="row g-0">
                                     <div class="col-md-4">
-                                        <img src="assets/img/<?php echo $product_image; ?>" class="img-fluid card-img-top" alt="<?php echo $product_name; ?>" style="margin: 24% 0%;">
+                                        <img src="assets/img/<?php echo $product_image; ?>" class="img-fluid card-img-top" alt="<?php echo $product_name; ?>">
                                     </div>
                                     <div class="col-md-8 h-100">
-                                        <div class="card-body" style="margin: 20% 0%;">
+                                        <div class="card-body">
                                             <h5 class="card-title"><b><?php echo $product_name; ?></b></h5>
                                             <p class="card-text" id="desc_<?php echo $row['pid']; ?>"><?php echo $product_description; ?></p>
                                             <p class="card-price" style="color:#A54A4E;"><b>Price: Rs <?php echo $product_price; ?></b></p>
@@ -74,10 +84,10 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                                 </div>
                                 <div class="card-footer">
                                     <a href="product-detail.php?pid=<?php echo $row['pid']; ?>" class="btn-icon" title="View Details">
-                                        <i class="fas fa-info-circle" style="margin: 0% 35%;font-size: small;"> View Detail</i>
+                                        <i class="fas fa-info-circle" style="font-size: small;"> View Detail</i>
                                     </a>
                                     <a href="#" class="btn-icon btn-add-to-cart" data-pid="<?php echo $row['pid']; ?>" title="Add to Cart">
-                                        <i class="fas fa-cart-plus" style="margin: 0% 35%; font-size: small;"> Add to Cart</i>
+                                        <i class="fas fa-cart-plus" style="margin: 0%; font-size: small;"> Add to Cart</i>
                                     </a>
                                 </div>
                             </div>
@@ -87,11 +97,44 @@ $username = $is_logged_in ? $_SESSION['username'] : 'Guest';
                 } else {
                     echo "No products found";
                 }
+                ?>
+                <div class="container">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <?php
+                // Create previous page button
+                $prevPage = $page - 1;
+                echo "<li class='page-item " . ($page <= 1 ? 'disabled' : '') . "'>
+                        <a class='page-link' href='products.php?page=$prevPage' aria-label='Previous'>
+                            <span aria-hidden='true'>&laquo;</span>
+                        </a>
+                    </li>";
+
+                // Create page numbers
+                for ($i = 1; $i <= ceil(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM products")) / $productsPerPage); $i++) {
+                    echo "<li class='page-item " . ($page == $i ? 'active' : '') . "'>
+                            <a class='page-link' href='products.php?page=$i'>$i</a>
+                        </li>";
+                }
+
+                // Create next page button
+                $nextPage = $page + 1;
+                echo "<li class='page-item " . ($page >= ceil(mysqli_num_rows(mysqli_query($conn, "SELECT * FROM products")) / $productsPerPage) ? 'disabled' : '') . "'>
+                        <a class='page-link' href='products.php?page=$nextPage' aria-label='Next'>
+                            <span aria-hidden='true'>&raquo;</span>
+                        </a>
+                    </li>";
+                ?>
+            </ul>
+        </nav>
+    </div>
+                <?php
                 mysqli_close($conn); // Close database connection
                 ?>
             </div>
         </div>
     </section>
+
             </div>
     <?php include('footer.php'); ?>
     
