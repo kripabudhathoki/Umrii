@@ -2,6 +2,7 @@
 session_start();
 include "dbconnect.php";
 
+
 // Fetch 5-star reviews
 $sql = "SELECT * FROM review WHERE rating = 5 ORDER BY review_id DESC LIMIT 3";
 $result = $conn->query($sql);
@@ -24,6 +25,53 @@ if ($result_products->num_rows > 0) {
 }
 $conn->close();
 ?>
+
+<?php 
+
+// On review.php
+
+if (isset($_SESSION['show_popup']) && $_SESSION['show_popup'] == true) {
+  ?>
+  <div id="ReviewSuccessPopup" style="display: none;">
+        <h2>Review was Successfully Submitted!</h2>
+    </div>
+    <style>
+        #ReviewSuccessPopup {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #f7f7f7; /* Light gray background */
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure popup is on top of other elements */
+            width: 350px; /* Set a fixed width for the popup */
+            text-align: center; /* Center the text horizontally */
+        }
+
+        #ReviewSuccessPopup h2 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        </style>
+  <script>
+    window.onload = function() {
+        document.getElementById("ReviewSuccessPopup").style.display = "block";
+
+// Hide the popup after 5 seconds
+setTimeout(function() {
+    document.getElementById("ReviewSuccessPopup").style.display = "none";
+}, 5000);
+    };
+  </script>
+  <?php
+  unset($_SESSION['show_popup']);
+}
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">

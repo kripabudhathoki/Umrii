@@ -104,7 +104,11 @@ if ($uid > 0) {
                         <div class="text-right">
                         <button type="button" id="clearAll" class="btn btn-danger clear-all-btn d-flex justify-content-start">Clear All</button>
                             <strong>Grand Total: <span id="grandTotal">Rs. <?php echo array_sum(array_column($cart_items, 'total_price')); ?></span></strong>
-                            <a href="checkout.php"><button type="submit" name="checkout" class="btn btn-success d-flex justify-content-center" style="margin-left: 40%;">Proceed to checkout</button></a>
+                            <?php if (!empty($cart_items)) : ?>
+    <a href="checkout.php"><button type="submit" name="checkout" class="btn btn-success d-flex justify-content-center" style="margin-left: 40%;">Proceed to checkout</button></a>
+<?php else : ?>
+    <button type="button" class="btn btn-success d-flex justify-content-center" style="margin-left: 40%;" disabled>Proceed to checkout</button>
+<?php endif; ?>
             
                         </div>
                     </div>

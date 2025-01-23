@@ -36,6 +36,7 @@ $offset = ($page - 1) * $productsPerPage;
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
+
     <?php include('navbar.php'); ?>
     <div class="myorders" style="min-height: 100vh;">
     <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
@@ -162,54 +163,91 @@ document.addEventListener('DOMContentLoaded', function() {
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
         <script>
- $(document).ready(function() {
-    $('.btn-add-to-cart').on('click', function(e) {
-        e.preventDefault();  
-        var url = 'add_to_cart.php'; 
-        var pid = $(this).data('pid'); // Use data attribute to pass PID
+            $(document).ready(function () {
+    // Event listener for add-to-cart button
+    $('.btn-add-to-cart').on('click', function (e) {
+        e.preventDefault();
+
+        var pid = $(this).data('pid'); // Get product ID
         var quantity = 1; // Default quantity
 
         $.ajax({
-            url: url,
+            url: 'add_to_cart.php',
             type: 'POST',
-            data: {
-                pid: pid,
-                quantity: quantity
-            },
+            data: { pid: pid, quantity: quantity },
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
-                    alert(response.message);
-                    updateCartCount(); 
+                showPopup("Item added to cart!"); // Show the popup message
+                updateCartCount(); 
+                } else if (response.popup) {
+                    showPopup("Item already in cart!"); 
+                    // Show the popup message
+                // var message = $('#product-already-added');
+                // message.text("Product already added to cart!"); // Set the message text
+                // message.addClass('visible'); // Show the message
+
+                // // Add some animation to the message
+                // message.css('opacity', 0);
+                // message.animate({ opacity: 1 }, 500);
+
+                // // Hide the message after 3 seconds
+                // setTimeout(function () {
+                //     message.animate({ opacity: 0 }, 500, function () {
+                //     message.removeClass('visible');
+                //     });
+                // }, 3000);
+                } else if (response.alert) {
+                alert(response.message);
                 } else {
-                    if (response.redirect) {
-                        window.location.href = response.redirect;
-                    } else {
-                        alert(response.message); 
-                    } 
+                if (response.redirect) {
+                    window.location.href = response.redirect; // Redirect if needed
+                } else {
+                    alert(response.message); // Show error message
+                }
                 }
             },
-            error: function(xhr, status, error) {
-                alert('Error: ' + error); 
-            }
-        });
-    });
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            },
+            });
+                });
 
+    // Function to show popup
+    function showPopup(message) {
+  var popup = $('#popupMessage');
+  popup.text(message); // Set the popup message
+  popup.addClass('visible'); // Show popup
+
+  // Add some animation to the popup message
+  popup.css('opacity', 0);
+  popup.animate({ opacity: 1 }, 500);
+
+  // Hide the popup after 3 seconds
+  setTimeout(function () {
+    popup.animate({ opacity: 0 }, 500, function () {
+      popup.removeClass('visible');
+    });
+  }, 3000);
+}
+
+    // Optional: Function to update cart count
     function updateCartCount() {
         $.ajax({
             url: 'get_cart_count.php',
             type: 'GET',
-            success: function(response) {
+            success: function (response) {
                 $('#cart-count').text(response);
-            },
-            error: function(xhr, status, error) {
+            },  
+            error: function (xhr, status, error) {
                 console.error('Error fetching cart count:', error);
-            }
+            },
         });
     }
 });
 
 </script>
 
+<div id="popupMessage" class="popup-message hidden">Item added to cart!</div>
 </body>
 </html>

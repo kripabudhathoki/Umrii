@@ -94,6 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['phone'] = $user['phone'];
             $_SESSION['address'] = $user['address'];
             $_SESSION['loggedin'] = true;
+            $_SESSION['login_success'] = true;
             header('Location: index.php');
             exit();
         } else {
@@ -103,23 +104,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 if ($signup_success) {
-    echo '<script>
-            alert("Signup successful");
-            window.location.href = "index.php";
-          </script>';
+    // Start the session
+    session_start();
+    // Retrieve the user data from the database
+    $query = "SELECT * FROM users WHERE username=? LIMIT 1";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    // Set session variables
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['uid'] = $user['uid'];
+    $_SESSION['fname'] = $user['fname'];
+    $_SESSION['lname'] = $user['lname'];
+    $_SESSION['phone'] = $user['phone'];
+    $_SESSION['address'] = $user['address'];
+    $_SESSION['loggedin'] = true;
+    $_SESSION['signup_success'] = true;
+
+    // Redirect to the index page
+    header('Location: index.php');
     exit();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <title>UMRII</title>
+    
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
+
     <link href="css/login.css" rel="stylesheet" />
+    
     <style>
         .name-group {
             display: flex;
@@ -368,4 +390,3 @@ if ($signup_success) {
     </script>
 </body>
 </html>
-

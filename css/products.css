@@ -60,3 +60,48 @@
     align-items: center;  /* Aligns buttons to the left */
     gap: 5px;
 }
+.popup-message {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  opacity: 0;
+  width: 300px;
+  height: 80px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.popup-message.visible {
+  display: block;
+  opacity: 1;
+}
+.hidden {
+    display: none;
+}
+.product-already-added {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: none;
+    opacity: 0;
+    width: 250px;
+    height: 100px;
+    text-align: center;
+  }
+  
+  .product-already-added.visible {
+    display: block;
+    opacity: 1;
+  }

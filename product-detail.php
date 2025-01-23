@@ -37,6 +37,7 @@ if (mysqli_num_rows($result) > 0) {
     <title>UMRII</title>
     <link rel="shortcut icon" href="assets/img/logoW.png" type="image/x-icon">
     <link rel="icon" type="image/x-icon" href="assets/img/logoW.png" />
+    <link rel="stylesheet" href="css/product-detail.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -52,73 +53,6 @@ if (mysqli_num_rows($result) > 0) {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <?php include('navbar.php'); ?>
 <!-- END nav -->
-<style>
-    .hero-wrap {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .hero-wrap::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('assets/img/background1.jpg');
-        background-size: cover;
-        background-position: center;
-        filter: blur(1px);
-        z-index: -1;
-        padding: 5em 0;
-        margin: 0 5%;
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .product-detail-card {
-    display: flex;
-    background: gainsboro;
-    padding: 0.1em;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 90%;
-    margin-top: 5%;
-}
-
-    .product-detail-card img {
-        border-radius: 15px 0px 0px 15px;
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-
-    .product-detail-card .product-image {
-        flex: 1;
-        max-width: 50%;
-    }
-
-    .product-detail-card .product-info {
-        flex: 1;
-        padding-left: 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .product-detail-card .price span {
-        font-size: 2rem;
-        color: #A54A4E;
-        font-weight: bold;
-    }
-
-    .quantity-buttons .input-group-btn button {
-        border-radius: 50%;
-    }
-</style>
 <div class="myorders" style="min-height: 100vh;">
 <div class="hero-wrap" style="background-image: url('assets/img/background1.jpg');background-size: cover;background-repeat: no-repeat;background-position: center center;padding: 5em 0;margin: 0 5%; z-index: -1;">
     <div class="container">

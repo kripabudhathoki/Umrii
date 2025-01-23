@@ -2,6 +2,7 @@ $(document).ready(function () {
     const BASE_URL = "https://cors-anywhere.herokuapp.com/https://nominatim.openstreetmap.org/search?format=json&limit=5&bounded=1&viewbox=85.272,27.747,85.367,27.661&q=La&countrycodes=np&bounded=1";
 
 
+
     // Location suggestion handling
     $('#address').on('input', function () {
         const query = $(this).val();

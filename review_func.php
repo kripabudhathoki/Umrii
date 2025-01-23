@@ -18,10 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("ssiss", $name, $product_name, $rating, $review,$product_image);
 
         if ($stmt->execute()) {
-            echo "<script>
-                    alert('New review created successfully');
-                    window.location.href = 'review.php';
-                </script>";
+            $_SESSION['show_popup'] = true;
+                header('Location: review.php');
+                exit;;
         } else {
             $signup_error['database'] = "Error: " . $stmt->error;
             echo "<script>

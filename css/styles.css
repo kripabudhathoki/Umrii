@@ -303,6 +303,7 @@ a:not([href]):not([class]), a:not([href]):not([class]):hover {
   color: var(--bs-primary) !important;
 }
 
+
 /*** Topbar End ***/
 
 
@@ -740,7 +741,7 @@ progress {
   color: #6c757d;
 }
 .blockquote-footer::before {
-  content: "— ";
+  content: "— ";
 }
 
 .img-fluid {

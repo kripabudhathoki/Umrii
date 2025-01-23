@@ -25,7 +25,7 @@ if (isset($_SESSION['uid'])) {
             // Check if the product is already in the cart
             $existing_item_query = $conn->query("SELECT * FROM cart_items WHERE cart_id = $cart_id AND pid = $pid");
             if ($existing_item_query->num_rows > 0) {
-                $response = ['success' => false, 'message' => 'Product already in cart'];
+                $response = ['success' => false, 'message' => 'Product already in cart', 'popup' => true, 'alert' => false];
             } else {
                 $result = $conn->query("SELECT * FROM products WHERE pid = $pid");
                 $product = $result->fetch_assoc();

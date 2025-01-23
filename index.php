@@ -11,6 +11,105 @@ while ($row = mysqli_fetch_assoc($result)) {
     $featuredProducts[] = $row;
 }
 ?>
+<?php
+
+if (isset($_SESSION['signup_success'])) {
+    ?>
+    <div id="signupSuccessPopup" style="display: none;">
+        <h2>Signup Successful!</h2>
+        <p>Your signup was successful.</p>
+    </div>
+
+    <style>
+        #signupSuccessPopup {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #f7f7f7; /* Light gray background */
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure popup is on top of other elements */
+            width: 350px; /* Set a fixed width for the popup */
+            text-align: center; /* Center the text horizontally */
+}
+
+#signupSuccessPopup h2 {
+    font-size: 22px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 10px;
+}
+
+#signupSuccessPopup p {
+    font-size: 14px;
+            color: #666; /* Dark gray text color */
+            margin-bottom: 10px;
+}
+    </style>
+
+    <script>
+        // Display the popup
+        document.getElementById("signupSuccessPopup").style.display = "block";
+
+        // Hide the popup after 5 seconds
+        setTimeout(function() {
+            document.getElementById("signupSuccessPopup").style.display = "none";
+        }, 5000);
+    </script>
+    <?php
+    unset($_SESSION['signup_success']);
+}
+?>
+<?php
+if (isset($_SESSION['login_success'])) {
+    ?>
+    <div id="loginSuccessPopup" style="display: none;">
+        <h2>Login Successful!</h2>
+            <p>Welcome back!</p>
+    </div>
+
+    <style>
+        #loginSuccessPopup {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #f7f7f7; /* Light gray background */
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Ensure popup is on top of other elements */
+            width: 350px; /* Set a fixed width for the popup */
+            text-align: center; /* Center the text horizontally */
+        }
+
+        #loginSuccessPopup h2 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #loginSuccessPopup p {
+            font-size: 14px;
+            color: #666; /* Dark gray text color */
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <script>
+        // Display the popup
+        document.getElementById("loginSuccessPopup").style.display = "block";
+
+        // Hide the popup after 5 seconds
+        setTimeout(function() {
+            document.getElementById("loginSuccessPopup").style.display = "none";
+        }, 5000);
+    </script>
+    <?php
+    unset($_SESSION['login_success']);
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
