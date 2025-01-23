@@ -82,7 +82,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
             <div class="cart-detail col-md-12" style = "height: 100px;">
               <h6>Delivery Charge</h6>
-              <p id="deliveryCost">Delivery Price: Calculating...</p>
+              <p id="deliveryCost">Delivery Price: Please enter your address to calculate the delivery charge.</p>
             </div>
 
             <div class="cart-detail p-0 p-md-4">
