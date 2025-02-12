@@ -52,7 +52,7 @@ if ($uid > 0) {
 
     <section class="ftco-section ftco-cart">
         <div class="container">
-            <div class="row intro-text left-0 text-center bg-faded p-5 rounded">
+            <div class="bg-white p-5 contact-form">
                 <div class="col-md-12">
                     <div class="cart-list">
                         <table class="table table-bordered" id="cartTable">

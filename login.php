@@ -64,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $sql = "INSERT INTO users (fname, lname, email, phone, password, address, username) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("sssssss", $fname, $lname, $email, $phone, $hashed_password, $address, $username);
-
                 if ($stmt->execute()) {
                     $signup_success = true;
                 } else {

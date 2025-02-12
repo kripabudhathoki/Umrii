@@ -62,7 +62,7 @@
     </style>
 </head>
 <body>
-<header>
+<header style="position: sticky;">
     <h1 class="site-heading text-center text-faded d-none d-lg-block">
         <div class="topbar">
             <div class="d-flex justify-content-between">
