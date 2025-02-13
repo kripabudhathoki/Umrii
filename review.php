@@ -2,7 +2,7 @@
 session_start();
 include "dbconnect.php";
 
-
+$is_logged_in = isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
 // Fetch 5-star reviews
 $sql = "SELECT * FROM review WHERE rating = 5 ORDER BY review_id DESC LIMIT 3";
 $result = $conn->query($sql);
@@ -211,6 +211,13 @@ setTimeout(function() {
             // setInterval(updateCartCount, 30000); // Update every 30 seconds
 
             
+        });
+
+        document.getElementById("reviewForm").addEventListener("submit", function(event) {
+            <?php if (!$is_logged_in): ?>
+                event.preventDefault();
+                window.location.href = "login.php";
+            <?php endif; ?>
         });
     </script>
 

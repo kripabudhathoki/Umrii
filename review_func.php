@@ -2,6 +2,8 @@
 session_start();
 include "dbconnect.php";
 
+// Redirect to login page if user is not logged in
+if (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $product_name = $_POST['product_name'];
@@ -36,6 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     exit;
     
     
+}
+}else{
+  
+    header("Location: login.php");
+    exit();
 }
 
 ?>
