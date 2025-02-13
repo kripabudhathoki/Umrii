@@ -49,7 +49,7 @@ include "dbconnect.php";
           </div>
         </div>";
         
-            echo "<div class='container d-flex'>";
+            echo "<div class='container d-flex' style= 'flex-direction:column'> ";
             while ($row = $result->fetch_assoc()) {
                 echo "<div class='card'>";
                 echo "<div class='row g-0'>";

@@ -30,7 +30,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 <?php include('navbar.php'); ?>
 
 <div class="myorders" style="min-height: 100vh;">
-  <div class="hero-wrap">
+  <div class="hero-wrap"style="background-image: url('assets/img/background1.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center center; padding: 5em 0; margin: 0 5%; z-index: -1;">
     <div class="container">
       <div class="row no-gutters slider-text align-items-center justify-content-center hero-content">
         <div class="col-md-9 text-center">
